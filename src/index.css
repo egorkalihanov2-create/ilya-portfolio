@@ -26,6 +26,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "Druk Cyr";
+  src: url("./assets/fonts/drukcyr-medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   font-family: "Object Sans", Arial, sans-serif;
   color: #0d0d0d;
@@ -180,8 +188,9 @@ img {
   position: relative;
   z-index: 2;
   margin: 0;
+  font-family: "Druk Cyr", "Object Sans", Arial, sans-serif;
   font-size: clamp(16px, 5vw, 96px);
-  font-weight: 800;
+  font-weight: 500;
   line-height: 1.05;
   letter-spacing: -0.011em;
 }
@@ -189,7 +198,7 @@ img {
 .statement-copy p {
   max-width: 1160px;
   margin: 5.5% 0 0;
-  font-size: clamp(9px, 2.5vw, 48px);
+  font-size: clamp(9px, calc(3.035vw - 10.27px), 48px);
   line-height: 1.05;
   letter-spacing: -0.011em;
 }
@@ -208,6 +217,7 @@ img {
   bottom: -0.02em;
   left: -0.12em;
   height: 0.72em;
+  rotate: -2.95deg;
   transform-origin: left center;
   border-radius: 0.1em;
   background: #ffb900;
@@ -427,6 +437,10 @@ img {
   left: 0;
 }
 
+.gallery-arrow-prev img {
+  transform: scaleX(-1);
+}
+
 .gallery-arrow-next {
   right: 0;
 }
@@ -448,11 +462,12 @@ img {
 .manifesto-top,
 .manifesto-bottom {
   position: absolute;
-  left: 8%;
-  width: 81.5%;
+  left: 5%;
+  width: 90%;
   margin: 0;
   line-height: 1;
   letter-spacing: -0.011em;
+  white-space: nowrap;
 }
 
 .manifesto-top {
@@ -461,7 +476,7 @@ img {
 }
 
 .manifesto-bottom {
-  top: 51.5%;
+  top: 58%;
   color: rgba(255, 255, 255, 0.5);
   font-family: "Vasek", Georgia, serif;
   font-size: clamp(16px, 4vw, 77px);
@@ -528,20 +543,30 @@ img {
 .floating-object {
   position: absolute;
   z-index: 3;
-  top: 19%;
-  left: 71%;
-  width: 15.5%;
-  height: 102%;
-  overflow: hidden;
+  top: 16%;
+  left: 70%;
+  display: grid;
+  width: 16%;
+  aspect-ratio: 1;
+  place-items: center;
   pointer-events: none;
 }
 
-.floating-object img {
-  width: 100%;
+.floating-object-crop {
+  position: relative;
+  width: 48.3%;
+  height: 92.9%;
+  overflow: hidden;
+  transform: rotate(135.64deg);
+}
+
+.floating-object-crop img {
+  position: absolute;
+  top: 0;
+  left: -22.59%;
+  width: 290.36%;
+  max-width: none;
   height: 100%;
-  transform: rotate(136deg) scale(1.2);
-  object-fit: cover;
-  object-position: 3% center;
 }
 
 .cta-block {
@@ -598,7 +623,12 @@ img {
   color: #ffffff;
 }
 
-.cta-choice > img {
+.cta-float {
+  position: absolute;
+  inset: 0;
+}
+
+.cta-float > img {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -606,11 +636,11 @@ img {
   object-fit: cover;
 }
 
-.cta-choice > img.mirror {
+.cta-float > img.mirror {
   transform: scaleX(-1);
 }
 
-.cta-choice > span {
+.cta-float > span {
   position: absolute;
   z-index: 2;
   top: 8.9%;
@@ -631,14 +661,14 @@ img {
   transition: transform 180ms ease, filter 180ms ease;
 }
 
-.cta-choice-more > span {
+.cta-choice-more .cta-float > span {
   min-width: 61%;
   background: #1a1a1a;
   box-shadow: 0 5px 0 #626262;
 }
 
-.cta-choice:hover > span,
-.cta-choice:focus-visible > span {
+.cta-choice:hover .cta-float > span,
+.cta-choice:focus-visible .cta-float > span {
   transform: translateX(-50%) translateY(-4px) scale(1.03);
   filter: brightness(1.04);
 }
@@ -853,14 +883,14 @@ img {
     font-size: clamp(8px, 2.45vw, 11px);
   }
 
-  .cta-choice > span {
+  .cta-float > span {
     min-width: 74%;
     min-height: 37%;
     box-shadow: 0 2px 0 #eb7500;
     font-size: clamp(8px, 2.3vw, 10px);
   }
 
-  .cta-choice-more > span {
+  .cta-choice-more .cta-float > span {
     box-shadow: 0 2px 0 #626262;
   }
 

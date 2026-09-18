@@ -133,7 +133,9 @@ export default function App() {
             animate={{ y: [-7, 7, -7] }}
             transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
           >
-            <img src="./assets/figma/floating-object.png" alt="D&AD award pencil" />
+            <div className="floating-object-crop">
+              <img src="./assets/figma/floating-object.png" alt="D&AD award pencil" />
+            </div>
           </motion.div>
         </section>
 
@@ -159,27 +161,45 @@ export default function App() {
               className="cta-choice cta-choice-create"
               href="mailto:napishi"
               variants={{
-                hidden: { opacity: 0, scale: 0.55 },
-                visible: { opacity: 1, scale: 1, transition: { delay: 0.45, type: "spring" } },
+                hidden: { opacity: 0, y: 120, scale: 0.72 },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  transition: { delay: 0.72, duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+                },
               }}
-              animate={{ y: [0, -8, 0] }}
-              transition={{ y: { delay: 1.15, duration: 3.4, repeat: Infinity, ease: "easeInOut" } }}
             >
-              <img src="./assets/figma/cta-hands.png" alt="" />
-              <span>Let’s create<br />something</span>
+              <motion.div
+                className="cta-float"
+                animate={{ y: [-8, 8, -8] }}
+                transition={{ delay: 1.45, duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <img src="./assets/figma/cta-hands.png" alt="" />
+                <span>Let’s create<br />something</span>
+              </motion.div>
             </motion.a>
             <motion.a
               className="cta-choice cta-choice-more"
               href="#about"
               variants={{
-                hidden: { opacity: 0, scale: 0.55 },
-                visible: { opacity: 1, scale: 1, transition: { delay: 0.62, type: "spring" } },
+                hidden: { opacity: 0, y: 120, scale: 0.72 },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  transition: { delay: 0.72, duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+                },
               }}
-              animate={{ y: [0, 9, 0] }}
-              transition={{ y: { delay: 1.25, duration: 4, repeat: Infinity, ease: "easeInOut" } }}
             >
-              <img className="mirror" src="./assets/figma/cta-hands.png" alt="" />
-              <span>More<br />about me</span>
+              <motion.div
+                className="cta-float"
+                animate={{ y: [8, -8, 8] }}
+                transition={{ delay: 1.45, duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <img className="mirror" src="./assets/figma/cta-hands.png" alt="" />
+                <span>More<br />about me</span>
+              </motion.div>
             </motion.a>
           </div>
         </motion.section>
