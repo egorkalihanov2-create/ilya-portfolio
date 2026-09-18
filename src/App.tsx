@@ -126,12 +126,13 @@ export default function App() {
           </p>
           <p className="manifesto-bottom">
             And the festival-winning <span className="airbnb-pill"><img src="./assets/figma/airbnb.png" alt="Airbnb" /></span>
-            work is proof of that.
+            work is proof of <span className="manifesto-ending">that.</span>
           </p>
           <motion.div
             className="floating-object"
-            animate={{ y: [-7, 7, -7] }}
-            transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
+            animate={{ y: [-3, 3, -3] }}
+            transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
+            aria-label="D&AD award pencil"
           >
             <div className="floating-object-crop">
               <img src="./assets/figma/floating-object.png" alt="D&AD award pencil" />
@@ -159,7 +160,9 @@ export default function App() {
           <div className="cta-actions">
             <motion.a
               className="cta-choice cta-choice-create"
-              href="mailto:napishi"
+              href="https://t.me/wilyam_the_originator"
+              target="_blank"
+              rel="noreferrer"
               variants={{
                 hidden: { opacity: 0, y: 120, scale: 0.72 },
                 visible: {

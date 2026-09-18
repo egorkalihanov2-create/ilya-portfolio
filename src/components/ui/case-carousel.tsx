@@ -10,7 +10,9 @@ const cases = [
 export function CaseCarousel() {
   const [active, setActive] = useState(0);
   const move = (direction: number) => {
-    setActive((current) => (current + direction + cases.length) % cases.length);
+    setActive(
+      (current) => (current - direction + cases.length) % cases.length,
+    );
   };
 
   return (
@@ -34,7 +36,7 @@ export function CaseCarousel() {
             <motion.article
               className={`case-card case-position-${position}`}
               key={item.image}
-              layout
+              layout="position"
               transition={{ type: "spring", stiffness: 180, damping: 24 }}
               aria-hidden={position !== 2}
             >
