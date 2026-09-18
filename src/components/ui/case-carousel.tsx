@@ -14,6 +14,10 @@ export function CaseCarousel() {
       (current) => (current - direction + cases.length) % cases.length,
     );
   };
+  const selectCard = (position: number) => {
+    if (position === 2) return;
+    move(position === 0 ? -1 : 1);
+  };
 
   return (
     <section
@@ -33,16 +37,18 @@ export function CaseCarousel() {
         {cases.map((item, index) => {
           const position = (index - active + cases.length) % cases.length;
           return (
-            <motion.article
+            <motion.button
+              type="button"
               className={`case-card case-position-${position}`}
               key={item.image}
               layout="position"
               transition={{ type: "spring", stiffness: 180, damping: 24 }}
-              aria-hidden={position !== 2}
+              aria-label={`Show case ${index + 1}`}
+              onClick={() => selectCard(position)}
             >
               <h3>{item.label}</h3>
               <img src={item.image} alt="Portfolio campaign visual" />
-            </motion.article>
+            </motion.button>
           );
         })}
       </motion.div>

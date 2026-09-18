@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { useCallback, useState } from "react";
 import { CaseCarousel } from "@/components/ui/case-carousel";
 import FolderInteraction from "@/components/ui/folder-interaction";
@@ -38,6 +38,7 @@ const folders = [
 
 export default function App() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
   const closePopup = useCallback(() => setIsPopupOpen(false), []);
 
   return (
@@ -130,13 +131,13 @@ export default function App() {
           </p>
           <motion.div
             className="floating-object"
-            animate={{ y: [-3, 3, -3] }}
+            animate={shouldReduceMotion ? undefined : {
+              y: ["-4%", "4%", "-4%"],
+              rotate: [-0.8, 0.8, -0.8],
+            }}
             transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
-            aria-label="D&AD award pencil"
           >
-            <div className="floating-object-crop">
-              <img src="./assets/figma/floating-object.png" alt="D&AD award pencil" />
-            </div>
+            <img src="./assets/figma/pen.png" alt="D&AD award pencil" />
           </motion.div>
         </section>
 

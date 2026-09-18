@@ -74,6 +74,7 @@ img {
 }
 
 .site-shell {
+  position: relative;
   width: min(100%, 1920px);
   min-height: 100vh;
   margin-inline: auto;
@@ -83,7 +84,7 @@ img {
 }
 
 .site-header {
-  position: fixed;
+  position: absolute;
   z-index: 50;
   top: 33px;
   left: 50%;
@@ -364,11 +365,22 @@ img {
 .case-card {
   position: absolute;
   width: 81.7%;
+  padding: 0;
   overflow: hidden;
   aspect-ratio: 1499 / 972;
+  border: 0;
   border-radius: var(--radius);
+  color: inherit;
   background: #e9e9e9;
   box-shadow: 0 6px 30px rgba(0, 0, 0, 0.035);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.case-card:focus-visible {
+  outline: 3px solid #ffb900;
+  outline-offset: 4px;
 }
 
 .case-position-0 {
@@ -511,6 +523,7 @@ img {
 .heinz-pill {
   width: 2.7em;
   margin-inline: 0.35em;
+  vertical-align: -0.08em;
 }
 
 .airbnb-pill {
@@ -548,31 +561,19 @@ img {
 .floating-object {
   position: absolute;
   z-index: 3;
-  top: 48%;
-  left: 73.6%;
-  display: grid;
-  width: clamp(72px, 13.5%, 248px);
-  aspect-ratio: 5.8 / 5.45;
-  place-items: center;
+  top: 50%;
+  left: 74%;
+  width: clamp(58px, 10.5%, 192px);
+  aspect-ratio: 244 / 217;
   pointer-events: auto;
   user-select: none;
+  will-change: transform;
 }
 
-.floating-object-crop {
-  position: relative;
-  width: 52%;
-  height: 96%;
-  overflow: hidden;
-  transform: rotate(-44.36deg);
-}
-
-.floating-object-crop img {
-  position: absolute;
-  top: -33.8%;
-  left: -30%;
-  width: 307.2%;
-  max-width: none;
-  height: 150.6%;
+.floating-object img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .cta-block {
@@ -883,6 +884,12 @@ img {
 
   .manifesto-bottom {
     font-size: clamp(10px, 3.7vw, 16px);
+  }
+
+  .floating-object {
+    top: 54%;
+    left: 74%;
+    width: clamp(54px, 12%, 80px);
   }
 
   .cta-intro h2 {
