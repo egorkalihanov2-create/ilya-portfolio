@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 import { CaseCarousel } from "@/components/ui/case-carousel";
 import FolderInteraction from "@/components/ui/folder-interaction";
 import { FolderPopup } from "@/components/ui/folder-popup";
+import { useMediaQuery } from "@/lib/use-media-query";
 
 const folders = [
   {
@@ -39,6 +40,7 @@ const folders = [
 export default function App() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const shouldReduceMotion = useReducedMotion();
+  const isMobile = useMediaQuery("(max-width: 480px)");
   const closePopup = useCallback(() => setIsPopupOpen(false), []);
 
   return (
@@ -54,32 +56,71 @@ export default function App() {
 
       <main id="main" className="main-flow">
         <section className="hero-block" aria-label="Introduction">
-          <img
-            src="./assets/figma/hero.png"
-            alt="Ilya, the originator"
-          />
+          <picture>
+            <source media="(max-width: 480px)" srcSet="./assets/figma/mobile-hero.png" />
+            <img src="./assets/figma/hero.png" alt="Ilya, the originator" />
+          </picture>
         </section>
 
-        <section id="about" className="intro-copy">
+        <motion.section
+          id="about"
+          className="intro-copy"
+          initial={shouldReduceMotion ? false : "hidden"}
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.6 }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { duration: 0.65 } },
+          }}
+        >
           <p>
             Hey, I’m Ilya — a Conceptual Creative who’s spent<br className="desktop-break" />
             the last 7 years between global ad agencies, tech teams and brands,
             turning what companies need<br className="desktop-break" />
             to say into ideas people might actually care about
           </p>
-        </section>
+        </motion.section>
 
         <motion.section
           className="statement-block"
-          initial="hidden"
+          initial={shouldReduceMotion ? false : "hidden"}
           whileInView="visible"
           viewport={{ once: true, amount: 0.35 }}
         >
           <motion.div
+            className="portrait-wrap"
+            variants={{
+              hidden: { opacity: isMobile ? 0 : 1, scale: isMobile ? 1.025 : 1 },
+              visible: {
+                opacity: 1,
+                scale: 1,
+                transition: { duration: 0.58, ease: [0.22, 1, 0.36, 1] },
+              },
+            }}
+          >
+            <picture>
+              <source media="(max-width: 480px)" srcSet="./assets/figma/mobile-statement.png" />
+              <img src="./assets/figma/portrait.png" alt="Ilya seated outdoors" />
+            </picture>
+          </motion.div>
+          <motion.div
+            className="statement-shade"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: { delay: isMobile ? 0.42 : 0, duration: 0.45 },
+              },
+            }}
+          />
+          <motion.div
             className="statement-copy"
             variants={{
               hidden: { opacity: 0 },
-              visible: { opacity: 1, transition: { duration: 0.65 } },
+              visible: {
+                opacity: 1,
+                transition: { delay: isMobile ? 0.78 : 0, duration: 0.58 },
+              },
             }}
           >
             <h2>
@@ -97,9 +138,6 @@ export default function App() {
               endlessly polishing
             </p>
           </motion.div>
-          <div className="portrait-wrap">
-            <img src="./assets/figma/portrait.png" alt="Ilya seated outdoors" />
-          </div>
         </motion.section>
 
         <section className="work-block" aria-labelledby="work-heading">
@@ -122,7 +160,7 @@ export default function App() {
 
         <section className="manifesto-block">
           <p className="manifesto-top">
-            WORLD-CHANGERS <span className="brand-dot"><img src="./assets/figma/logo-small.png" alt="" /></span> DO NOT WAIT
+            WORLD-CHANGERS <span className="brand-dot"><img src="./assets/figma/logo-small.png" alt="" /></span><br className="manifesto-mobile-break" /> DO NOT WAIT
             <span className="heinz-pill"><img src="./assets/figma/heinz.png" alt="Heinz" /></span> FOR PERMISSION
           </p>
           <p className="manifesto-bottom">
@@ -145,7 +183,7 @@ export default function App() {
 
         <motion.section
           className="cta-block"
-          initial="hidden"
+          initial={shouldReduceMotion ? false : "hidden"}
           whileInView="visible"
           viewport={{ once: true, amount: 0.35 }}
         >
@@ -178,7 +216,7 @@ export default function App() {
             >
               <motion.div
                 className="cta-float"
-                animate={{ y: [-8, 8, -8] }}
+                animate={shouldReduceMotion ? undefined : { y: [-8, 8, -8] }}
                 transition={{ delay: 1.45, duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
               >
                 <img src="./assets/figma/cta-hands.png" alt="" />
@@ -200,7 +238,7 @@ export default function App() {
             >
               <motion.div
                 className="cta-float"
-                animate={{ y: [8, -8, 8] }}
+                animate={shouldReduceMotion ? undefined : { y: [8, -8, 8] }}
                 transition={{ delay: 1.45, duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
               >
                 <img className="mirror" src="./assets/figma/cta-hands.png" alt="" />

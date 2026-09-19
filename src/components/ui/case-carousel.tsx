@@ -1,5 +1,6 @@
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
+import { useMediaQuery } from "@/lib/use-media-query";
 
 const cases = [
   { image: "./assets/figma/case-1.png", label: "Name of case" },
@@ -7,8 +8,16 @@ const cases = [
   { image: "./assets/figma/case-3.png", label: "Name of case" },
 ];
 
+const mobileStackOffsets = [
+  { x: "16.9vw", y: 0 },
+  { x: "0.7vw", y: "-35.3vw" },
+  { x: "-15.4vw", y: "-70.9vw" },
+];
+
 export function CaseCarousel() {
   const [active, setActive] = useState(0);
+  const isMobile = useMediaQuery("(max-width: 480px)");
+  const shouldReduceMotion = useReducedMotion();
   const move = (direction: number) => {
     setActive(
       (current) => (current - direction + cases.length) % cases.length,
@@ -20,10 +29,13 @@ export function CaseCarousel() {
   };
 
   return (
-    <section
+    <motion.section
       id="cases"
       className="case-carousel"
       aria-label="Selected cases"
+      initial={isMobile && !shouldReduceMotion ? "stacked" : false}
+      whileInView="spread"
+      viewport={{ once: true, amount: 0.28 }}
     >
       <motion.div
         className="case-deck"
@@ -42,6 +54,23 @@ export function CaseCarousel() {
               className={`case-card case-position-${position}`}
               key={item.image}
               layout="position"
+              custom={position}
+              variants={{
+                stacked: (cardPosition: number) => ({
+                  x: mobileStackOffsets[cardPosition].x,
+                  y: mobileStackOffsets[cardPosition].y,
+                }),
+                spread: (cardPosition: number) => ({
+                  x: 0,
+                  y: 0,
+                  transition: {
+                    type: "spring",
+                    stiffness: 150,
+                    damping: 22,
+                    delay: cardPosition * 0.12,
+                  },
+                }),
+              }}
               transition={{ type: "spring", stiffness: 180, damping: 24 }}
               aria-label={`Show case ${index + 1}`}
               onClick={() => selectCard(position)}
@@ -69,6 +98,6 @@ export function CaseCarousel() {
       >
         <img src="./assets/figma/arrow-next.svg" alt="" />
       </button>
-    </section>
+    </motion.section>
   );
 }
