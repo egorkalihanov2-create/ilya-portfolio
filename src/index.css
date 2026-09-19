@@ -164,10 +164,11 @@ img {
 
 .statement-block {
   display: grid;
-  grid-template-columns: 69.4% 28.5%;
-  gap: 2.1%;
+  grid-template-columns: minmax(0, 1273fr) minmax(0, 523fr);
+  column-gap: 2.1253%;
   overflow: hidden;
   aspect-ratio: 1835 / 593;
+  container-type: inline-size;
 }
 
 .statement-copy,
@@ -179,8 +180,8 @@ img {
 .statement-copy {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 4.6% 2.45%;
+  justify-content: flex-start;
+  padding: 5.4496cqw 0.2725cqw 0 2.7248cqw;
   color: #ffffff;
   background: #0d0d0d;
 }
@@ -190,17 +191,17 @@ img {
   z-index: 2;
   margin: 0;
   font-family: "Druk Cyr", "Object Sans", Arial, sans-serif;
-  font-size: clamp(16px, 5vw, 96px);
+  font-size: clamp(20px, 6.158cqw, 113px);
   font-weight: 500;
-  line-height: 1.05;
-  letter-spacing: -0.011em;
+  line-height: 0.89;
+  letter-spacing: 0.04em;
 }
 
 .statement-copy p {
-  max-width: 1160px;
-  margin: 5.5% 0 0;
-  font-size: clamp(9px, calc(3.035vw - 10.27px), 48px);
-  line-height: 1.05;
+  width: 100%;
+  margin: 2.3433cqw 0 0;
+  font-size: clamp(10px, 2.6158cqw, 48px);
+  line-height: 1;
   letter-spacing: -0.011em;
 }
 
@@ -224,11 +225,17 @@ img {
   background: #ffb900;
 }
 
+.portrait-wrap {
+  position: relative;
+}
+
 .portrait-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 73% center;
+  position: absolute;
+  top: -8.05%;
+  left: -132.34%;
+  width: 243.84%;
+  max-width: none;
+  height: 120.97%;
 }
 
 .work-block {
@@ -561,10 +568,11 @@ img {
 .floating-object {
   position: absolute;
   z-index: 3;
-  top: 50%;
-  left: 74%;
-  width: clamp(58px, 10.5%, 192px);
+  top: 0.82em;
+  left: calc(100% - 0.16em);
+  width: clamp(58px, 2.45em, 192px);
   aspect-ratio: 244 / 217;
+  transform-origin: left top;
   pointer-events: auto;
   user-select: none;
   will-change: transform;
@@ -819,19 +827,6 @@ img {
     display: none;
   }
 
-  .statement-copy {
-    padding: 5% 2.4%;
-  }
-
-  .statement-copy h2 {
-    font-size: clamp(13px, 4.7vw, 20px);
-  }
-
-  .statement-copy p {
-    margin-top: 6%;
-    font-size: clamp(8px, 2.55vw, 11px);
-  }
-
   .work-block {
     min-height: 104px;
     aspect-ratio: 1835 / 588;
@@ -884,12 +879,6 @@ img {
 
   .manifesto-bottom {
     font-size: clamp(10px, 3.7vw, 16px);
-  }
-
-  .floating-object {
-    top: 54%;
-    left: 74%;
-    width: clamp(54px, 12%, 80px);
   }
 
   .cta-intro h2 {

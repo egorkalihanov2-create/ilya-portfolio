@@ -127,18 +127,20 @@ export default function App() {
           </p>
           <p className="manifesto-bottom">
             And the festival-winning <span className="airbnb-pill"><img src="./assets/figma/airbnb.png" alt="Airbnb" /></span>
-            work is proof of <span className="manifesto-ending">that.</span>
+            work is proof of <span className="manifesto-ending">
+              that.
+              <motion.span
+                className="floating-object"
+                animate={shouldReduceMotion ? undefined : {
+                  y: ["-4%", "4%", "-4%"],
+                  rotate: [-0.8, 0.8, -0.8],
+                }}
+                transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <img src="./assets/figma/pen.png" alt="D&AD award pencil" />
+              </motion.span>
+            </span>
           </p>
-          <motion.div
-            className="floating-object"
-            animate={shouldReduceMotion ? undefined : {
-              y: ["-4%", "4%", "-4%"],
-              rotate: [-0.8, 0.8, -0.8],
-            }}
-            transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <img src="./assets/figma/pen.png" alt="D&AD award pencil" />
-          </motion.div>
         </section>
 
         <motion.section
