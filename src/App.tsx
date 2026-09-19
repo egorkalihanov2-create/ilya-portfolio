@@ -128,13 +128,13 @@ export default function App() {
               is to <u>originate</u>, not decorate<span className="statement-period">.</span>
             </h2>
             <p>
-              I like the <span className="highlight-wrap">“zero to one”
+              I like the “<span className="highlight-wrap">zero to one
                 <motion.span
                   className="highlight-stroke"
                   variants={{ hidden: { scaleX: 0 }, visible: { scaleX: 1 } }}
                   transition={{ duration: 0.75, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
                 />
-              </span> kind of thinking — creating something new instead of
+              </span>” kind of thinking — creating something new instead of
               endlessly polishing
             </p>
           </motion.div>

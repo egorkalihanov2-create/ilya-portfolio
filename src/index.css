@@ -994,11 +994,11 @@ img {
 
   .site-header nav {
     min-height: 6.25vw;
-    padding: 0 10.4167vw;
+    padding: 0 min(3.9457vw, 18.9px);
   }
 
   .site-header a {
-    font-size: 3.2338vw;
+    font-size: min(3.2338vw, 14px);
     letter-spacing: -0.011em;
   }
 
@@ -1051,12 +1051,14 @@ img {
 
   .intro-copy {
     aspect-ratio: 384 / 80;
+    margin-top: max(-36px, -7.5157vw);
+    margin-bottom: max(-23px, -4.8017vw);
     padding: 3.9801vw 0;
   }
 
   .intro-copy p {
     width: 100%;
-    font-size: 2.9851vw;
+    font-size: clamp(11px, 2.9851vw, 13px);
     line-height: 1;
   }
 
@@ -1108,9 +1110,40 @@ img {
     display: block;
     width: 100%;
     height: 145.17%;
+    overflow: hidden;
     border-radius: 2.2223cqw;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0) 31.452%, rgba(0, 0, 0, 0.33) 45.362%);
-    backdrop-filter: blur(0.677vw);
+    background: linear-gradient(
+      180deg,
+      rgba(5, 7, 8, 0.5) 0%,
+      rgba(5, 7, 8, 0.38) 30%,
+      rgba(5, 7, 8, 0.2) 58%,
+      rgba(5, 7, 8, 0.06) 77%,
+      rgba(5, 7, 8, 0) 92%
+    );
+    pointer-events: none;
+  }
+
+  .statement-shade::before,
+  .statement-shade::after {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    content: "";
+    pointer-events: none;
+  }
+
+  .statement-shade::before {
+    -webkit-backdrop-filter: blur(5.5px);
+    backdrop-filter: blur(5.5px);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0, rgba(0, 0, 0, 0.92) min(18cqw, 70px), rgba(0, 0, 0, 0.32) min(32cqw, 120px), transparent min(42cqw, 160px));
+    mask-image: linear-gradient(to bottom, #000 0, rgba(0, 0, 0, 0.92) min(18cqw, 70px), rgba(0, 0, 0, 0.32) min(32cqw, 120px), transparent min(42cqw, 160px));
+  }
+
+  .statement-shade::after {
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0, rgba(0, 0, 0, 0.7) min(28cqw, 105px), transparent min(47cqw, 180px));
+    mask-image: linear-gradient(to bottom, #000 0, rgba(0, 0, 0, 0.7) min(28cqw, 105px), transparent min(47cqw, 180px));
   }
 
   .statement-copy {
@@ -1138,7 +1171,7 @@ img {
   .statement-copy p {
     width: 89.206%;
     margin: 4.1694cqw 0 0;
-    font-size: min(3.2172cqw, 12px);
+    font-size: min(3.2172cqw, 13px);
     line-height: 1;
     letter-spacing: -0.011em;
   }
@@ -1148,9 +1181,9 @@ img {
   }
 
   .highlight-stroke {
-    right: -0.12em;
+    right: -0.08em;
     bottom: 0.08em;
-    left: -0.12em;
+    left: -0.08em;
     height: 1.1407em;
     rotate: -2.44deg;
     border-radius: 0.273em;
@@ -1260,7 +1293,7 @@ img {
     width: 100%;
     max-width: none;
     margin-top: 3.6535cqw;
-    font-size: 3.2258cqw;
+    font-size: min(3.2258cqw, 13px);
   }
 
   .folder-card:nth-child(1) .folder-title {
@@ -1368,7 +1401,7 @@ img {
   .cta-intro h2 {
     width: 100%;
     margin: 1.422% 0 0;
-    font-size: 4.0478vw;
+    font-size: 12px;
   }
 
   .cta-choice {
