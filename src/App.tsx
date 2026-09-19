@@ -125,7 +125,7 @@ export default function App() {
           >
             <h2>
               My creative instinct<br />
-              is to <u>originate</u>, not decorate.
+              is to <u>originate</u>, not decorate<span className="statement-period">.</span>
             </h2>
             <p>
               I like the <span className="highlight-wrap">“zero to one”

@@ -1092,7 +1092,7 @@ img {
   }
 
   .portrait-wrap img {
-    top: -17.514%;
+    top: -26.5537%;
     left: -40%;
     width: 145.237%;
     max-width: none;
@@ -1108,15 +1108,15 @@ img {
     display: block;
     width: 100%;
     height: 145.17%;
-    border-radius: 2.68vw;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0) 31.452%, rgba(0, 0, 0, 0.33) 80.16%);
+    border-radius: 2.2223cqw;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0) 31.452%, rgba(0, 0, 0, 0.33) 45.362%);
     backdrop-filter: blur(0.677vw);
   }
 
   .statement-copy {
     position: absolute;
     z-index: 2;
-    top: 9.4915%;
+    top: 6.4972%;
     left: 0;
     width: 100%;
     height: auto;
@@ -1129,7 +1129,7 @@ img {
   }
 
   .statement-copy h2 {
-    width: 100%;
+    width: 96.8255cqw;
     font-size: min(11.3102cqw, 42.187px);
     line-height: 0.89;
     letter-spacing: 0.04em;
@@ -1137,10 +1137,23 @@ img {
 
   .statement-copy p {
     width: 89.206%;
-    margin: 4.764cqw 0 0;
-    font-size: min(3.8097cqw, 14.21px);
+    margin: 4.1694cqw 0 0;
+    font-size: min(3.2172cqw, 12px);
     line-height: 1;
     letter-spacing: -0.011em;
+  }
+
+  .statement-period {
+    display: none;
+  }
+
+  .highlight-stroke {
+    right: -0.12em;
+    bottom: 0.08em;
+    left: -0.12em;
+    height: 1.1407em;
+    rotate: -2.44deg;
+    border-radius: 0.273em;
   }
 
   .main-flow > .work-block {
@@ -1150,71 +1163,108 @@ img {
   .work-block {
     position: relative;
     min-height: 0;
-    aspect-ratio: 372 / 263;
+    aspect-ratio: 372 / 311;
     padding: 0;
     border-radius: 1.6642vw;
+    container-type: inline-size;
   }
 
   .work-heading-row {
     position: absolute;
     z-index: 2;
-    top: 3.93%;
-    right: 3.25%;
-    left: 2.7%;
+    top: 2.7796cqw;
+    right: 3.3056cqw;
+    left: 2.6075cqw;
   }
 
   .work-heading-row h2 {
-    font-size: 2.4206vw;
+    font-size: 2.6159cqw;
   }
 
   .work-heading-row > img {
-    width: 8.6648%;
+    width: 8.6648cqw;
     min-width: 0;
   }
 
   .folders-grid {
     position: absolute;
-    top: 7.4%;
-    left: 0;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 110px));
-    grid-template-rows: repeat(2, minmax(0, 94px));
-    align-content: start;
-    justify-content: center;
-    width: 100%;
+    inset: 0;
+    display: block;
     margin: 0;
-    gap: 3vw 6.5vw;
+  }
+
+  .folders-grid .folder-card {
+    position: absolute;
+    transform: translateX(-50%);
   }
 
   .folder-card:nth-child(1) {
-    grid-row: 1;
-    grid-column: 1;
+    top: 15.25cqw;
+    left: 26.5672cqw;
+    width: 31.2218cqw;
   }
 
   .folder-card:nth-child(2) {
-    grid-row: 2;
-    grid-column: 1;
+    top: 50.1881cqw;
+    left: 26.5672cqw;
+    width: 28.2325cqw;
   }
 
   .folder-card:nth-child(3) {
-    grid-row: 1;
-    grid-column: 2;
+    top: 14.8226cqw;
+    left: 73.1632cqw;
+    width: 36.5363cqw;
   }
 
   .folder-card:nth-child(4) {
-    grid-row: 2;
-    grid-column: 2;
+    top: 50.2392cqw;
+    left: 73.1632cqw;
+    width: 28.2325cqw;
   }
 
   .folder-art {
-    width: 13.226vw;
-    max-width: 53.172px;
+    width: 17.661cqw;
+    max-width: none;
+    height: 14.4148cqw;
+    aspect-ratio: auto;
+  }
+
+  .folder-back {
+    top: 7.4032%;
+    left: 7.5496%;
+    width: 89.1688%;
+    height: 92.5823%;
+  }
+
+  .folder-front {
+    left: 0.81%;
+    bottom: 0;
+    width: 96.1415%;
+    height: 83.9401%;
+  }
+
+  .folder-logos img {
+    top: 0;
+    width: 35.264%;
+  }
+
+  .folder-logos img:first-child {
+    left: 14.6121%;
+  }
+
+  .folder-logos img:last-child {
+    right: 9.8182%;
   }
 
   .folder-title {
-    max-width: 27.36vw;
-    margin-top: 1vw;
-    font-size: 2.7363vw;
+    width: 100%;
+    max-width: none;
+    margin-top: 3.6535cqw;
+    font-size: 3.2258cqw;
+  }
+
+  .folder-card:nth-child(1) .folder-title {
+    margin-top: 3.3218cqw;
   }
 
   .main-flow > .case-carousel {
