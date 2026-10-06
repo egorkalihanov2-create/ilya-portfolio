@@ -2,7 +2,10 @@ import { motion, useReducedMotion } from "motion/react";
 import { useCallback, useState } from "react";
 import FolderInteraction from "@/components/ui/folder-interaction";
 import { FolderPopup } from "@/components/ui/folder-popup";
-import { HorizontalParallaxGallery } from "@/components/ui/horizontal-parallax-gallery";
+import {
+  PerspectiveCarouselWithModal,
+  perspectiveProjects,
+} from "@/components/perspective-carousel";
 import { useMediaQuery } from "@/lib/use-media-query";
 
 const folders = [
@@ -188,7 +191,7 @@ export default function App() {
           </div>
         </section>
 
-        <HorizontalParallaxGallery />
+        <PerspectiveCarouselWithModal projects={perspectiveProjects} />
 
         <section className="manifesto-block">
           <p className="manifesto-top">
