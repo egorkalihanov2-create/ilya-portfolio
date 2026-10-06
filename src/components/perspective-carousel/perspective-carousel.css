@@ -35,7 +35,7 @@
   width: 100%;
   place-items: start center;
   overflow: visible;
-  color: #ededed;
+  color: #e5e5e5;
   font-family: "Object Sans", Arial, sans-serif;
   font-size: clamp(10rem, 28vw, 28rem);
   font-weight: 400;
@@ -69,11 +69,11 @@
 }
 
 .pc-accent-word__text.is-active::before {
-  animation: pc-accent-glitch-left 2.15s linear both;
+  animation: pc-accent-glitch-left 2.8s linear both;
 }
 
 .pc-accent-word__text.is-active::after {
-  animation: pc-accent-glitch-right 2.15s linear both;
+  animation: pc-accent-glitch-right 2.8s linear both;
 }
 
 @keyframes pc-accent-glitch-left {

@@ -5,6 +5,8 @@
 - Mobile implementation: `output/playwright/cases-accent-mobile.png`
 - Post-animation state: `output/playwright/cases-accent-hidden.png`
 - Glitch state: `output/playwright/cases-accent-glitch.png`
+- Direct `#cases` reload: `output/playwright/accent-direct-reload.png`
+- Re-entry state: `output/playwright/accent-reentry.png`
 - Combined comparison: `output/playwright/cases-accent-comparison.png`
 - Desktop viewport: 1010 × 667 CSS px, device scale factor 1
 - Source pixels: 1010 × 667
@@ -33,6 +35,7 @@ The 512 × 884 capture focuses on the annotated carousel state. It confirms that
 1. Earlier position used `clamp(54px, 8.5vh, 92px)` and was reported as too high.
 2. The position was changed to `clamp(110px, 16vh, 150px)` so the cards obscure the lower part of the lettering.
 3. Desktop and mobile captures confirm the requested overlap; the post-animation capture confirms complete disappearance.
+4. The trigger was delayed by 550 ms and re-armed on viewport exit so Pages reloads and repeated visits reliably show the accent.
 
 ## Findings
 
@@ -40,15 +43,16 @@ No actionable P0, P1, or P2 mismatches remain for the requested accent treatment
 
 ## Primary interactions and runtime checks
 
-- Scroll/navigation into the Cases section triggers the accent once.
-- The word remains visible for roughly 1.5 seconds and exits during a short glitch phase.
+- Scroll/navigation into the Cases section triggers the accent after a 550 ms settling delay.
+- The word remains clearly visible for roughly 1.8 seconds and exits during a short glitch phase.
+- Leaving the section and returning triggers the accent again.
 - The carousel remains interactive and on top of the accent.
 - Browser console checked: 0 errors and 0 warnings.
 
 ## Implementation checklist
 
 - [x] Object Sans Regular accent added behind cards.
-- [x] One-time in-view trigger added.
+- [x] Reliable delayed in-view trigger with re-entry replay added.
 - [x] 1–2 second hold and short glitch exit added.
 - [x] Reduced-motion fallback added.
 - [x] Desktop and mobile states verified.
