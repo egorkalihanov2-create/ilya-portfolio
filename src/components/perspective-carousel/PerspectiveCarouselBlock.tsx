@@ -1,6 +1,7 @@
 import {
   animate,
   motion,
+  useInView,
   useMotionValue,
   useReducedMotion,
 } from "motion/react";
@@ -32,6 +33,8 @@ export function PerspectiveCarouselBlock({
   const [isMobile, setIsMobile] = useState(false);
   const dragX = useMotionValue(0);
   const reduceMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  const showAccent = useInView(sectionRef, { amount: 0.25, once: true });
   const isTransitioning = useRef(false);
   const didDrag = useRef(false);
 
@@ -69,7 +72,43 @@ export function PerspectiveCarouselBlock({
   );
 
   return (
-    <section id={id} className={`pc-block ${className}`.trim()}>
+    <section
+      id={id}
+      ref={sectionRef}
+      className={`pc-block ${className}`.trim()}
+    >
+      <div className="pc-accent-word" aria-hidden="true">
+        <motion.span
+          className={`pc-accent-word__text${showAccent ? " is-active" : ""}`}
+          data-text="Cases"
+          initial={{ opacity: 0 }}
+          animate={
+            showAccent
+              ? reduceMotion
+                ? { opacity: [0, 1, 1, 0] }
+                : {
+                    opacity: [0, 1, 1, 1, 0.82, 0.28, 0.72, 0],
+                    x: [0, 0, 0, 0, -7, 8, -3, 0],
+                    skewX: [0, 0, 0, 0, -2, 3, -1, 0],
+                  }
+              : { opacity: 0 }
+          }
+          transition={
+            showAccent
+              ? reduceMotion
+                ? { duration: 2, times: [0, 0.05, 0.8, 1] }
+                : {
+                    duration: 2.15,
+                    ease: "linear",
+                    times: [0, 0.05, 0.68, 0.73, 0.77, 0.82, 0.9, 1],
+                  }
+              : { duration: 0 }
+          }
+        >
+          Cases
+        </motion.span>
+      </div>
+
       <div
         className="pc-carousel"
         tabIndex={0}

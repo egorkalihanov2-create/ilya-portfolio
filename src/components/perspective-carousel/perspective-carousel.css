@@ -12,6 +12,7 @@
   --pc-tag-background: #cfcfcf;
   --pc-accent: #d2a100;
   position: relative;
+  isolation: isolate;
   display: grid;
   width: 100%;
   min-height: min(92svh, 900px);
@@ -25,8 +26,117 @@
   font-family: var(--pc-font-family, inherit);
 }
 
+.pc-accent-word {
+  position: absolute;
+  top: clamp(110px, 16vh, 150px);
+  left: 0;
+  z-index: 0;
+  display: grid;
+  width: 100%;
+  place-items: start center;
+  overflow: visible;
+  color: #ededed;
+  font-family: "Object Sans", Arial, sans-serif;
+  font-size: clamp(10rem, 28vw, 28rem);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 0.78;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.pc-accent-word__text {
+  position: relative;
+  display: block;
+  will-change: opacity, transform;
+}
+
+.pc-accent-word__text::before,
+.pc-accent-word__text::after {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  content: attr(data-text);
+  pointer-events: none;
+}
+
+.pc-accent-word__text::before {
+  color: #8cecff;
+}
+
+.pc-accent-word__text::after {
+  color: #ff8ba7;
+}
+
+.pc-accent-word__text.is-active::before {
+  animation: pc-accent-glitch-left 2.15s linear both;
+}
+
+.pc-accent-word__text.is-active::after {
+  animation: pc-accent-glitch-right 2.15s linear both;
+}
+
+@keyframes pc-accent-glitch-left {
+  0%,
+  71%,
+  100% {
+    opacity: 0;
+    transform: translate(0);
+  }
+
+  74% {
+    opacity: 0.28;
+    clip-path: inset(16% 0 58% 0);
+    transform: translate(-8px, -1px);
+  }
+
+  78% {
+    opacity: 0;
+  }
+
+  82% {
+    opacity: 0.22;
+    clip-path: inset(62% 0 12% 0);
+    transform: translate(6px, 2px);
+  }
+
+  88% {
+    opacity: 0;
+  }
+}
+
+@keyframes pc-accent-glitch-right {
+  0%,
+  73%,
+  100% {
+    opacity: 0;
+    transform: translate(0);
+  }
+
+  76% {
+    opacity: 0.22;
+    clip-path: inset(46% 0 29% 0);
+    transform: translate(7px, 1px);
+  }
+
+  81% {
+    opacity: 0;
+  }
+
+  86% {
+    opacity: 0.2;
+    clip-path: inset(8% 0 70% 0);
+    transform: translate(-5px, -2px);
+  }
+
+  91% {
+    opacity: 0;
+  }
+}
+
 .pc-carousel {
   position: relative;
+  z-index: 1;
   width: 100%;
   height: min(68svh, 660px);
   min-height: 470px;

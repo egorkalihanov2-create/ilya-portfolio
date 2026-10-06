@@ -1,61 +1,60 @@
-# Mobile Design QA
+# Design QA — animated Cases accent
 
-## Evidence
-
-- Source visual truth: Figma file `ec3iV5MVkpyzwRXnxoJO0o`, node `1:2` (`402 × 2555` px).
-- Source screenshot: `qa/figma-mobile-source.png`.
-- Rendered implementation: `http://127.0.0.1:5174/`, captured in the Codex in-app browser at a `402 × 850` CSS px viewport with a full-page capture.
-- Density normalization: source and implementation were inspected at a 402 CSS-pixel width (1:1 design width); no device bezel or browser chrome was included.
-- State: page loaded at `#main`, entrance animations settled. Case-stack entrance, navigation anchors, and responsive desktop preservation were checked separately.
+- Source visual truth: `C:\Users\77FE78~1\AppData\Local\Temp\codex-clipboard-fb291954-b2bc-489d-84db-1fe0412a7791.png`
+- Desktop implementation: `output/playwright/cases-accent-visible.png`
+- Mobile implementation: `output/playwright/cases-accent-mobile.png`
+- Post-animation state: `output/playwright/cases-accent-hidden.png`
+- Glitch state: `output/playwright/cases-accent-glitch.png`
+- Combined comparison: `output/playwright/cases-accent-comparison.png`
+- Desktop viewport: 1010 × 667 CSS px, device scale factor 1
+- Source pixels: 1010 × 667
+- Desktop implementation pixels: 1010 × 667
+- Mobile viewport and implementation pixels: 512 × 884, device scale factor 1
+- State: the Cases section immediately after entering the viewport, plus disappearance and mobile responsive states
 
 ## Full-view comparison evidence
 
-The rendered page uses the same eight-section order and measured widths/heights as the Figma frame:
+The source and desktop implementation were placed side by side in `cases-accent-comparison.png`. The reference is used for the accent-word hierarchy and its placement behind the carousel; the portfolio intentionally preserves its existing carousel dimensions, project order, arrows, typography, and imagery. The final accent is moved lower than the source at the user's request so that a larger portion of the word is occluded by the cards.
 
-| Section | Rendered size |
-| --- | --- |
-| Hero | 402 × 696 |
-| Intro | 384 × 80 |
-| Statement | 373 × 354 |
-| Work folders | 372 × 263 |
-| Cases | 384 × 521 |
-| Manifesto | 372 × 92 |
-| CTA | 384 × 222 |
-| Contacts | 306.6 × 7.8 |
+## Focused region comparison evidence
 
-The source and browser capture were both opened and inspected. A temporary side-by-side browser page could not be created because the browser blocked a `data:` URL; comparison was therefore performed against the same-width source and implementation captures already open in the session.
+The 512 × 884 capture focuses on the annotated carousel state. It confirms that the upper portion of `Cases` remains legible while its lower portion is hidden behind the centered project card. A separate post-animation capture confirms that the accent leaves no residual pixels or layout shift after disappearing.
 
-## Focused region evidence
+## Required fidelity surfaces
 
-- Typography: Object Sans Regular/Heavy, Druk Cyr Medium, and Vasek Italic load from the project assets. The statement display type, intro copy, compact navigation, and footer match the measured Figma sizes and line heights.
-- Spacing/layout: section sizes, 43 px rhythm (10.6965vw at 402 px), two-column folder grid, and three-card diagonal case layout match the source measurements.
-- Colors/tokens: white canvas, translucent charcoal header, orange `#ffb900`, light folder surface, dark statement gradient, and dark manifesto surface match the source palette.
-- Image quality: the exact Figma hero and statement raster assets are used at mobile width; existing campaign, logo, hand, head, and pen assets are retained without CSS or SVG substitutes.
-- Copy/content: all visible labels and portfolio copy match the supplied design/content.
-
-## Interaction and accessibility checks
-
-- Header remains in normal page flow/absolute placement and scrolls away rather than sticking.
-- Intro fades in; statement reveals photo, shade, then copy/highlight; case cards spread from a vertically offset stack; CTA reuses the paired desktop motion.
-- `prefers-reduced-motion` disables entrance/infinite movement while preserving content.
-- Case cards remain buttons and swipeable; folder cards and CTA links retain semantic controls and focus states.
-- Browser console: no warnings or errors.
-- Desktop regression check: 1278 × 912 viewport; statement grid, folders, carousel, manifesto, and CTA remain intact.
-
-## Findings
-
-- No actionable P0/P1/P2 mismatch remains in the checked mobile or desktop states.
-- P3: browser raster previews soften small text slightly compared with the Figma canvas, but the production font files, sizes, and source assets are correct.
+- Fonts and typography: Object Sans Regular is loaded from the portfolio's existing font face and rendered at weight 400 with responsive display sizing and tight tracking.
+- Spacing and layout rhythm: the accent is centered within the existing section, lowered to `clamp(110px, 16vh, 150px)`, and placed behind the cards without changing carousel geometry.
+- Colors and visual tokens: the base accent uses `#ededed`; cyan and pink channel offsets appear only during the short glitch phase.
+- Image quality and asset fidelity: all existing case images remain unchanged, uncropped beyond the established carousel behavior, and stay above the accent layer.
+- Copy and content: the accent copy is exactly `Cases`; it is decorative and hidden from assistive technology.
 
 ## Comparison history
 
-- Initial implementation: desktop DOM order changed when the mobile statement layers were introduced.
-- Fix: desktop grid columns were explicitly assigned and the mobile shade was hidden outside the mobile breakpoint.
-- Post-fix evidence: desktop 1278 × 912 browser capture shows the original copy-left/portrait-right composition restored; mobile captures retain the layered photo treatment.
-- First visual comparison: the source hero hides the raster asset's embedded “This is” label beneath the translucent navigation, while a few pixels remained visible in the initial browser capture (P2 above-the-fold mismatch).
-- Fix: a proportional white crop mask now covers only the label's residual pixels between the navigation and orange image surface.
-- Post-fix evidence: the 402 px browser capture now begins with the compact navigation followed by a clean white gutter and the orange hero surface, matching the Figma source.
+1. Earlier position used `clamp(54px, 8.5vh, 92px)` and was reported as too high.
+2. The position was changed to `clamp(110px, 16vh, 150px)` so the cards obscure the lower part of the lettering.
+3. Desktop and mobile captures confirm the requested overlap; the post-animation capture confirms complete disappearance.
 
-## Final result
+## Findings
+
+No actionable P0, P1, or P2 mismatches remain for the requested accent treatment. The different side-card project shown in the reference is intentional existing carousel state, not part of this change.
+
+## Primary interactions and runtime checks
+
+- Scroll/navigation into the Cases section triggers the accent once.
+- The word remains visible for roughly 1.5 seconds and exits during a short glitch phase.
+- The carousel remains interactive and on top of the accent.
+- Browser console checked: 0 errors and 0 warnings.
+
+## Implementation checklist
+
+- [x] Object Sans Regular accent added behind cards.
+- [x] One-time in-view trigger added.
+- [x] 1–2 second hold and short glitch exit added.
+- [x] Reduced-motion fallback added.
+- [x] Desktop and mobile states verified.
+
+## Follow-up polish
+
+No P3 follow-up is required for this iteration.
 
 final result: passed
