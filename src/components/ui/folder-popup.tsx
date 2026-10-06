@@ -2,19 +2,20 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect } from "react";
 
 type FolderPopupProps = {
-  open: boolean;
+  folder: {
+    id: string;
+    title: string;
+    projects: readonly {
+      name: string;
+      logo: string;
+      logoClass?: string;
+    }[];
+  } | null;
   onClose: () => void;
 };
 
-const brands = [
-  ["Alfa Bank", "./assets/figma/logo-alfa.png"],
-  ["Pepsico", "./assets/figma/logo-pepsico.png"],
-  ["Spotify", "./assets/figma/logo-spotify.png"],
-  ["Yandex Market", "./assets/figma/logo-yandex.png"],
-  ["Yota Mobile", "./assets/figma/logo-yota.png"],
-];
-
-export function FolderPopup({ open, onClose }: FolderPopupProps) {
+export function FolderPopup({ folder, onClose }: FolderPopupProps) {
+  const open = Boolean(folder);
   useEffect(() => {
     if (!open) return;
     const onKeyDown = (event: KeyboardEvent) => {
@@ -42,7 +43,7 @@ export function FolderPopup({ open, onClose }: FolderPopupProps) {
           }}
         >
           <motion.section
-            className="folder-popup"
+            className={`folder-popup folder-popup-${folder?.id ?? "closed"}`}
             role="dialog"
             aria-modal="true"
             aria-labelledby="folder-popup-title"
@@ -52,23 +53,25 @@ export function FolderPopup({ open, onClose }: FolderPopupProps) {
             transition={{ type: "spring", stiffness: 240, damping: 25 }}
           >
             <header className="popup-header">
-              <h2 id="folder-popup-title">Global &amp; regional brands</h2>
+              <h2 id="folder-popup-title">{folder?.title}</h2>
               <button type="button" className="popup-back" onClick={onClose}>
                 <img src="./assets/figma/arrow-back.svg" alt="" />
                 Back
               </button>
             </header>
             <div className="brand-grid">
-              {brands.map(([name, logo], index) => (
+              {folder?.projects.map((project, index) => (
                 <motion.div
                   className="brand-item"
-                  key={name}
+                  key={project.name}
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.08 + index * 0.05 }}
                 >
-                  <img src={logo} alt="" />
-                  <span>{name}</span>
+                  <span className={`project-logo ${project.logoClass ?? ""}`}>
+                    <img src={project.logo} alt="" />
+                  </span>
+                  <span>{project.name}</span>
                 </motion.div>
               ))}
             </div>

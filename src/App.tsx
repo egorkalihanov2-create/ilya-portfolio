@@ -1,47 +1,78 @@
 import { motion, useReducedMotion } from "motion/react";
 import { useCallback, useState } from "react";
-import { CaseCarousel } from "@/components/ui/case-carousel";
 import FolderInteraction from "@/components/ui/folder-interaction";
 import { FolderPopup } from "@/components/ui/folder-popup";
+import { HorizontalParallaxGallery } from "@/components/ui/horizontal-parallax-gallery";
 import { useMediaQuery } from "@/lib/use-media-query";
 
 const folders = [
   {
+    id: "global",
     title: "Global & regional brands",
     logos: [
-      "./assets/figma/logo-alfa.png",
-      "./assets/figma/logo-pepsico.png",
+      "./assets/figma/projects/alfa.png",
+      "./assets/figma/projects/pepsico.png",
     ],
-    featured: true,
+    projects: [
+      { name: "Pepsico", logo: "./assets/figma/projects/pepsico.png" },
+      { name: "Alfa Bank", logo: "./assets/figma/projects/alfa.png" },
+      { name: "Beeline", logo: "./assets/figma/projects/beeline.png" },
+      { name: "Level Group", logo: "./assets/figma/projects/level-group.png" },
+      { name: "Megafon", logo: "./assets/figma/projects/megafon.png", logoClass: "logo-megafon" },
+      { name: "Yota Mobile", logo: "./assets/figma/projects/yota.png" },
+      { name: "Demix", logo: "./assets/figma/projects/demix.png", logoClass: "logo-demix" },
+    ],
   },
   {
+    id: "tech",
     title: "Tech & products",
     logos: [
-      "./assets/figma/logo-tech.png",
-      "./assets/figma/logo-yandex.png",
+      "./assets/figma/projects/citydrive.png",
+      "./assets/figma/projects/yandex-market.png",
+    ],
+    projects: [
+      { name: "Yandex Market", logo: "./assets/figma/projects/yandex-market.png" },
+      { name: "Yandex Go", logo: "./assets/figma/projects/yandex-go.svg" },
+      { name: "Citydrive", logo: "./assets/figma/projects/citydrive.png" },
+      { name: "Green Cars Compare", logo: "./assets/figma/projects/green-cars.svg" },
     ],
   },
   {
+    id: "agencies",
     title: "Agencies & creative companies",
     logos: [
-      "./assets/figma/logo-spotify.png",
-      "./assets/figma/logo-yandex.png",
+      "./assets/figma/projects/setters.svg",
+      "./assets/figma/projects/winx.png",
+    ],
+    projects: [
+      { name: "SETTERS", logo: "./assets/figma/projects/setters.svg", logoClass: "logo-setters" },
+      { name: "Winx", logo: "./assets/figma/projects/winx.png", logoClass: "logo-winx" },
+      { name: "Skolkovo", logo: "./assets/figma/projects/skolkovo.svg" },
+      { name: "Beyond Tailor", logo: "./assets/figma/projects/beyond-tailor.png", logoClass: "logo-beyond" },
     ],
   },
   {
+    id: "fmcg",
     title: "FMCG",
     logos: [
-      "./assets/figma/logo-spotify.png",
-      "./assets/figma/logo-yandex.png",
+      "./assets/figma/projects/kozel.png",
+      "./assets/figma/projects/prostokvashino.png",
+    ],
+    projects: [
+      { name: "Kozel", logo: "./assets/figma/projects/kozel.png" },
+      { name: "Green Baboon", logo: "./assets/figma/projects/green-baboon.png", logoClass: "logo-green-baboon" },
+      { name: "Prostokvashino", logo: "./assets/figma/projects/prostokvashino.png" },
     ],
   },
-];
+] as const;
+
+type FolderData = (typeof folders)[number];
 
 export default function App() {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [selectedFolder, setSelectedFolder] = useState<FolderData | null>(null);
   const shouldReduceMotion = useReducedMotion();
   const isMobile = useMediaQuery("(max-width: 480px)");
-  const closePopup = useCallback(() => setIsPopupOpen(false), []);
+  const closePopup = useCallback(() => setSelectedFolder(null), []);
 
   return (
     <div className="site-shell">
@@ -74,7 +105,7 @@ export default function App() {
           }}
         >
           <p>
-            Hey, I’m Ilya — a Conceptual Creative who’s spent<br className="desktop-break" />
+            Hey, I’m Ilya — a Conceptual Creative from Minsk who’s spent<br className="desktop-break" />
             the last 7 years between global ad agencies, tech teams and brands,
             turning what companies need<br className="desktop-break" />
             to say into ideas people might actually care about
@@ -149,22 +180,41 @@ export default function App() {
             {folders.map((folder) => (
               <FolderInteraction
                 key={folder.title}
-                {...folder}
-                onOpen={() => setIsPopupOpen(true)}
+                title={folder.title}
+                logos={[...folder.logos]}
+                onOpen={() => setSelectedFolder(folder)}
               />
             ))}
           </div>
         </section>
 
-        <CaseCarousel />
+        <HorizontalParallaxGallery />
 
         <section className="manifesto-block">
           <p className="manifesto-top">
-            WORLD-CHANGERS <span className="brand-dot"><img src="./assets/figma/logo-small.png" alt="" /></span><br className="manifesto-mobile-break" /> DO NOT WAIT
-            <span className="heinz-pill"><img src="./assets/figma/heinz.png" alt="Heinz" /></span> FOR PERMISSION
+            WORLD-CHANGERS <motion.span
+              className="brand-dot manifesto-action"
+              initial={shouldReduceMotion ? false : { scale: 1 }}
+              whileInView={shouldReduceMotion ? undefined : { scale: [1, 1.36, 0.94, 1] }}
+              viewport={{ once: true, amount: 0.9 }}
+              transition={{ delay: 0.05, duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
+            ><img src="./assets/figma/logo-small.png" alt="" /></motion.span><br className="manifesto-mobile-break" /> DO NOT WAIT
+            <motion.span
+              className="heinz-pill manifesto-action"
+              initial={shouldReduceMotion ? false : { scale: 1 }}
+              whileInView={shouldReduceMotion ? undefined : { scale: [1, 1.3, 0.96, 1] }}
+              viewport={{ once: true, amount: 0.9 }}
+              transition={{ delay: 0.2, duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
+            ><img src="./assets/figma/heinz.png" alt="Heinz" /></motion.span> FOR PERMISSION
           </p>
           <p className="manifesto-bottom">
-            And the festival-winning <span className="airbnb-pill"><img src="./assets/figma/airbnb.png" alt="Airbnb" /></span>
+            And the festival-winning <motion.span
+              className="airbnb-pill manifesto-action"
+              initial={shouldReduceMotion ? false : { scale: 1 }}
+              whileInView={shouldReduceMotion ? undefined : { scale: [1, 1.32, 0.95, 1] }}
+              viewport={{ once: true, amount: 0.9 }}
+              transition={{ delay: 0.35, duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
+            ><img src="./assets/figma/airbnb.png" alt="Airbnb" /></motion.span>
             work is proof of <span className="manifesto-ending">
               that.
               <motion.span
@@ -250,12 +300,11 @@ export default function App() {
 
         <footer id="contacts" className="contacts-block">
           <a href="https://t.me/wilyam_the_originator">tg: @wilyam_the_originator</a>
-          <a href="tel:+79319992201">phone: +7 931 999 2201</a>
-          <a href="mailto:napishi">gmail: napishi</a>
+          <a href="mailto:novik.brand@gmail.com">gmail: novik.brand@gmail.com</a>
         </footer>
       </main>
 
-      <FolderPopup open={isPopupOpen} onClose={closePopup} />
+      <FolderPopup folder={selectedFolder} onClose={closePopup} />
     </div>
   );
 }

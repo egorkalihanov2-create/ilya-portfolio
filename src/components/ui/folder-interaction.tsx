@@ -1,19 +1,16 @@
 import { motion } from "motion/react";
 import { useState } from "react";
-import { cn } from "@/lib/utils";
 
 type FolderInteractionProps = {
   title: string;
   logos: string[];
   onOpen: () => void;
-  featured?: boolean;
 };
 
 export function FolderInteraction({
   title,
   logos,
   onOpen,
-  featured = false,
 }: FolderInteractionProps) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -31,11 +28,7 @@ export function FolderInteraction({
       <span className="folder-art" aria-hidden="true">
         <img
           className="folder-back"
-          src={
-            featured
-              ? "./assets/figma/folder-back-featured.svg"
-              : "./assets/figma/folder-back.svg"
-          }
+          src="./assets/figma/folder-back.svg"
           alt=""
         />
 
@@ -55,12 +48,8 @@ export function FolderInteraction({
         </span>
 
         <motion.img
-          className={cn("folder-front", featured && "folder-front-featured")}
-          src={
-            featured
-              ? "./assets/figma/folder-front-featured.svg"
-              : "./assets/figma/folder-front.svg"
-          }
+          className="folder-front"
+          src="./assets/figma/folder-front.svg"
           alt=""
           animate={{
             y: isHovered ? 3 : 0,
