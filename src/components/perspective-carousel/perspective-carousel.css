@@ -17,10 +17,10 @@
   width: 100%;
   min-height: min(92svh, 900px);
   place-items: center;
-  overflow: hidden;
+  overflow: visible;
   padding: 48px 0;
   border: 0;
-  border-radius: var(--radius, 0);
+  border-radius: 0;
   background: var(--pc-background);
   color: var(--pc-text);
   font-family: var(--pc-font-family, inherit);
@@ -28,8 +28,8 @@
 
 .pc-accent-word {
   position: absolute;
-  top: clamp(110px, 16vh, 150px);
-  left: 0;
+  top: clamp(13px, calc(376px - 25.2vw), 118px);
+  left: -2.2vw;
   z-index: 0;
   display: grid;
   width: 100%;
@@ -37,10 +37,10 @@
   overflow: visible;
   color: #e5e5e5;
   font-family: "Object Sans", Arial, sans-serif;
-  font-size: clamp(10rem, 28vw, 28rem);
+  font-size: clamp(10rem, 27.5vw, 33rem);
   font-weight: 400;
-  letter-spacing: -0.055em;
-  line-height: 0.78;
+  letter-spacing: -0.011em;
+  line-height: 1;
   pointer-events: none;
   white-space: nowrap;
 }
@@ -140,10 +140,11 @@
   width: 100%;
   height: min(68svh, 660px);
   min-height: 470px;
-  overflow: hidden;
+  overflow: visible;
   perspective: 1450px;
   perspective-origin: center 47%;
   touch-action: pan-y;
+  transform: translateY(clamp(0px, calc(21.6vw - 221px), 100px));
 }
 
 .pc-carousel:focus-visible,
@@ -415,6 +416,12 @@
     height: 57svh;
     min-height: 430px;
     perspective: 1000px;
+  }
+
+  .pc-accent-word {
+    top: clamp(100px, 15svh, 138px);
+    left: 0;
+    font-size: clamp(6.4rem, 32vw, 12rem);
   }
 
   .pc-carousel__card-position {

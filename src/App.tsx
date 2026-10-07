@@ -195,29 +195,41 @@ export default function App() {
 
         <section className="manifesto-block">
           <p className="manifesto-top">
-            WORLD-CHANGERS <motion.span
+            WORLD-CHANGERS <motion.a
               className="brand-dot manifesto-action"
+              href="https://youtu.be/JxxppIriCwo"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open project video"
               initial={shouldReduceMotion ? false : { scale: 1 }}
               whileInView={shouldReduceMotion ? undefined : { scale: [1, 1.36, 0.94, 1] }}
               viewport={{ once: true, amount: 0.9 }}
               transition={{ delay: 0.05, duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
-            ><img src="./assets/figma/logo-small.png" alt="" /></motion.span><br className="manifesto-mobile-break" /> DO NOT WAIT
-            <motion.span
+            ><img src="./assets/figma/logo-small.png" alt="" /></motion.a><br className="manifesto-mobile-break" /> DO NOT WAIT
+            <motion.a
               className="heinz-pill manifesto-action"
+              href="https://youtu.be/WG3IXn9B1lA"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open Heinz project video"
               initial={shouldReduceMotion ? false : { scale: 1 }}
               whileInView={shouldReduceMotion ? undefined : { scale: [1, 1.3, 0.96, 1] }}
               viewport={{ once: true, amount: 0.9 }}
               transition={{ delay: 0.2, duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
-            ><img src="./assets/figma/heinz.png" alt="Heinz" /></motion.span> FOR PERMISSION
+            ><img src="./assets/figma/heinz.png" alt="Heinz" /></motion.a> FOR PERMISSION
           </p>
           <p className="manifesto-bottom">
-            And the festival-winning <motion.span
+            And the festival-winning <motion.a
               className="airbnb-pill manifesto-action"
+              href="https://docs.google.com/presentation/d/11pPwlESlAM9gZ4YUOvBcD7anuS9MlzcKkCkUtEQGRSk/edit"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open Airbnb project presentation"
               initial={shouldReduceMotion ? false : { scale: 1 }}
               whileInView={shouldReduceMotion ? undefined : { scale: [1, 1.32, 0.95, 1] }}
               viewport={{ once: true, amount: 0.9 }}
               transition={{ delay: 0.35, duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
-            ><img src="./assets/figma/airbnb.png" alt="Airbnb" /></motion.span>
+            ><img src="./assets/figma/airbnb.png" alt="Airbnb" /></motion.a>
             work is proof of <span className="manifesto-ending">
               that.
               <motion.span

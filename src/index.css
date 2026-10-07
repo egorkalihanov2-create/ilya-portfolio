@@ -359,8 +359,16 @@ img {
 }
 
 .manifesto-action {
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
   transform-origin: center;
   will-change: transform;
+}
+
+.manifesto-action:focus-visible {
+  outline: 2px solid #ffb900;
+  outline-offset: 3px;
 }
 
 .folder-logos img:first-child {
@@ -371,9 +379,20 @@ img {
   right: 2%;
 }
 
+.folder-card:nth-child(2) .folder-logos img:first-child,
 .folder-card:nth-child(4) .folder-logos img:first-child {
   padding: 4%;
   background: #ffffff;
+}
+
+.folder-card:nth-child(3) .folder-logos img:first-child {
+  top: 2%;
+  width: 55%;
+  height: 34%;
+  padding: 6% 4%;
+  border-radius: 4px;
+  background: #ffffff;
+  object-fit: contain;
 }
 
 .folder-title {
