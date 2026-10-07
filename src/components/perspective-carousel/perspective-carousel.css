@@ -36,6 +36,7 @@
   perspective: 1450px;
   perspective-origin: center 47%;
   touch-action: pan-y;
+  transform: translateY(clamp(0px, calc(21.6vw - 221px), 100px));
 }
 
 .pc-carousel:focus-visible,
