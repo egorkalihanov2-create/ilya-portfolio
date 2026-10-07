@@ -28,7 +28,7 @@
 
 .pc-accent-word {
   position: absolute;
-  top: clamp(13px, calc(376px - 25.2vw), 118px);
+  top: clamp(-48px, calc(318px - 25.2vw), 118px);
   left: -2.2vw;
   z-index: 0;
   display: grid;
@@ -144,7 +144,6 @@
   perspective: 1450px;
   perspective-origin: center 47%;
   touch-action: pan-y;
-  transform: translateY(clamp(0px, calc(21.6vw - 221px), 100px));
 }
 
 .pc-carousel:focus-visible,
@@ -420,7 +419,7 @@
 
   .pc-accent-word {
     top: clamp(100px, 15svh, 138px);
-    left: 0;
+    left: -4vw;
     font-size: clamp(6.4rem, 32vw, 12rem);
   }
 
