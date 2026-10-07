@@ -165,7 +165,14 @@ export function PerspectiveCarouselBlock({
                   aria-label={`Open project: ${project.title}`}
                 >
                   <span className="pc-card__media">
-                    <img src={project.image} alt="" draggable={false} />
+                    <img
+                      src={project.coverImage}
+                      alt=""
+                      draggable={false}
+                      loading={isCenter ? "eager" : "lazy"}
+                      decoding="async"
+                      fetchPriority={isCenter ? "high" : "low"}
+                    />
                   </span>
                   <span className="pc-card__footer">
                     <span className="pc-card__title">{project.title}</span>

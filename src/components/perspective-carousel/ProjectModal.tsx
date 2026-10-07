@@ -58,8 +58,16 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               <span />
               <span />
             </button>
-            <div className="pc-modal__media">
-              <img src={project.image} alt="" draggable={false} />
+            <div
+              className="pc-modal__media"
+              style={{ backgroundImage: `url("${project.coverImage}")` }}
+            >
+              <img
+                src={project.image}
+                alt=""
+                draggable={false}
+                decoding="async"
+              />
               <div className="pc-modal__play" aria-hidden="true">
                 <span />
               </div>

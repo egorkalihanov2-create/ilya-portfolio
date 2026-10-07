@@ -198,6 +198,8 @@
   aspect-ratio: 1322 / 745;
   overflow: hidden;
   border-radius: 13px 13px 0 0;
+  background-position: center;
+  background-size: cover;
 }
 
 .pc-modal__media img {
