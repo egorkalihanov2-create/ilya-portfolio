@@ -26,114 +26,6 @@
   font-family: var(--pc-font-family, inherit);
 }
 
-.pc-accent-word {
-  position: absolute;
-  top: clamp(-48px, calc(318px - 25.2vw), 118px);
-  left: -2.2vw;
-  z-index: 0;
-  display: grid;
-  width: 100%;
-  place-items: start center;
-  overflow: visible;
-  color: #e5e5e5;
-  font-family: "Object Sans", Arial, sans-serif;
-  font-size: clamp(10rem, 27.5vw, 33rem);
-  font-weight: 400;
-  letter-spacing: -0.011em;
-  line-height: 1;
-  pointer-events: none;
-  white-space: nowrap;
-}
-
-.pc-accent-word__text {
-  position: relative;
-  display: block;
-  will-change: opacity, transform;
-}
-
-.pc-accent-word__text::before,
-.pc-accent-word__text::after {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  content: attr(data-text);
-  pointer-events: none;
-}
-
-.pc-accent-word__text::before {
-  color: #8cecff;
-}
-
-.pc-accent-word__text::after {
-  color: #ff8ba7;
-}
-
-.pc-accent-word__text.is-active::before {
-  animation: pc-accent-glitch-left 2.8s linear both;
-}
-
-.pc-accent-word__text.is-active::after {
-  animation: pc-accent-glitch-right 2.8s linear both;
-}
-
-@keyframes pc-accent-glitch-left {
-  0%,
-  71%,
-  100% {
-    opacity: 0;
-    transform: translate(0);
-  }
-
-  74% {
-    opacity: 0.28;
-    clip-path: inset(16% 0 58% 0);
-    transform: translate(-8px, -1px);
-  }
-
-  78% {
-    opacity: 0;
-  }
-
-  82% {
-    opacity: 0.22;
-    clip-path: inset(62% 0 12% 0);
-    transform: translate(6px, 2px);
-  }
-
-  88% {
-    opacity: 0;
-  }
-}
-
-@keyframes pc-accent-glitch-right {
-  0%,
-  73%,
-  100% {
-    opacity: 0;
-    transform: translate(0);
-  }
-
-  76% {
-    opacity: 0.22;
-    clip-path: inset(46% 0 29% 0);
-    transform: translate(7px, 1px);
-  }
-
-  81% {
-    opacity: 0;
-  }
-
-  86% {
-    opacity: 0.2;
-    clip-path: inset(8% 0 70% 0);
-    transform: translate(-5px, -2px);
-  }
-
-  91% {
-    opacity: 0;
-  }
-}
-
 .pc-carousel {
   position: relative;
   z-index: 1;
@@ -415,12 +307,6 @@
     height: 57svh;
     min-height: 430px;
     perspective: 1000px;
-  }
-
-  .pc-accent-word {
-    top: clamp(100px, 15svh, 138px);
-    left: -4vw;
-    font-size: clamp(6.4rem, 32vw, 12rem);
   }
 
   .pc-carousel__card-position {

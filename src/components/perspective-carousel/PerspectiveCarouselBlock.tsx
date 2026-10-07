@@ -1,7 +1,6 @@
 import {
   animate,
   motion,
-  useInView,
   useMotionValue,
   useReducedMotion,
 } from "motion/react";
@@ -31,13 +30,8 @@ export function PerspectiveCarouselBlock({
 }: PerspectiveCarouselBlockProps) {
   const [order, setOrder] = useState(projects);
   const [isMobile, setIsMobile] = useState(false);
-  const [accentRun, setAccentRun] = useState(0);
-  const [isAccentPlaying, setIsAccentPlaying] = useState(false);
   const dragX = useMotionValue(0);
   const reduceMotion = useReducedMotion();
-  const sectionRef = useRef<HTMLElement>(null);
-  const sectionInView = useInView(sectionRef, { amount: 0.35 });
-  const accentArmed = useRef(true);
   const isTransitioning = useRef(false);
   const didDrag = useRef(false);
 
@@ -52,23 +46,6 @@ export function PerspectiveCarouselBlock({
     query.addEventListener("change", sync);
     return () => query.removeEventListener("change", sync);
   }, []);
-
-  useEffect(() => {
-    if (!sectionInView) {
-      accentArmed.current = true;
-      return;
-    }
-
-    if (!accentArmed.current) return;
-
-    const timer = window.setTimeout(() => {
-      accentArmed.current = false;
-      setAccentRun((current) => current + 1);
-      setIsAccentPlaying(true);
-    }, 550);
-
-    return () => window.clearTimeout(timer);
-  }, [sectionInView]);
 
   const shift = useCallback(
     (direction: -1 | 1) => {
@@ -94,41 +71,8 @@ export function PerspectiveCarouselBlock({
   return (
     <section
       id={id}
-      ref={sectionRef}
       className={`pc-block ${className}`.trim()}
     >
-      <div className="pc-accent-word" aria-hidden="true">
-        {isAccentPlaying ? (
-          <motion.span
-            key={accentRun}
-            className="pc-accent-word__text is-active"
-            data-text="Cases"
-            initial={{ opacity: 0 }}
-            animate={
-              reduceMotion
-                ? { opacity: [0, 1, 1, 0] }
-                : {
-                    opacity: [0, 1, 1, 1, 0.82, 0.28, 0.72, 0],
-                    x: [0, 0, 0, 0, -7, 8, -3, 0],
-                    skewX: [0, 0, 0, 0, -2, 3, -1, 0],
-                  }
-            }
-            transition={
-              reduceMotion
-                ? { duration: 2.6, times: [0, 0.04, 0.8, 1] }
-                : {
-                    duration: 2.8,
-                    ease: "linear",
-                    times: [0, 0.04, 0.68, 0.75, 0.8, 0.85, 0.92, 1],
-                  }
-            }
-            onAnimationComplete={() => setIsAccentPlaying(false)}
-          >
-            Cases
-          </motion.span>
-        ) : null}
-      </div>
-
       <div
         className="pc-carousel"
         tabIndex={0}
