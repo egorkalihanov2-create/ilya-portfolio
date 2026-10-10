@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
 import type { CaseCarouselBlock, CaseMedia, PerspectiveProject } from "./types";
+import { VideoPlayer } from "./VideoPlayer";
 
 function CaseMediaView({ item }: { item: CaseMedia }) {
   return (
     <figure className="pc-case-media">
       {item.type === "video" ? (
-        <video
+        <VideoPlayer
           src={item.src}
           poster={item.poster}
           autoPlay={item.autoplay}

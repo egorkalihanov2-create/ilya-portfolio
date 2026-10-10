@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   CaseProjectContent,
+  VideoPlayer,
   resolveCaseAsset,
   resolveProjectAssets,
 } from "@/components/perspective-carousel";
@@ -149,12 +150,12 @@ function ProjectPreview({ project }: { project: PerspectiveProject }) {
     <article className="admin-case-preview">
       <div className="admin-case-preview__media">
         {videoStarted && resolved.previewVideo ? (
-          <video src={resolved.previewVideo.src} poster={resolved.image} autoPlay controls playsInline preload="metadata" />
+          <VideoPlayer src={resolved.previewVideo.src} poster={resolved.image} autoPlay controls playsInline preload="metadata" />
         ) : (
           <img src={resolved.image} alt="" />
         )}
         {!videoStarted && resolved.previewVideo ? (
-          <button type="button" aria-label="Включить видео" onClick={() => setVideoStarted(true)}>
+          <button className="admin-case-preview__play" type="button" aria-label="Включить видео" onClick={() => setVideoStarted(true)}>
             <span />
           </button>
         ) : null}

@@ -1,6 +1,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 import { CaseProjectContent } from "./CaseProjectContent";
+import { VideoPlayer } from "./VideoPlayer";
 import type { PerspectiveProject } from "./types";
 
 interface ProjectModalProps {
@@ -69,7 +70,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               style={{ backgroundImage: `url("${project.coverImage}")` }}
             >
               {videoStarted && project.previewVideo ? (
-                <video
+                <VideoPlayer
                   className="pc-modal__video"
                   src={project.previewVideo.src}
                   poster={project.previewVideo.poster ?? project.image}
