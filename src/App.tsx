@@ -1,9 +1,10 @@
 import { motion, useReducedMotion } from "motion/react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import FolderInteraction from "@/components/ui/folder-interaction";
 import { FolderPopup } from "@/components/ui/folder-popup";
 import {
   PerspectiveCarouselWithModal,
+  loadCaseCatalog,
   perspectiveProjects,
 } from "@/components/perspective-carousel";
 import { useMediaQuery } from "@/lib/use-media-query";
@@ -73,9 +74,34 @@ type FolderData = (typeof folders)[number];
 
 export default function App() {
   const [selectedFolder, setSelectedFolder] = useState<FolderData | null>(null);
+  const [caseProjects, setCaseProjects] = useState(perspectiveProjects);
   const shouldReduceMotion = useReducedMotion();
   const isMobile = useMediaQuery("(max-width: 480px)");
   const closePopup = useCallback(() => setSelectedFolder(null), []);
+
+  useEffect(() => {
+    let active = true;
+    const load = () => {
+      void loadCaseCatalog()
+        .then((catalog) => {
+          if (active) setCaseProjects(catalog.projects);
+        })
+        .catch(() => {
+          // Keep the bundled fallback if the editable catalog is unavailable.
+        });
+    };
+    const channel = "BroadcastChannel" in window
+      ? new BroadcastChannel("ilya-case-catalog")
+      : null;
+    channel?.addEventListener("message", load);
+    window.addEventListener("focus", load);
+    load();
+    return () => {
+      active = false;
+      channel?.close();
+      window.removeEventListener("focus", load);
+    };
+  }, []);
 
   return (
     <div className="site-shell">
@@ -191,7 +217,7 @@ export default function App() {
           </div>
         </section>
 
-        <PerspectiveCarouselWithModal projects={perspectiveProjects} />
+        <PerspectiveCarouselWithModal projects={caseProjects} />
 
         <section className="manifesto-block">
           <p className="manifesto-top">

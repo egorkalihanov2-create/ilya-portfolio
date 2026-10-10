@@ -1,0 +1,348 @@
+{
+  "version": 1,
+  "revision": 3,
+  "projects": [
+    {
+      "id": "citydrive",
+      "title": "CITYDRIVE: Tales from the Crypt",
+      "tag": "special project",
+      "coverImage": "assets/perspective-carousel/covers/citydrive.webp",
+      "image": "assets/perspective-carousel/citydrive.png",
+      "previewVideo": {
+        "id": "70956cb7-ab1b-4bf4-a030-e09cf7274a55",
+        "type": "video",
+        "src": "uploads/d7f08c92-3f47-424c-b023-e898ee256a56.mp4",
+        "alt": "videoplayback (1).mp4",
+        "caption": "",
+        "autoplay": false,
+        "muted": false,
+        "controls": true
+      },
+      "blocks": [
+        {
+          "id": "citydrive-description",
+          "type": "text",
+          "heading": "",
+          "text": "A Halloween campaign that transformed a common carsharing problem into an entertaining user experience."
+        },
+        {
+          "id": "citydrive-role",
+          "type": "text",
+          "heading": "",
+          "text": "My role: developed the creative concept, campaign platform and communication mechanics — from the initial idea to final execution."
+        }
+      ]
+    },
+    {
+      "id": "alfa-smooth-over",
+      "title": "Alfa-Bank: Smooth Over",
+      "tag": "TV/OLV",
+      "coverImage": "assets/perspective-carousel/covers/alfa-smooth-over.webp",
+      "image": "assets/perspective-carousel/alfa-smooth-over.png",
+      "previewVideo": {
+        "id": "dd2e8bad-9491-4850-83fa-069a5610cd5d",
+        "type": "video",
+        "src": "uploads/5225f370-c096-49dd-a92a-a3af6ed44875.mp4",
+        "alt": "videoplayback (1).mp4",
+        "caption": "",
+        "autoplay": false,
+        "muted": false,
+        "controls": true
+      },
+      "blocks": [
+        {
+          "id": "alfa-smooth-description",
+          "type": "text",
+          "heading": "",
+          "text": "A mockumentary recruitment campaign that turned a negatively perceived contact-center job into a comedy show about the art of smoothing things over."
+        },
+        {
+          "id": "alfa-smooth-role",
+          "type": "text",
+          "heading": "",
+          "text": "My role: developed the creative concept, campaign idea, video scripts and digital mechanics — from the initial insight to the recruitment landing experience."
+        },
+        {
+          "id": "ea4d645c-d658-4e1e-9e9c-d426ae11f789",
+          "type": "media",
+          "item": {
+            "id": "6e089c14-6c3c-4ce2-ba9f-b9e0b5ebe0e0",
+            "type": "video",
+            "src": "uploads/86f5c80f-1932-48bd-a55b-0e9a624812fa.mp4",
+            "alt": "",
+            "caption": "Некоторое описание",
+            "autoplay": false,
+            "muted": false,
+            "controls": true
+          }
+        },
+        {
+          "id": "08180a4f-a99f-4188-b443-5f5b1c8226f7",
+          "type": "media",
+          "item": {
+            "id": "a6ec72bb-a866-4964-9cb9-77548df72950",
+            "type": "video",
+            "src": "uploads/81296549-2272-4bdf-90e4-06211ea1c80e.mp4",
+            "alt": "",
+            "caption": "Некоторое описание",
+            "autoplay": false,
+            "muted": false,
+            "controls": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "demix",
+      "title": "Demix: Make Kvadrat Great Again",
+      "tag": "TV/OOH/DOOH",
+      "coverImage": "assets/perspective-carousel/covers/demix.webp",
+      "image": "assets/perspective-carousel/demix.png",
+      "blocks": [
+        {
+          "id": "demix-description",
+          "type": "text",
+          "heading": "",
+          "text": "A football special project created for the Russian Championship — bringing the classic Soviet yard game “Kvadrat” back to the streets with a limited kit available with every football purchase. The campaign was amplified through bloggers and athletes, who helped turn the game from a nostalgic childhood memory into a social challenge people could actually play again."
+        },
+        {
+          "id": "demix-role",
+          "type": "text",
+          "heading": "",
+          "text": "My role: developed the big idea, creative concept, limited box and unboxing mechanics, plus the creative framework for blogger and athlete integrations."
+        },
+        {
+          "id": "4736fb52-fe04-4528-9735-1d8243d5d94d",
+          "type": "carousel",
+          "layout": "carousel",
+          "columns": 2,
+          "items": [
+            {
+              "id": "456ea200-5529-43ec-b90e-f15baa956827",
+              "type": "image",
+              "src": "uploads/bdb8ee0d-f7f6-4de6-b25e-26b009b77727.png",
+              "alt": "",
+              "caption": ""
+            },
+            {
+              "id": "cf94bbb6-2ec5-4622-b579-ee15c9f606ed",
+              "type": "image",
+              "src": "uploads/fb48896b-71ad-41f4-ad5e-37db88744430.png",
+              "alt": "",
+              "caption": ""
+            },
+            {
+              "id": "fa797f3c-81e2-4d0b-b8d3-5de47db7f488",
+              "type": "image",
+              "src": "uploads/a1406da1-e55d-4565-9254-8306609ed547.png",
+              "alt": "",
+              "caption": ""
+            },
+            {
+              "id": "0ff4e54f-885f-4fb2-93f6-201b998fa0ba",
+              "type": "image",
+              "src": "uploads/cb6648bc-f57f-4987-aa31-6a62e67d840f.png",
+              "alt": "",
+              "caption": ""
+            }
+          ]
+        },
+        {
+          "id": "557c3e40-04c5-41dc-8ed9-ef792222b265",
+          "type": "carousel",
+          "layout": "grid",
+          "columns": 2,
+          "items": [
+            {
+              "id": "fb03128e-0a8b-4475-be51-d35e1c01c0da",
+              "type": "image",
+              "src": "uploads/44e6e711-5386-48bb-8d69-259408ea5927.jpg",
+              "alt": "5699.jpg",
+              "caption": ""
+            },
+            {
+              "id": "b5c9af57-a914-489d-93b2-9585ce2798df",
+              "type": "image",
+              "src": "uploads/518637dc-4188-4826-a333-51e3e8a618d8.jpg",
+              "alt": "5700.jpg",
+              "caption": ""
+            },
+            {
+              "id": "2a3c4a49-063a-4c13-bbba-ee9b60f5aa75",
+              "type": "image",
+              "src": "uploads/e05bf03a-8281-465f-81dd-90bba52c07b5.jpg",
+              "alt": "5701.jpg",
+              "caption": ""
+            },
+            {
+              "id": "bbafacc2-4194-481f-8654-fb049f5180c4",
+              "type": "image",
+              "src": "uploads/f4288e51-191c-4a1f-8ffb-b923fb3b9302.jpg",
+              "alt": "5702.jpg",
+              "caption": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "winx",
+      "title": "WINX CLUB: Welcome to Russia",
+      "tag": "SMM",
+      "coverImage": "assets/perspective-carousel/covers/winx.webp",
+      "image": "assets/perspective-carousel/winx.png",
+      "blocks": [
+        {
+          "id": "winx-description",
+          "type": "text",
+          "heading": "",
+          "text": "Not the most complicated case (the hardest part was getting them officially verified, by the way), but definitely one of my favorites — because how often do you come to work and create memes for fairies?"
+        },
+        {
+          "id": "winx-role",
+          "type": "text",
+          "heading": "",
+          "text": "My role: SMM strategy, content supervision, collaboration ideas, organic promotion and paid media mechanics."
+        }
+      ]
+    },
+    {
+      "id": "beeline",
+      "title": "Beeline: Your vision — our execution",
+      "tag": "EVP/Employer Branding",
+      "coverImage": "assets/perspective-carousel/covers/beeline.webp",
+      "image": "assets/perspective-carousel/beeline.png",
+      "blocks": [
+        {
+          "id": "beeline-description",
+          "type": "text",
+          "heading": "",
+          "text": "Beeline was trying to break out of heavy corporate bureaucracy, but many long-time employees no longer believed that real change was possible. We created an EVP platform that brought back a startup-like mindset: your ideas matter, your voice can move things forward, and the company is ready to help make them happen."
+        },
+        {
+          "id": "beeline-role",
+          "type": "text",
+          "heading": "",
+          "text": "My role: market and competitor analysis, EVP platform development, master slogan, direction-specific messaging and key visual ideas."
+        }
+      ]
+    },
+    {
+      "id": "alfa-only",
+      "title": "Alfa-Bank: Alfa Only",
+      "tag": "TV/OOH/DOOH",
+      "coverImage": "assets/perspective-carousel/covers/alfa-only.webp",
+      "image": "assets/perspective-carousel/alfa-only.png",
+      "previewVideo": {
+        "id": "ddf9d8fd-f53f-48d1-ba19-29ddf9cca697",
+        "type": "video",
+        "src": "uploads/ca929736-b771-4d2f-8c6e-04ea4f0f520f.mp4",
+        "alt": "videoplayback (5).mp4",
+        "caption": "",
+        "autoplay": false,
+        "muted": false,
+        "controls": true
+      },
+      "blocks": [
+        {
+          "id": "alfa-only-description",
+          "type": "text",
+          "heading": "",
+          "text": "A nationwide campaign for a premium travel card, introducing Oscar- and Golden Globe-nominated actor Yura Borisov as the new Alfa Only brand ambassador."
+        },
+        {
+          "id": "alfa-only-role",
+          "type": "text",
+          "heading": "",
+          "text": "My role: campaign positioning, video scripts, photo shoot concept and key visual direction for TV, OOH and airport DOOH."
+        },
+        {
+          "id": "461714a8-ada9-4418-800a-0463bc9e9a84",
+          "type": "media",
+          "item": {
+            "id": "08106eae-1aa1-40e9-8c4c-fdf359e92cb0",
+            "type": "video",
+            "src": "uploads/c1defb47-1f7b-4010-8799-379347587d9b.mp4",
+            "alt": "videoplayback (4).mp4",
+            "caption": "",
+            "autoplay": false,
+            "muted": true,
+            "controls": true
+          }
+        },
+        {
+          "id": "a5af24e6-6ab1-4032-9429-1f68d8402f1c",
+          "type": "carousel",
+          "layout": "carousel",
+          "columns": 2,
+          "items": [
+            {
+              "id": "a37c1df6-8f8a-4d4a-9a44-f33672f92c83",
+              "type": "image",
+              "src": "uploads/bfd6faa9-78db-4e78-85fd-374fb978d2ca.png",
+              "alt": "Фото 1 (1) 1.png",
+              "caption": ""
+            },
+            {
+              "id": "180f7b02-6824-4394-af0a-766acbd63a22",
+              "type": "image",
+              "src": "uploads/32da6057-03bd-48c2-8e0c-ecc4a245b171.png",
+              "alt": "5 1.png",
+              "caption": ""
+            },
+            {
+              "id": "7ade5de8-2c50-4fcc-877a-056f58f40cc6",
+              "type": "image",
+              "src": "uploads/990463cb-e60e-43c7-8938-7d57a11dbb9a.png",
+              "alt": "6 (1) 1.png",
+              "caption": ""
+            },
+            {
+              "id": "f698929e-0ceb-49e4-8ed2-f1db6b12469b",
+              "type": "image",
+              "src": "uploads/91fd3a25-27a4-404e-9a73-ef390fec2a78.png",
+              "alt": "Фото 2 1.png",
+              "caption": ""
+            }
+          ]
+        },
+        {
+          "id": "bd0294bb-4c76-44db-8c62-9c68a7801a21",
+          "type": "carousel",
+          "layout": "grid",
+          "columns": 2,
+          "items": [
+            {
+              "id": "25c56001-92f9-44a3-b67c-ece74d68da38",
+              "type": "image",
+              "src": "uploads/b8ec89fd-7eb9-4266-bbb9-0c164745fd6b.png",
+              "alt": "Alfa_Only_Ura_Borisov_april_20260630 1.png",
+              "caption": ""
+            },
+            {
+              "id": "a334b258-f7a4-4877-aaae-2c9f0c445e65",
+              "type": "image",
+              "src": "uploads/4391cc43-2f12-465d-92fe-a009b09033a8.png",
+              "alt": "Alfa_Only_Ura_Borisov_april_20260626 1.png",
+              "caption": ""
+            },
+            {
+              "id": "e4aa303a-3353-41c1-ba54-79bc88694540",
+              "type": "image",
+              "src": "uploads/c2039a17-fe5b-4565-93b1-187d68bc4e59.png",
+              "alt": "Alfa_Only_Ura_Borisov_april_20260734 1.png",
+              "caption": ""
+            },
+            {
+              "id": "73708e6f-0a4d-4503-b063-efde6a7e6219",
+              "type": "image",
+              "src": "uploads/c6c639c8-49ee-4556-a3c1-b380f0fff086.png",
+              "alt": "Alfa_Only_Ura_Borisov_april_20260738 1.png",
+              "caption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

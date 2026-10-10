@@ -1,5 +1,6 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { CaseProjectContent } from "./CaseProjectContent";
 import type { PerspectiveProject } from "./types";
 
 interface ProjectModalProps {
@@ -9,6 +10,11 @@ interface ProjectModalProps {
 
 export function ProjectModal({ project, onClose }: ProjectModalProps) {
   const reduceMotion = useReducedMotion();
+  const [videoStarted, setVideoStarted] = useState(false);
+
+  useEffect(() => {
+    setVideoStarted(false);
+  }, [project?.id]);
 
   useEffect(() => {
     if (!project) return;
@@ -62,23 +68,41 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               className="pc-modal__media"
               style={{ backgroundImage: `url("${project.coverImage}")` }}
             >
-              <img
-                src={project.image}
-                alt=""
-                draggable={false}
-                decoding="async"
-              />
-              <div className="pc-modal__play" aria-hidden="true">
-                <span />
-              </div>
+              {videoStarted && project.previewVideo ? (
+                <video
+                  className="pc-modal__video"
+                  src={project.previewVideo.src}
+                  poster={project.previewVideo.poster ?? project.image}
+                  autoPlay
+                  controls
+                  playsInline
+                  preload="metadata"
+                />
+              ) : (
+                <img
+                  src={project.image}
+                  alt=""
+                  draggable={false}
+                  decoding="async"
+                />
+              )}
+              {!videoStarted && project.previewVideo ? (
+                <button
+                  className="pc-modal__play"
+                  type="button"
+                  aria-label={`Включить видео кейса ${project.title}`}
+                  onClick={() => setVideoStarted(true)}
+                >
+                  <span />
+                </button>
+              ) : null}
             </div>
             <div className="pc-modal__content">
               <div className="pc-modal__heading-row">
                 <h2 id="pc-modal-title">{project.title}</h2>
                 <span className="pc-modal__tag">{project.tag}</span>
               </div>
-              {project.description ? <p>{project.description}</p> : null}
-              {project.role ? <p>{project.role}</p> : null}
+              <CaseProjectContent project={project} />
             </div>
           </motion.article>
         </motion.div>
