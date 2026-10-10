@@ -51,7 +51,7 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  height: min(68svh, 660px);
+  height: min(74svh, 660px);
   min-height: 470px;
   overflow: visible;
   perspective: 1450px;
