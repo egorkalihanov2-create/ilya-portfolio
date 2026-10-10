@@ -364,11 +364,46 @@ img {
   text-decoration: none;
   transform-origin: center;
   will-change: transform;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.42), 0 0 0 rgba(255, 185, 0, 0);
+  transition: box-shadow 180ms ease, filter 180ms ease;
 }
 
+.manifesto-action:hover,
 .manifesto-action:focus-visible {
-  outline: 2px solid #ffb900;
-  outline-offset: 3px;
+  outline: none;
+  box-shadow: 0 0 0 2px #ffb900, 0 8px 22px rgba(255, 185, 0, 0.34);
+  filter: brightness(1.08);
+}
+
+.manifesto-action.is-periodic-pulse {
+  animation: manifesto-button-pulse 9s ease-in-out infinite;
+}
+
+.manifesto-action--pulse-two.is-periodic-pulse {
+  animation-delay: 3s;
+}
+
+.manifesto-action--pulse-three.is-periodic-pulse {
+  animation-delay: 6s;
+}
+
+.manifesto-action.is-periodic-pulse:hover,
+.manifesto-action.is-periodic-pulse:focus-visible {
+  animation-play-state: paused;
+  transform: scale(1.14) !important;
+}
+
+@keyframes manifesto-button-pulse {
+  0%,
+  6%,
+  14%,
+  100% {
+    transform: scale(1);
+  }
+
+  10% {
+    transform: scale(1.14);
+  }
 }
 
 .folder-logos img:first-child {

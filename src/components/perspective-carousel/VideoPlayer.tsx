@@ -23,6 +23,13 @@ interface VideoPlayerProps extends Omit<VideoHTMLAttributes<HTMLVideoElement>, "
   controls?: boolean;
 }
 
+interface VideoPlayButtonProps {
+  className?: string;
+  isPlaying?: boolean;
+  label: string;
+  onClick: () => void;
+}
+
 function formatTime(value: number) {
   if (!Number.isFinite(value) || value < 0) return "0:00";
   const total = Math.floor(value);
@@ -32,6 +39,24 @@ function formatTime(value: number) {
   return hours
     ? `${hours}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`
     : `${minutes}:${String(seconds).padStart(2, "0")}`;
+}
+
+export function VideoPlayButton({
+  className,
+  isPlaying = false,
+  label,
+  onClick,
+}: VideoPlayButtonProps) {
+  return (
+    <button
+      className={`pc-video-player__play-button${className ? ` ${className}` : ""}`}
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+    >
+      <HugeiconsIcon icon={isPlaying ? PauseIcon : PlayIcon} size={28} strokeWidth={1.8} />
+    </button>
+  );
 }
 
 export const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(function VideoPlayer(
@@ -192,9 +217,11 @@ export const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(functi
       {controls ? (
         <>
           <div className="pc-video-player__center" aria-hidden={!controlsVisible && isPlaying}>
-            <button type="button" onClick={togglePlay} aria-label={isPlaying ? "Pause video" : "Play video"}>
-              <HugeiconsIcon icon={isPlaying ? PauseIcon : PlayIcon} size={28} strokeWidth={1.8} />
-            </button>
+            <VideoPlayButton
+              isPlaying={isPlaying}
+              label={isPlaying ? "Pause video" : "Play video"}
+              onClick={togglePlay}
+            />
           </div>
           <div className="pc-video-player__controls">
             <div className="pc-video-player__timeline">

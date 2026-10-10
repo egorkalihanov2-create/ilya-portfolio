@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from "motion/react";
-import { useCallback, useEffect, useState } from "react";
+import type { Variants } from "motion/react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import FolderInteraction from "@/components/ui/folder-interaction";
 import { FolderPopup } from "@/components/ui/folder-popup";
 import {
@@ -72,12 +73,34 @@ const folders = [
 
 type FolderData = (typeof folders)[number];
 
+const manifestoActionVariants: Variants = {
+  idle: { scale: 1 },
+  attention: {
+    scale: [1, 1.3, 0.97, 1],
+    transition: { delay: 2, duration: 0.78, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
 export default function App() {
   const [selectedFolder, setSelectedFolder] = useState<FolderData | null>(null);
   const [caseProjects, setCaseProjects] = useState(perspectiveProjects);
+  const [manifestoPulseReady, setManifestoPulseReady] = useState(false);
+  const manifestoPulseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const shouldReduceMotion = useReducedMotion();
   const isMobile = useMediaQuery("(max-width: 480px)");
   const closePopup = useCallback(() => setSelectedFolder(null), []);
+
+  const startManifestoPulseCycle = useCallback(() => {
+    if (shouldReduceMotion || manifestoPulseTimer.current) return;
+    manifestoPulseTimer.current = setTimeout(() => {
+      setManifestoPulseReady(true);
+      manifestoPulseTimer.current = null;
+    }, 2780);
+  }, [shouldReduceMotion]);
+
+  useEffect(() => () => {
+    if (manifestoPulseTimer.current) clearTimeout(manifestoPulseTimer.current);
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -219,42 +242,48 @@ export default function App() {
 
         <PerspectiveCarouselWithModal projects={caseProjects} />
 
-        <section className="manifesto-block">
+        <motion.section
+          className="manifesto-block"
+          initial={shouldReduceMotion ? false : "idle"}
+          whileInView={shouldReduceMotion ? undefined : "attention"}
+          viewport={{ once: true, amount: 0.25, margin: "-43% 0px -43% 0px" }}
+          onViewportEnter={startManifestoPulseCycle}
+        >
           <p className="manifesto-top">
             WORLD-CHANGERS <motion.a
-              className="brand-dot manifesto-action"
+              className={`brand-dot manifesto-action manifesto-action--pulse-one${manifestoPulseReady ? " is-periodic-pulse" : ""}`}
               href="https://youtu.be/JxxppIriCwo"
               target="_blank"
               rel="noreferrer"
               aria-label="Open project video"
-              initial={shouldReduceMotion ? false : { scale: 1 }}
-              whileInView={shouldReduceMotion ? undefined : { scale: [1, 1.36, 0.94, 1] }}
-              viewport={{ once: true, amount: 0.9 }}
-              transition={{ delay: 0.05, duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
+              variants={manifestoActionVariants}
+              whileHover={shouldReduceMotion ? undefined : { scale: 1.14 }}
+              whileFocus={shouldReduceMotion ? undefined : { scale: 1.14 }}
+              whileTap={shouldReduceMotion ? undefined : { scale: 0.96 }}
             ><img src="./assets/figma/logo-small.png" alt="" /></motion.a><br className="manifesto-mobile-break" /> DO NOT WAIT
             <motion.a
-              className="heinz-pill manifesto-action"
+              className={`heinz-pill manifesto-action manifesto-action--pulse-two${manifestoPulseReady ? " is-periodic-pulse" : ""}`}
               href="https://youtu.be/WG3IXn9B1lA"
               target="_blank"
               rel="noreferrer"
               aria-label="Open Heinz project video"
-              initial={shouldReduceMotion ? false : { scale: 1 }}
-              whileInView={shouldReduceMotion ? undefined : { scale: [1, 1.3, 0.96, 1] }}
-              viewport={{ once: true, amount: 0.9 }}
-              transition={{ delay: 0.2, duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
+              variants={manifestoActionVariants}
+              whileHover={shouldReduceMotion ? undefined : { scale: 1.14 }}
+              whileFocus={shouldReduceMotion ? undefined : { scale: 1.14 }}
+              whileTap={shouldReduceMotion ? undefined : { scale: 0.96 }}
             ><img src="./assets/figma/heinz.png" alt="Heinz" /></motion.a> FOR PERMISSION
           </p>
           <p className="manifesto-bottom">
             And the festival-winning <motion.a
-              className="airbnb-pill manifesto-action"
+              className={`airbnb-pill manifesto-action manifesto-action--pulse-three${manifestoPulseReady ? " is-periodic-pulse" : ""}`}
               href="https://docs.google.com/presentation/d/11pPwlESlAM9gZ4YUOvBcD7anuS9MlzcKkCkUtEQGRSk/edit"
               target="_blank"
               rel="noreferrer"
               aria-label="Open Airbnb project presentation"
-              initial={shouldReduceMotion ? false : { scale: 1 }}
-              whileInView={shouldReduceMotion ? undefined : { scale: [1, 1.32, 0.95, 1] }}
-              viewport={{ once: true, amount: 0.9 }}
-              transition={{ delay: 0.35, duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
+              variants={manifestoActionVariants}
+              whileHover={shouldReduceMotion ? undefined : { scale: 1.14 }}
+              whileFocus={shouldReduceMotion ? undefined : { scale: 1.14 }}
+              whileTap={shouldReduceMotion ? undefined : { scale: 0.96 }}
             ><img src="./assets/figma/airbnb.png" alt="Airbnb" /></motion.a>
             work is proof of <span className="manifesto-ending">
               that.
@@ -270,7 +299,7 @@ export default function App() {
               </motion.span>
             </span>
           </p>
-        </section>
+        </motion.section>
 
         <motion.section
           className="cta-block"

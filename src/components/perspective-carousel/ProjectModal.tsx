@@ -1,7 +1,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 import { CaseProjectContent } from "./CaseProjectContent";
-import { VideoPlayer } from "./VideoPlayer";
+import { VideoPlayer, VideoPlayButton } from "./VideoPlayer";
 import type { PerspectiveProject } from "./types";
 
 interface ProjectModalProps {
@@ -88,14 +88,11 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 />
               )}
               {!videoStarted && project.previewVideo ? (
-                <button
+                <VideoPlayButton
                   className="pc-modal__play"
-                  type="button"
-                  aria-label={`Включить видео кейса ${project.title}`}
+                  label={`Включить видео кейса ${project.title}`}
                   onClick={() => setVideoStarted(true)}
-                >
-                  <span />
-                </button>
+                />
               ) : null}
             </div>
             <div className="pc-modal__content">
