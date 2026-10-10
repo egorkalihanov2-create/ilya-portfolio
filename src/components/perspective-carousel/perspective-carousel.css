@@ -11,6 +11,10 @@
   --pc-muted: #888883;
   --pc-tag-background: #cfcfcf;
   --pc-accent: #d2a100;
+  /* Manual title controls: negative X moves left; positive Y moves down. */
+  --pc-cases-title-x: -1.25vw;
+  --pc-cases-title-y: 17px;
+  --pc-cases-title-size: min(27.5vw, 528px);
   position: relative;
   isolation: isolate;
   display: grid;
@@ -24,6 +28,23 @@
   background: var(--pc-background);
   color: var(--pc-text);
   font-family: var(--pc-font-family, inherit);
+}
+
+.pc-cases-title {
+  position: absolute;
+  top: var(--pc-cases-title-y);
+  left: 50%;
+  z-index: 0;
+  color: #ededed;
+  font-family: "Object Sans", Arial, sans-serif;
+  font-size: var(--pc-cases-title-size);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.011em;
+  pointer-events: none;
+  transform: translateX(calc(-50% + var(--pc-cases-title-x)));
+  user-select: none;
+  white-space: nowrap;
 }
 
 .pc-carousel {
@@ -634,6 +655,9 @@
 
 @media (max-width: 720px) {
   .pc-block {
+    --pc-cases-title-x: -4vw;
+    --pc-cases-title-y: clamp(100px, 15svh, 138px);
+    --pc-cases-title-size: clamp(102px, 32vw, 192px);
     min-height: 78svh;
     padding-block: 32px;
   }

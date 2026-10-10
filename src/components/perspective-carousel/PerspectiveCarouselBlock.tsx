@@ -73,6 +73,10 @@ export function PerspectiveCarouselBlock({
       id={id}
       className={`pc-block ${className}`.trim()}
     >
+      <div className="pc-cases-title" aria-hidden="true">
+        Cases
+      </div>
+
       <div
         className="pc-carousel"
         tabIndex={0}
