@@ -13,7 +13,7 @@
   --pc-accent: #d2a100;
   /* Manual title controls: negative X moves left; positive Y moves down. */
   --pc-cases-title-x: -1.25vw;
-  --pc-cases-title-y: 17px;
+  --pc-cases-title-y: -23px;
   --pc-cases-title-size: min(27.5vw, 528px);
   position: relative;
   isolation: isolate;
