@@ -4,15 +4,30 @@ import http from "node:http";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createContentApi } from "./content-api.mjs";
+import { createGithubPublisher } from "./github-publisher.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dataDir = path.resolve(process.env.CONTENT_DIR || path.join(root, "public"));
+const githubValues = [process.env.GITHUB_TOKEN, process.env.GITHUB_OWNER, process.env.GITHUB_REPO];
+if (githubValues.some(Boolean) && !githubValues.every(Boolean)) {
+  throw new Error("Для публикации задайте GITHUB_TOKEN, GITHUB_OWNER и GITHUB_REPO вместе");
+}
+const publisher = githubValues.every(Boolean)
+  ? createGithubPublisher({
+      token: process.env.GITHUB_TOKEN,
+      owner: process.env.GITHUB_OWNER,
+      repo: process.env.GITHUB_REPO,
+      baseBranch: process.env.GITHUB_BASE_BRANCH || "main",
+      contentBranch: process.env.GITHUB_CONTENT_BRANCH || "admin/customer-content",
+    })
+  : null;
 const api = await createContentApi({
   root,
   dataDir,
   allowLocal: process.env.LOCAL_ADMIN === "1",
   password: process.env.ADMIN_PASSWORD || "",
   siteOrigin: process.env.SITE_ORIGIN || "",
+  publisher,
 });
 
 const mime = {

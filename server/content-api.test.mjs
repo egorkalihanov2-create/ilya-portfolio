@@ -12,7 +12,25 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 test("local editor loads, uploads and saves a versioned catalog", async (context) => {
   const dataDir = await mkdtemp(path.join(os.tmpdir(), "ilya-admin-test-"));
   context.after(() => rm(dataDir, { recursive: true, force: true }));
-  const api = await createContentApi({ root, dataDir, development: true });
+  const publications = [];
+  const publisher = {
+    info: {
+      repository: "example/portfolio",
+      baseBranch: "main",
+      contentBranch: "admin/customer-content",
+    },
+    async publish(value) {
+      publications.push(value);
+      return {
+        published: true,
+        changedFiles: value.files.length,
+        branch: "admin/customer-content",
+        pullRequestUrl: "https://github.com/example/portfolio/pull/1",
+        message: "Pull Request готов.",
+      };
+    },
+  };
+  const api = await createContentApi({ root, dataDir, development: true, publisher });
   const server = http.createServer((request, response) => {
     api.handler(request, response, () => {
       response.writeHead(404);
@@ -27,6 +45,8 @@ test("local editor loads, uploads and saves a versioned catalog", async (context
   assert.equal(session.authenticated, true);
   assert.equal(session.mode, "local");
   assert.ok(session.csrf);
+  assert.equal(session.githubPublishing.enabled, true);
+  assert.equal(session.githubPublishing.repository, "example/portfolio");
 
   const catalog = await fetch(`${origin}/api/catalog`).then((response) => response.json());
   assert.equal(catalog.version, 1);
@@ -96,4 +116,19 @@ test("local editor loads, uploads and saves a versioned catalog", async (context
   assert.equal(stored.projects[0].title, "QA title");
   assert.equal(stored.projects[0].previewVideo.src, uploadedVideo.src);
   assert.equal(stored.projects[2].blocks.find((block) => block.type === "carousel").layout, "grid");
+
+  const publishResponse = await fetch(`${origin}/api/admin/publish`, {
+    method: "POST",
+    headers: {
+      Origin: origin,
+      "X-CSRF-Token": session.csrf,
+    },
+  });
+  assert.equal(publishResponse.status, 200);
+  const published = await publishResponse.json();
+  assert.equal(published.pullRequestUrl, "https://github.com/example/portfolio/pull/1");
+  assert.equal(publications.length, 1);
+  assert.equal(publications[0].message, `Обновление кейсов из админки (версия ${saved.revision})`);
+  assert.ok(publications[0].files.some((file) => file.path === "public/content/cases.json"));
+  assert.ok(publications[0].files.some((file) => file.path === `public/${uploadedVideo.src}`));
 });

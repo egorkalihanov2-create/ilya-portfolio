@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "node server/index.mjs",
-    "test": "node --test server/content-api.test.mjs"
+    "test": "node --test server/content-api.test.mjs server/github-publisher.test.mjs"
   },
   "dependencies": {
     "@hugeicons/core-free-icons": "^3.1.0",

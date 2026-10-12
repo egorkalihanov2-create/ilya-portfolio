@@ -14,7 +14,7 @@ import path from "node:path";
 import { validateCatalog } from "./catalog-schema.mjs";
 
 const derive = promisify(scrypt);
-const MAX_UPLOAD = 100 * 1024 * 1024;
+const MAX_UPLOAD = 95 * 1024 * 1024;
 const SESSION_MS = 8 * 60 * 60 * 1000;
 const error = (status, message) => Object.assign(new Error(message), { status });
 const loopback = (address) => ["127.0.0.1", "::1", "::ffff:127.0.0.1"].includes(address);
@@ -118,6 +118,7 @@ export async function createContentApi({
   allowLocal = false,
   password = "",
   siteOrigin = "",
+  publisher = null,
 }) {
   if (!development && !allowLocal && (password.length < 16 || password.length > 256)) {
     throw new Error("Задайте ADMIN_PASSWORD длиной от 16 до 256 символов");
@@ -153,6 +154,7 @@ export async function createContentApi({
   const attempts = new Map();
   const localCsrf = randomBytes(32).toString("hex");
   let saveQueue = Promise.resolve();
+  let publishQueue = Promise.resolve();
 
   const isLocal = (req) => (development || allowLocal)
     && loopback(req.socket.remoteAddress)
@@ -234,6 +236,9 @@ export async function createContentApi({
           mode: isLocal(req) ? "local" : "password",
           loginAvailable: Boolean(passwordHash),
           maxUploadBytes: MAX_UPLOAD,
+          githubPublishing: publisher
+            ? { enabled: true, ...publisher.info }
+            : { enabled: false },
         });
       }
       if (pathname === "/api/admin/login" && req.method === "POST") {
@@ -314,6 +319,39 @@ export async function createContentApi({
         });
         saveQueue = save.catch(() => {});
         return json(res, 200, await save);
+      }
+      if (pathname === "/api/admin/publish" && req.method === "POST") {
+        auth(req, true);
+        if (!publisher) throw error(503, "Публикация в GitHub не настроена");
+        const publish = publishQueue.then(async () => {
+          const catalog = await read();
+          const sources = catalog.projects.flatMap((project) => [
+            project.coverImage,
+            project.image,
+            project.previewVideo?.src,
+            project.previewVideo?.poster,
+            ...project.blocks.flatMap((blockValue) => {
+              if (blockValue.type === "media") return [blockValue.item.src, blockValue.item.poster].filter(Boolean);
+              if (blockValue.type === "carousel") return blockValue.items.flatMap((item) => [item.src, item.poster].filter(Boolean));
+              return [];
+            }),
+          ].filter(Boolean));
+          const files = [{
+            path: "public/content/cases.json",
+            content: await readFile(catalogPath),
+          }];
+          for (const src of new Set(sources.filter((value) => value.startsWith("uploads/")))) {
+            const file = await uploadedFile(path.basename(src));
+            if (!file) throw error(400, `Медиафайл отсутствует: ${src}`);
+            files.push({ path: `public/${src}`, content: await readFile(file) });
+          }
+          return publisher.publish({
+            files,
+            message: `Обновление кейсов из админки (версия ${catalog.revision})`,
+          });
+        });
+        publishQueue = publish.catch(() => {});
+        return json(res, 200, await publish);
       }
       throw error(404, "Маршрут не найден");
     } catch (cause) {

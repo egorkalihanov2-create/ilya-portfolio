@@ -18,6 +18,20 @@ interface AdminSession {
   mode: "local" | "password";
   loginAvailable: boolean;
   maxUploadBytes: number;
+  githubPublishing: {
+    enabled: boolean;
+    repository?: string;
+    baseBranch?: string;
+    contentBranch?: string;
+  };
+}
+
+interface PublishResult {
+  published: boolean;
+  changedFiles: number;
+  branch: string;
+  pullRequestUrl: string | null;
+  message: string;
 }
 
 interface PickerRequest {
@@ -180,6 +194,7 @@ export function AdminApp() {
   const [status, setStatus] = useState("Подключение к редактору…");
   const [error, setError] = useState(false);
   const [password, setPassword] = useState("");
+  const [publishUrl, setPublishUrl] = useState("");
   const fileInput = useRef<HTMLInputElement>(null);
   const picker = useRef<PickerRequest | null>(null);
 
@@ -363,21 +378,44 @@ export function AdminApp() {
     });
   };
 
+  const persistDraft = async () => {
+    if (!draft) throw new Error("Каталог не загружен");
+    const saved = await request<CaseCatalog>("/api/admin/catalog", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(draft),
+    });
+    setDraft(saved);
+    setDirty(false);
+    const channel = new BroadcastChannel("ilya-case-catalog");
+    channel.postMessage({ revision: saved.revision });
+    channel.close();
+    return saved;
+  };
+
   const save = async () => {
     if (!draft) return;
     setBusy(true);
     try {
-      const saved = await request<CaseCatalog>("/api/admin/catalog", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(draft),
-      });
-      setDraft(saved);
-      setDirty(false);
-      const channel = new BroadcastChannel("ilya-case-catalog");
-      channel.postMessage({ revision: saved.revision });
-      channel.close();
-      showStatus(`Сохранено · версия ${saved.revision}`);
+      const saved = await persistDraft();
+      showStatus(`Сохранено на сайте · версия ${saved.revision}`);
+    } catch (cause) {
+      showStatus((cause as Error).message, true);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const publish = async () => {
+    if (!draft || !session?.githubPublishing.enabled) return;
+    setBusy(true);
+    setPublishUrl("");
+    try {
+      const saved = dirty ? await persistDraft() : draft;
+      showStatus(`Версия ${saved.revision} отправляется в GitHub…`);
+      const result = await request<PublishResult>("/api/admin/publish", { method: "POST" });
+      setPublishUrl(result.pullRequestUrl ?? "");
+      showStatus(result.message);
     } catch (cause) {
       showStatus((cause as Error).message, true);
     } finally {
@@ -434,11 +472,19 @@ export function AdminApp() {
         <div>
           <button type="button" disabled={busy} onClick={() => void loadCatalog()}>Обновить</button>
           <button className="primary" type="button" disabled={busy || !dirty} onClick={() => void save()}>
-            {busy ? "Подождите…" : dirty ? "Сохранить изменения" : "Всё сохранено"}
+            {busy ? "Подождите…" : dirty ? "Сохранить на сайте" : "Сохранено на сайте"}
           </button>
+          {session.githubPublishing.enabled ? (
+            <button type="button" disabled={busy} onClick={() => void publish()}>
+              Передать в GitHub
+            </button>
+          ) : null}
         </div>
       </header>
-      <p className={error ? "admin-status is-error" : "admin-status"}>{status}</p>
+      <p className={error ? "admin-status is-error" : "admin-status"}>
+        {status}
+        {publishUrl ? <a href={publishUrl} target="_blank" rel="noreferrer">Открыть Pull Request</a> : null}
+      </p>
       <main className="admin-layout">
         <nav className="admin-nav" aria-label="Кейсы">
           <span className="admin-kicker">CASES</span>
