@@ -6,7 +6,9 @@ import {
   useScroll,
   useTransform,
 } from "motion/react";
-import { useRef, useState } from "react";
+import { useRef, useState, type CSSProperties } from "react";
+
+type CSSCustomProperties = CSSProperties & Record<`--${string}`, string | number>;
 
 const storyParagraphs = [
   "I still believe advertising can be art.",
@@ -28,25 +30,25 @@ const tools = [
   {
     label: "Thinking & writing",
     description: (
-      <><strong>ChatGPT, Claude, DeepSeek</strong> — for research, idea development, scripts, copy, case structure and strategic sparring.</>
+      <><strong>ChatGPT, Claude, DeepSeek</strong> —<br className="about-tools-mobile-break" /> for research, idea development, scripts, copy, case structure and strategic sparring.</>
     ),
   },
   {
     label: "Visual exploration",
     description: (
-      <><strong>Midjourney, Firefly, Nano Banana</strong> — for visual directions, references, moodboards and fast concept exploration.</>
+      <><strong>Midjourney, Firefly, Nano Banana</strong> —<br className="about-tools-mobile-break" /> for visual directions, references, moodboards and fast concept exploration.</>
     ),
   },
   {
     label: "Design & presentations",
     description: (
-      <><strong>Figma, Photoshop, Keynote</strong> — for layouts, storyboards, presentation systems and polished creative decks.</>
+      <><strong>Figma, Photoshop, Keynote</strong> —<br className="about-tools-mobile-break" /> for layouts, storyboards, presentation systems and polished creative decks.</>
     ),
   },
   {
     label: "Video & audio prototyping",
     description: (
-      <><strong>Runway, Kling, ElevenLabs</strong> — for animatics, motion tests, voice experiments and quick audiovisual prototypes.</>
+      <><strong>Runway, Kling, ElevenLabs</strong> —<br className="about-tools-mobile-break" /> for animatics, motion tests, voice experiments and quick audiovisual prototypes.</>
     ),
   },
 ] as const;
@@ -54,25 +56,33 @@ const tools = [
 const toolLines = [
   {
     src: "./assets/figma/about/line.svg",
+    mobileSrc: "./assets/figma/about/mobile-line-yellow.svg",
     box: { left: "8.3615%", top: "38.9247%", width: "11.3932%", height: "22.4637%" },
+    mobileBox: { left: "11.403763%", top: "25.97785%", width: "10.709178%", height: "47.758681%" },
     image: { top: "-0.71%", left: "-1.43%", width: "101.61%", height: "102.15%" },
     mirrored: false,
   },
   {
     src: "./assets/figma/about/line-2.svg",
+    mobileSrc: "./assets/figma/about/mobile-line-green.svg",
     box: { left: "28.4731%", top: "31.5054%", width: "7.3852%", height: "22.7957%" },
+    mobileBox: { left: "73.28726%", top: "35.915608%", width: "11.165995%", height: "38.085934%" },
     image: { top: "-1.05%", left: "-2.21%", width: "103.69%", height: "102.12%" },
     mirrored: false,
   },
   {
     src: "./assets/figma/about/line-4.svg",
+    mobileSrc: "./assets/figma/about/mobile-line-purple.svg",
     box: { left: "81.0839%", top: "32.3656%", width: "6.2109%", height: "29.9462%" },
+    mobileBox: { left: "63.207684%", top: "66.098043%", width: "2.737586%", height: "8.343055%" },
     image: { top: "-0.58%", left: "-2.63%", width: "105.26%", height: "101.6%" },
     mirrored: true,
   },
   {
     src: "./assets/figma/about/line-3.svg",
+    mobileSrc: "./assets/figma/about/mobile-line-red.svg",
     box: { left: "60.4359%", top: "42.9032%", width: "6.485%", height: "12.2581%" },
+    mobileBox: { left: "14.336041%", top: "51.777558%", width: "16.034562%", height: "22.508132%" },
     image: { top: "-2.59%", left: "-2.52%", width: "103.33%", height: "105.08%" },
     mirrored: true,
   },
@@ -158,6 +168,13 @@ function CreativeTools() {
   const cursorX = useMotionValue(0);
   const cursorY = useMotionValue(0);
   const line = toolLines[active];
+  const lineStyle = {
+    ...line.box,
+    "--mobile-line-left": line.mobileBox.left,
+    "--mobile-line-top": line.mobileBox.top,
+    "--mobile-line-width": line.mobileBox.width,
+    "--mobile-line-height": line.mobileBox.height,
+  } as CSSCustomProperties;
 
   const positionCursor = (
     element: HTMLElement,
@@ -211,9 +228,12 @@ function CreativeTools() {
         key={line.src}
         className={`about-tools-line${line.mirrored ? " is-mirrored" : ""}`}
         aria-hidden
-        style={line.box}
+        style={lineStyle}
       >
-        <img src={line.src} alt="" style={line.image} />
+        <picture>
+          <source media="(max-width: 600px)" srcSet={line.mobileSrc} />
+          <img src={line.src} alt="" style={line.image} />
+        </picture>
       </div>
 
       <AnimatePresence mode="wait" initial={false}>

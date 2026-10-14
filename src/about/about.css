@@ -311,10 +311,14 @@
   transform: scaleX(-1);
 }
 
-.about-tools-line > img {
+.about-tools-line img {
   position: absolute;
   display: block;
   max-width: none;
+}
+
+.about-tools-mobile-break {
+  display: none;
 }
 
 .about-tools-description {
@@ -435,17 +439,41 @@
   .about-dna { padding-top: 38px; }
   .about-dna h2 { top: 10px; font-size: 15px; }
   .about-dna > img { border-radius: 10px; }
-  .about-tools { height: 530px; aspect-ratio: auto; border-radius: 10px; cursor: auto; }
-  .about-tools-heading { top: 18px; right: 18px; left: 18px; }
-  .about-tools-heading h2 { font-size: 15px; }
-  .about-tools-heading img { width: 46px; }
-  .about-tool-pill { height: 48px; font-size: 13px; cursor: pointer; }
-  .about-tool-pill-0 { top: 17%; left: 2%; width: 48%; }
-  .about-tool-pill-1 { top: 28%; left: 48%; width: 49%; }
-  .about-tool-pill-2 { top: 39%; right: 2%; width: 60%; }
-  .about-tool-pill-3 { top: 50%; left: 3%; width: 67%; }
-  .about-tools-line { display: none; }
-  .about-tools-description { top: 69%; left: 8%; width: 84%; font-size: 17px; }
+  .about-tools {
+    --mobile-tools-width: calc(100vw - 25px);
+    width: var(--mobile-tools-width) !important;
+    height: auto;
+    aspect-ratio: 377 / 455;
+    border-radius: 8.42px;
+    cursor: auto;
+  }
+  .about-tools-heading { top: 2.860%; right: auto; left: 3.7901%; }
+  .about-tools-heading h2 { font-size: calc(3.2485vw - 0.8121px); }
+  .about-tools-heading img { display: none; }
+  .about-tool-pill {
+    height: 9.763077%;
+    font-size: calc(5.005vw - 1.2513px);
+    cursor: pointer;
+  }
+  .about-tool-pill-0 { top: 12.858462%; left: 8.819098%; width: 53.179576%; rotate: -3.75deg; }
+  .about-tool-pill-1 { top: 24.848022%; left: 41.726393%; width: 53.179576%; rotate: -2.33deg; }
+  .about-tool-pill-2 { top: 53.838462%; right: auto; left: 29.870424%; width: 64.866844%; rotate: -3.28deg; }
+  .about-tool-pill-3 { top: 38.998791%; left: 4.911273%; width: 72.783024%; rotate: 1.44deg; }
+  .about-tools-line {
+    left: var(--mobile-line-left) !important;
+    top: var(--mobile-line-top) !important;
+    width: var(--mobile-line-width) !important;
+    height: var(--mobile-line-height) !important;
+  }
+  .about-tools-line.is-mirrored { transform: none; }
+  .about-tools-line img { top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; }
+  .about-tools-description {
+    top: 80.21978%;
+    left: 5.30504%;
+    width: 89.38992%;
+    font-size: calc(4.1106vw - 1.0277px);
+  }
+  .about-tools-mobile-break { display: initial; }
   .about-tools-cursor { display: none; }
   .about-ending { min-height: 310px; padding-top: 25px; }
   .about-ending > p { max-width: 90%; font-size: 17px; white-space: normal; }
