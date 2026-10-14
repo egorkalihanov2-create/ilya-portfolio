@@ -4,7 +4,6 @@ import {
   useMotionValue,
   useReducedMotion,
   useScroll,
-  useSpring,
   useTransform,
 } from "motion/react";
 import { useRef, useState } from "react";
@@ -138,22 +137,31 @@ function CreativeTools() {
   const reduceMotion = useReducedMotion();
   const cursorX = useMotionValue(0);
   const cursorY = useMotionValue(0);
-  const smoothX = useSpring(cursorX, { stiffness: 650, damping: 42, mass: 0.18 });
-  const smoothY = useSpring(cursorY, { stiffness: 650, damping: 42, mass: 0.18 });
   const line = lineLayouts[active];
+
+  const positionCursor = (
+    element: HTMLElement,
+    clientX: number,
+    clientY: number,
+  ) => {
+    const rect = element.getBoundingClientRect();
+    cursorX.set(clientX - rect.left - 24);
+    cursorY.set(clientY - rect.top - 24);
+  };
 
   return (
     <section
       className="about-tools"
       data-active={active}
       onPointerEnter={(event) => {
-        if (event.pointerType === "mouse") setCursorVisible(true);
+        if (event.pointerType !== "mouse") return;
+        positionCursor(event.currentTarget, event.clientX, event.clientY);
+        setCursorVisible(true);
       }}
       onPointerLeave={() => setCursorVisible(false)}
       onPointerMove={(event) => {
-        const rect = event.currentTarget.getBoundingClientRect();
-        cursorX.set(event.clientX - rect.left - 24);
-        cursorY.set(event.clientY - rect.top - 24);
+        if (event.pointerType !== "mouse") return;
+        positionCursor(event.currentTarget, event.clientX, event.clientY);
       }}
     >
       <div className="about-tools-heading">
@@ -206,7 +214,7 @@ function CreativeTools() {
         src="./assets/figma/about/cursor.png"
         alt=""
         aria-hidden
-        style={{ x: smoothX, y: smoothY }}
+        style={{ x: cursorX, y: cursorY }}
         animate={{ opacity: cursorVisible ? 1 : 0, scale: cursorVisible ? 1 : 0.72 }}
         transition={{ duration: reduceMotion ? 0 : 0.14 }}
       />
