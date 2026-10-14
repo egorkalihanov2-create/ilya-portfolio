@@ -51,11 +51,31 @@ const tools = [
   },
 ] as const;
 
-const lineLayouts = [
-  { left: "7.7%", top: "38.9%", width: "11.4%", rotate: "0deg", flip: 1 },
-  { left: "35.5%", top: "32.5%", width: "10.8%", rotate: "18deg", flip: 1 },
-  { left: "69.5%", top: "31.5%", width: "10.5%", rotate: "47deg", flip: -1 },
-  { left: "51.5%", top: "40%", width: "11%", rotate: "28deg", flip: 1 },
+const toolLines = [
+  {
+    src: "./assets/figma/about/line.svg",
+    box: { left: "8.3615%", top: "38.9247%", width: "11.3932%", height: "22.4637%" },
+    image: { top: "-0.71%", left: "-1.43%", width: "101.61%", height: "102.15%" },
+    mirrored: false,
+  },
+  {
+    src: "./assets/figma/about/line-2.svg",
+    box: { left: "28.4731%", top: "31.5054%", width: "7.3852%", height: "22.7957%" },
+    image: { top: "-1.05%", left: "-2.21%", width: "103.69%", height: "102.12%" },
+    mirrored: false,
+  },
+  {
+    src: "./assets/figma/about/line-4.svg",
+    box: { left: "81.0839%", top: "32.3656%", width: "6.2109%", height: "29.9462%" },
+    image: { top: "-0.58%", left: "-2.63%", width: "105.26%", height: "101.6%" },
+    mirrored: true,
+  },
+  {
+    src: "./assets/figma/about/line-3.svg",
+    box: { left: "60.4359%", top: "42.9032%", width: "6.485%", height: "12.2581%" },
+    image: { top: "-2.59%", left: "-2.52%", width: "103.33%", height: "105.08%" },
+    mirrored: true,
+  },
 ] as const;
 
 function Header() {
@@ -137,7 +157,7 @@ function CreativeTools() {
   const reduceMotion = useReducedMotion();
   const cursorX = useMotionValue(0);
   const cursorY = useMotionValue(0);
-  const line = lineLayouts[active];
+  const line = toolLines[active];
 
   const positionCursor = (
     element: HTMLElement,
@@ -187,12 +207,14 @@ function CreativeTools() {
         ))}
       </div>
 
-      <img
-        className="about-tools-line"
-        src="./assets/figma/about/line.svg"
-        alt=""
-        style={{ left: line.left, top: line.top, width: line.width, transform: `rotate(${line.rotate}) scaleX(${line.flip})` }}
-      />
+      <div
+        key={line.src}
+        className={`about-tools-line${line.mirrored ? " is-mirrored" : ""}`}
+        aria-hidden
+        style={line.box}
+      >
+        <img src={line.src} alt="" style={line.image} />
+      </div>
 
       <AnimatePresence mode="wait" initial={false}>
         <motion.p

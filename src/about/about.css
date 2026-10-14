@@ -304,14 +304,18 @@
 .about-tools-line {
   position: absolute;
   z-index: 1;
-  height: auto;
-  transform-origin: center;
-  transition: left 420ms cubic-bezier(0.22, 1, 0.36, 1), top 420ms cubic-bezier(0.22, 1, 0.36, 1), width 420ms cubic-bezier(0.22, 1, 0.36, 1), transform 420ms cubic-bezier(0.22, 1, 0.36, 1), filter 420ms ease;
+  pointer-events: none;
 }
 
-.about-tools[data-active="1"] .about-tools-line { filter: hue-rotate(44deg) saturate(0.85); }
-.about-tools[data-active="2"] .about-tools-line { filter: hue-rotate(225deg) saturate(0.75); }
-.about-tools[data-active="3"] .about-tools-line { filter: hue-rotate(330deg) saturate(0.9); }
+.about-tools-line.is-mirrored {
+  transform: scaleX(-1);
+}
+
+.about-tools-line > img {
+  position: absolute;
+  display: block;
+  max-width: none;
+}
 
 .about-tools-description {
   position: absolute;
@@ -455,8 +459,4 @@
   .about-tools { cursor: auto; }
   .about-tool-pill { cursor: pointer; }
   .about-tools-cursor { display: none; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .about-tools-line { transition: none; }
 }
