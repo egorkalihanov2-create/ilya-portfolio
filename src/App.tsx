@@ -130,8 +130,8 @@ export default function App() {
     <div className="site-shell">
       <header className="site-header">
         <nav aria-label="Main navigation">
-          <a href="#main">Main</a>
-          <a href="#about">About me</a>
+          <a href="./index.html">Main</a>
+          <a href="./about.html">About me</a>
           <a href="#cases">Cases</a>
           <a href="#contacts">Contacts</a>
         </nav>
@@ -345,7 +345,7 @@ export default function App() {
             </motion.a>
             <motion.a
               className="cta-choice cta-choice-more"
-              href="#about"
+              href="./about.html"
               variants={{
                 hidden: { opacity: 0, y: 120, scale: 0.72 },
                 visible: {
