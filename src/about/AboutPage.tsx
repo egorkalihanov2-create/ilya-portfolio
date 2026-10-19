@@ -113,8 +113,8 @@ function Hero() {
 
   return (
     <section ref={ref} id="top" className="about-hero" aria-label="About me">
-      <img className="about-hero-background" src="./assets/figma/about/background.png" alt="Creative workshop audience" />
-      <img className="about-hero-object" src="./assets/figma/about/object.png" alt="Ilya sitting in the audience" />
+      <img className="about-hero-background" src="./assets/figma/about/hero-figma-background.png" alt="Creative workshop audience" />
+      <img className="about-hero-object" src="./assets/figma/about/hero-figma-object.png" alt="Ilya sitting in the audience" />
       <div className="about-hero-title" aria-label="About me">
         <motion.span style={reduceMotion ? undefined : { opacity, x: baseX }}>About me</motion.span>
         {!reduceMotion && <>

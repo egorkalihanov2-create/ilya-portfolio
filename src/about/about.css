@@ -68,16 +68,19 @@
 
 .about-hero-background {
   position: absolute;
-  top: -46.51%;
-  left: 0;
-  width: 100%;
+  top: -41.72%;
+  left: -50.95%;
+  width: 200.65%;
   max-width: none;
-  height: 171.99%;
+  height: 205.45%;
+  filter: blur(2.85px);
   object-fit: cover;
+  object-position: center center;
 }
 
 .about-hero-object {
   position: absolute;
+  z-index: 1;
   top: 40.24%;
   left: 32.52%;
   width: 28.97%;
@@ -95,7 +98,7 @@
   font-family: "Druk Cyr", "Object Sans", Arial, sans-serif;
   font-size: clamp(80px, 17.2vw, 330px);
   font-weight: 500;
-  line-height: 1;
+  line-height: 1.5;
   text-align: center;
   letter-spacing: -0.011em;
   white-space: nowrap;
@@ -428,9 +431,9 @@
   .about-header a { font-size: 10px; }
   .about-flow { gap: 42px; padding-top: 52px; padding-bottom: 38px; }
   .about-hero { aspect-ratio: 384 / 330; border-radius: 10px; }
-  .about-hero-background { top: -22%; height: 145%; }
+  .about-hero-background { top: -22%; left: -28%; width: 156%; height: 145%; }
   .about-hero-object { top: 35%; left: 31%; width: 32%; }
-  .about-hero-title { top: 4%; font-size: 20vw; }
+  .about-hero-title { top: 4%; font-size: 20vw; line-height: 1.25; }
   .about-story { height: 480px; min-height: 480px; padding: 52px 24px 52px; border-radius: 10px; }
   .about-story-copy { font-size: 16px; }
   .about-story:not(.is-expanded) .about-story-copy { height: 320px; }
