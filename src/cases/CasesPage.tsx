@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import {
-  ProjectModal,
   loadCaseCatalog,
   perspectiveProjects,
   type PerspectiveProject,
 } from "@/components/perspective-carousel";
+import { CaseDetailView } from "./CaseDetailView";
 
 const preferredTagOrder = [
   "Special project",
@@ -56,7 +56,10 @@ function Header() {
 export default function CasesPage() {
   const [projects, setProjects] = useState(perspectiveProjects);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
-  const [selectedProject, setSelectedProject] = useState<PerspectiveProject | null>(null);
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(() => {
+    if (typeof window === "undefined") return null;
+    return new URLSearchParams(window.location.search).get("case");
+  });
 
   useEffect(() => {
     const controller = new AbortController();
@@ -66,6 +69,14 @@ export default function CasesPage() {
         // Keep the bundled fallback when the editable catalog is unavailable.
       });
     return () => controller.abort();
+  }, []);
+
+  useEffect(() => {
+    const updateFromHistory = () => {
+      setSelectedProjectId(new URLSearchParams(window.location.search).get("case"));
+    };
+    window.addEventListener("popstate", updateFromHistory);
+    return () => window.removeEventListener("popstate", updateFromHistory);
   }, []);
 
   const tags = useMemo(() => {
@@ -78,17 +89,52 @@ export default function CasesPage() {
     return [...uniqueTags.values()];
   }, [projects]);
 
-  const visibleProjects = useMemo(() => {
-    const filtered = selectedTag
-      ? projects.filter((project) => projectHasTag(project, selectedTag))
-      : projects;
-    return [...filtered].sort((a, b) => {
+  const orderedProjects = useMemo(() => {
+    return [...projects].sort((a, b) => {
       const aIndex = preferredProjectOrder.indexOf(a.id);
       const bIndex = preferredProjectOrder.indexOf(b.id);
       return (aIndex < 0 ? Number.MAX_SAFE_INTEGER : aIndex)
         - (bIndex < 0 ? Number.MAX_SAFE_INTEGER : bIndex);
     });
-  }, [projects, selectedTag]);
+  }, [projects]);
+
+  const visibleProjects = useMemo(() => {
+    return selectedTag
+      ? orderedProjects.filter((project) => projectHasTag(project, selectedTag))
+      : orderedProjects;
+  }, [orderedProjects, selectedTag]);
+
+  const selectedProject = orderedProjects.find((project) => project.id === selectedProjectId) ?? null;
+
+  const navigateToProject = (project: PerspectiveProject) => {
+    const url = new URL(window.location.href);
+    url.searchParams.set("case", project.id);
+    window.history.pushState({}, "", url);
+    setSelectedProjectId(project.id);
+    window.scrollTo({ top: 0, behavior: "instant" });
+  };
+
+  const closeProject = () => {
+    const url = new URL(window.location.href);
+    url.searchParams.delete("case");
+    window.history.pushState({}, "", url);
+    setSelectedProjectId(null);
+    window.scrollTo({ top: 0, behavior: "instant" });
+  };
+
+  if (selectedProject) {
+    return (
+      <div className="cases-shell cases-shell--detail">
+        <Header />
+        <CaseDetailView
+          project={selectedProject}
+          projects={orderedProjects}
+          onClose={closeProject}
+          onSelect={navigateToProject}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="cases-shell">
@@ -122,7 +168,7 @@ export default function CasesPage() {
               key={project.id}
               type="button"
               className="cases-card"
-              onClick={() => setSelectedProject(project)}
+              onClick={() => navigateToProject(project)}
               aria-label={`Open ${project.title}`}
             >
               <img src={project.coverImage} alt={project.title} />
@@ -152,7 +198,6 @@ export default function CasesPage() {
           </a>
         </footer>
       </main>
-      <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
     </div>
   );
 }
