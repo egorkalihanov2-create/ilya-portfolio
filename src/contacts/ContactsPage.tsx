@@ -76,7 +76,10 @@ export default function ContactsPage() {
                 required
               />
               <button type="submit" aria-label="Send message">
-                <img src="./assets/figma/contacts/arrow.svg" alt="" />
+                <picture>
+                  <source media="(max-width: 600px)" srcSet="./assets/figma/contacts/arrow-mobile.svg" />
+                  <img src="./assets/figma/contacts/arrow.svg" alt="" />
+                </picture>
               </button>
             </label>
           </form>
