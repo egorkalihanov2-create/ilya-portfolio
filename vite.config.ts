@@ -15,6 +15,8 @@ export default defineConfig({
       input: {
         site: fileURLToPath(new URL("./index.html", import.meta.url)),
         about: fileURLToPath(new URL("./about.html", import.meta.url)),
+        cases: fileURLToPath(new URL("./cases.html", import.meta.url)),
+        contacts: fileURLToPath(new URL("./contacts.html", import.meta.url)),
       },
     },
   },

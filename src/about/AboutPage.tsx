@@ -36,19 +36,19 @@ const tools = [
   {
     label: "Visual exploration",
     description: (
-      <><strong>Midjourney, Firefly, Nano Banana</strong> —<br className="about-tools-mobile-break" /> for visual directions, references, moodboards and fast concept exploration.</>
+      <><strong>NanoBanana, ChatGPT, Midjourney</strong> —<br className="about-tools-mobile-break" /> for moodboards, visual territories, key visuals and fast image prototyping.</>
     ),
   },
   {
     label: "Design & presentations",
     description: (
-      <><strong>Figma, Photoshop, Keynote</strong> —<br className="about-tools-mobile-break" /> for layouts, storyboards, presentation systems and polished creative decks.</>
+      <><strong>Figma, Google Slides, Base44, Readymag</strong> —<br className="about-tools-mobile-break" /> for decks, layouts, case studies and final idea packaging.</>
     ),
   },
   {
     label: "Video & audio prototyping",
     description: (
-      <><strong>Runway, Kling, ElevenLabs</strong> —<br className="about-tools-mobile-break" /> for animatics, motion tests, voice experiments and quick audiovisual prototypes.</>
+      <><strong>Higgsfield, ElevenLabs, Flow, Kling</strong> —<br className="about-tools-mobile-break" /> for animatics, video/audio references and early proof of concept.</>
     ),
   },
 ] as const;
@@ -94,8 +94,8 @@ function Header() {
       <nav aria-label="Main navigation">
         <a href="./index.html">Main</a>
         <a href="./about.html" aria-current="page">About me</a>
-        <a href="./index.html#cases">Cases</a>
-        <a href="./index.html#contacts">Contacts</a>
+        <a href="./cases.html">Cases</a>
+        <a href="./contacts.html">Contacts</a>
       </nav>
     </header>
   );

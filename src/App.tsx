@@ -132,8 +132,8 @@ export default function App() {
         <nav aria-label="Main navigation">
           <a href="./index.html">Main</a>
           <a href="./about.html">About me</a>
-          <a href="#cases">Cases</a>
-          <a href="#contacts">Contacts</a>
+          <a href="./cases.html">Cases</a>
+          <a href="./contacts.html">Contacts</a>
         </nav>
       </header>
 
