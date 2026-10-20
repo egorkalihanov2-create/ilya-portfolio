@@ -960,7 +960,7 @@ img {
 
   .intro-copy p {
     width: 74%;
-    font-size: clamp(10px, 2.65vw, 14px);
+    font-size: 17px;
   }
 
   .desktop-break {
