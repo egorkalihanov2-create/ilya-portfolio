@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": 3,
+  "revision": 5,
   "projects": [
     {
       "id": "citydrive",
@@ -18,6 +18,57 @@
         "muted": false,
         "controls": true
       },
+      "previewBlocks": [
+        {
+          "id": "citydrive-description",
+          "type": "text",
+          "heading": "",
+          "text": "A Halloween campaign that transformed a common carsharing problem into an entertaining user experience."
+        },
+        {
+          "id": "citydrive-role",
+          "type": "text",
+          "heading": "",
+          "text": "My role: developed the creative concept, campaign platform and communication mechanics — from the initial idea to final execution."
+        },
+        {
+          "id": "citydrive-gallery",
+          "type": "carousel",
+          "layout": "grid",
+          "columns": 4,
+          "items": [
+            {
+              "id": "citydrive-gallery-1",
+              "type": "image",
+              "src": "assets/figma/case-detail/gallery-1.png",
+              "alt": "Citydrive campaign visual",
+              "caption": ""
+            },
+            {
+              "id": "citydrive-gallery-2",
+              "type": "image",
+              "src": "assets/figma/case-detail/gallery-2.png",
+              "alt": "Citydrive campaign portrait",
+              "caption": ""
+            },
+            {
+              "id": "citydrive-gallery-3",
+              "type": "image",
+              "src": "assets/figma/case-detail/gallery-3.png",
+              "alt": "Citydrive campaign portrait",
+              "caption": ""
+            },
+            {
+              "id": "citydrive-gallery-4",
+              "type": "image",
+              "src": "assets/figma/case-detail/gallery-4.png",
+              "alt": "Citydrive campaign visual",
+              "caption": ""
+            }
+          ]
+        }
+      ],
+      "detailVideo": null,
       "blocks": [
         {
           "id": "citydrive-description",
@@ -30,6 +81,39 @@
           "type": "text",
           "heading": "",
           "text": "My role: developed the creative concept, campaign platform and communication mechanics — from the initial idea to final execution."
+        },
+        {
+          "id": "citydrive-film-heading",
+          "type": "text",
+          "heading": "Campaign Film",
+          "text": ""
+        },
+        {
+          "id": "citydrive-film",
+          "type": "media",
+          "item": {
+            "id": "citydrive-film-media",
+            "type": "video",
+            "src": "assets/cases/citydrive/campaign-film.mp4",
+            "alt": "Citydrive: Tales from the Crypt campaign film",
+            "caption": "Citydrive: Tales from the Crypt",
+            "poster": "assets/cases/citydrive/campaign-poster.jpg",
+            "autoplay": false,
+            "muted": false,
+            "controls": true
+          }
+        },
+        {
+          "id": "citydrive-award",
+          "type": "media",
+          "layout": "award-overlay",
+          "item": {
+            "id": "citydrive-award-media",
+            "type": "image",
+            "src": "assets/cases/citydrive/award.png",
+            "alt": "Workspace Digital Awards 2024 first place award",
+            "caption": ""
+          }
         }
       ]
     },
@@ -49,7 +133,7 @@
         "muted": false,
         "controls": true
       },
-      "blocks": [
+      "previewBlocks": [
         {
           "id": "alfa-smooth-description",
           "type": "text",
@@ -85,6 +169,84 @@
             "src": "uploads/81296549-2272-4bdf-90e4-06211ea1c80e.mp4",
             "alt": "",
             "caption": "Некоторое описание",
+            "autoplay": false,
+            "muted": false,
+            "controls": true
+          }
+        }
+      ],
+      "detailVideo": null,
+      "blocks": [
+        {
+          "id": "alfa-smooth-description",
+          "type": "text",
+          "heading": "",
+          "text": "A mockumentary recruitment campaign that turned a negatively perceived contact-center job into a comedy show about the art of smoothing things over."
+        },
+        {
+          "id": "alfa-smooth-role",
+          "type": "text",
+          "heading": "",
+          "text": "My role: developed the creative concept, campaign idea, video scripts and digital mechanics — from the initial insight to the recruitment landing experience."
+        },
+        {
+          "id": "alfa-your-film-01-heading",
+          "type": "text",
+          "heading": "Film 01: The Professor",
+          "text": ""
+        },
+        {
+          "id": "alfa-your-film-01",
+          "type": "media",
+          "item": {
+            "id": "alfa-your-film-01-media",
+            "type": "video",
+            "src": "assets/cases/alfa-your/film-01-professor.mp4",
+            "alt": "The Professor campaign film",
+            "caption": "Film 01: The Professor",
+            "poster": "assets/cases/alfa-your/film-01-professor-poster.jpg",
+            "autoplay": false,
+            "muted": false,
+            "controls": true
+          }
+        },
+        {
+          "id": "alfa-your-film-02-heading",
+          "type": "text",
+          "heading": "Film 02: The Class President",
+          "text": ""
+        },
+        {
+          "id": "alfa-your-film-02",
+          "type": "media",
+          "item": {
+            "id": "alfa-your-film-02-media",
+            "type": "video",
+            "src": "assets/cases/alfa-your/film-02-class-president.mp4",
+            "alt": "The Class President campaign film",
+            "caption": "Film 02: The Class President",
+            "poster": "assets/cases/alfa-your/film-02-class-president-poster.jpg",
+            "autoplay": false,
+            "muted": false,
+            "controls": true
+          }
+        },
+        {
+          "id": "alfa-your-film-03-heading",
+          "type": "text",
+          "heading": "Film 03: The Security Guard",
+          "text": ""
+        },
+        {
+          "id": "alfa-your-film-03",
+          "type": "media",
+          "item": {
+            "id": "alfa-your-film-03-media",
+            "type": "video",
+            "src": "assets/cases/alfa-your/film-03-security-guard.mp4",
+            "alt": "The Security Guard campaign film",
+            "caption": "Film 03: The Security Guard",
+            "poster": "assets/cases/alfa-your/film-03-security-guard-poster.jpg",
             "autoplay": false,
             "muted": false,
             "controls": true
@@ -243,7 +405,7 @@
         "muted": false,
         "controls": true
       },
-      "blocks": [
+      "previewBlocks": [
         {
           "id": "alfa-only-description",
           "type": "text",
@@ -276,34 +438,10 @@
           "layout": "carousel",
           "columns": 2,
           "items": [
-            {
-              "id": "a37c1df6-8f8a-4d4a-9a44-f33672f92c83",
-              "type": "image",
-              "src": "uploads/bfd6faa9-78db-4e78-85fd-374fb978d2ca.png",
-              "alt": "Фото 1 (1) 1.png",
-              "caption": ""
-            },
-            {
-              "id": "180f7b02-6824-4394-af0a-766acbd63a22",
-              "type": "image",
-              "src": "uploads/32da6057-03bd-48c2-8e0c-ecc4a245b171.png",
-              "alt": "5 1.png",
-              "caption": ""
-            },
-            {
-              "id": "7ade5de8-2c50-4fcc-877a-056f58f40cc6",
-              "type": "image",
-              "src": "uploads/990463cb-e60e-43c7-8938-7d57a11dbb9a.png",
-              "alt": "6 (1) 1.png",
-              "caption": ""
-            },
-            {
-              "id": "f698929e-0ceb-49e4-8ed2-f1db6b12469b",
-              "type": "image",
-              "src": "uploads/91fd3a25-27a4-404e-9a73-ef390fec2a78.png",
-              "alt": "Фото 2 1.png",
-              "caption": ""
-            }
+            { "id": "a37c1df6-8f8a-4d4a-9a44-f33672f92c83", "type": "image", "src": "uploads/bfd6faa9-78db-4e78-85fd-374fb978d2ca.png", "alt": "Фото 1 (1) 1.png", "caption": "" },
+            { "id": "180f7b02-6824-4394-af0a-766acbd63a22", "type": "image", "src": "uploads/32da6057-03bd-48c2-8e0c-ecc4a245b171.png", "alt": "5 1.png", "caption": "" },
+            { "id": "7ade5de8-2c50-4fcc-877a-056f58f40cc6", "type": "image", "src": "uploads/990463cb-e60e-43c7-8938-7d57a11dbb9a.png", "alt": "6 (1) 1.png", "caption": "" },
+            { "id": "f698929e-0ceb-49e4-8ed2-f1db6b12469b", "type": "image", "src": "uploads/91fd3a25-27a4-404e-9a73-ef390fec2a78.png", "alt": "Фото 2 1.png", "caption": "" }
           ]
         },
         {
@@ -312,32 +450,137 @@
           "layout": "grid",
           "columns": 2,
           "items": [
+            { "id": "25c56001-92f9-44a3-b67c-ece74d68da38", "type": "image", "src": "uploads/b8ec89fd-7eb9-4266-bbb9-0c164745fd6b.png", "alt": "Alfa_Only_Ura_Borisov_april_20260630 1.png", "caption": "" },
+            { "id": "a334b258-f7a4-4877-aaae-2c9f0c445e65", "type": "image", "src": "uploads/4391cc43-2f12-465d-92fe-a009b09033a8.png", "alt": "Alfa_Only_Ura_Borisov_april_20260626 1.png", "caption": "" },
+            { "id": "e4aa303a-3353-41c1-ba54-79bc88694540", "type": "image", "src": "uploads/c2039a17-fe5b-4565-93b1-187d68bc4e59.png", "alt": "Alfa_Only_Ura_Borisov_april_20260734 1.png", "caption": "" },
+            { "id": "73708e6f-0a4d-4503-b063-efde6a7e6219", "type": "image", "src": "uploads/c6c639c8-49ee-4556-a3c1-b380f0fff086.png", "alt": "Alfa_Only_Ura_Borisov_april_20260738 1.png", "caption": "" }
+          ]
+        }
+      ],
+      "detailVideo": null,
+      "blocks": [
+        {
+          "id": "alfa-only-description",
+          "type": "text",
+          "heading": "",
+          "text": "A nationwide campaign for a premium travel card, introducing Oscar- and Golden Globe-nominated actor Yura Borisov as the new Alfa Only brand ambassador."
+        },
+        {
+          "id": "alfa-only-role",
+          "type": "text",
+          "heading": "",
+          "text": "My role: campaign positioning, video scripts, photo shoot concept and key visual direction for TV, OOH and airport DOOH."
+        },
+        {
+          "id": "alfa-only-season-01-heading",
+          "type": "text",
+          "heading": "Season 01: Introducing the Ambassador",
+          "text": ""
+        },
+        {
+          "id": "alfa-only-season-01-film",
+          "type": "media",
+          "item": {
+            "id": "alfa-only-season-01-film-media",
+            "type": "video",
+            "src": "assets/cases/alfa-only/season-01-film.mp4",
+            "alt": "Introducing the Ambassador campaign film",
+            "caption": "Season 01: Introducing the Ambassador",
+            "poster": "assets/cases/alfa-only/season-01-poster.jpg",
+            "autoplay": false,
+            "muted": false,
+            "controls": true
+          }
+        },
+        {
+          "id": "alfa-only-season-01-gallery",
+          "type": "carousel",
+          "layout": "grid",
+          "columns": 2,
+          "items": [
             {
-              "id": "25c56001-92f9-44a3-b67c-ece74d68da38",
+              "id": "alfa-only-season-01-photo-01",
               "type": "image",
-              "src": "uploads/b8ec89fd-7eb9-4266-bbb9-0c164745fd6b.png",
-              "alt": "Alfa_Only_Ura_Borisov_april_20260630 1.png",
+              "src": "assets/cases/alfa-only/season-01-photo-01.jpg",
+              "alt": "Yura Borisov with a travel case on a white background",
               "caption": ""
             },
             {
-              "id": "a334b258-f7a4-4877-aaae-2c9f0c445e65",
+              "id": "alfa-only-season-01-photo-02",
               "type": "image",
-              "src": "uploads/4391cc43-2f12-465d-92fe-a009b09033a8.png",
-              "alt": "Alfa_Only_Ura_Borisov_april_20260626 1.png",
+              "src": "assets/cases/alfa-only/season-01-photo-02.jpg",
+              "alt": "Yura Borisov building a house of Alfa Only cards",
               "caption": ""
             },
             {
-              "id": "e4aa303a-3353-41c1-ba54-79bc88694540",
+              "id": "alfa-only-season-01-photo-03",
               "type": "image",
-              "src": "uploads/c2039a17-fe5b-4565-93b1-187d68bc4e59.png",
-              "alt": "Alfa_Only_Ura_Borisov_april_20260734 1.png",
+              "src": "assets/cases/alfa-only/season-01-photo-03.jpg",
+              "alt": "Yura Borisov carrying a travel case",
               "caption": ""
             },
             {
-              "id": "73708e6f-0a4d-4503-b063-efde6a7e6219",
+              "id": "alfa-only-season-01-photo-04",
               "type": "image",
-              "src": "uploads/c6c639c8-49ee-4556-a3c1-b380f0fff086.png",
-              "alt": "Alfa_Only_Ura_Borisov_april_20260738 1.png",
+              "src": "assets/cases/alfa-only/season-01-photo-04.jpg",
+              "alt": "Yura Borisov sitting on travel cases",
+              "caption": ""
+            }
+          ]
+        },
+        {
+          "id": "alfa-only-season-02-heading",
+          "type": "text",
+          "heading": "Season 02: The First Nationwide Campaign",
+          "text": ""
+        },
+        {
+          "id": "alfa-only-season-02-film",
+          "type": "media",
+          "item": {
+            "id": "alfa-only-season-02-film-media",
+            "type": "video",
+            "src": "assets/cases/alfa-only/season-02-film.mp4",
+            "alt": "The First Nationwide Campaign film",
+            "caption": "Season 02: The First Nationwide Campaign",
+            "poster": "assets/cases/alfa-only/season-02-poster.jpg",
+            "autoplay": false,
+            "muted": false,
+            "controls": true
+          }
+        },
+        {
+          "id": "alfa-only-season-02-gallery",
+          "type": "carousel",
+          "layout": "grid",
+          "columns": 2,
+          "items": [
+            {
+              "id": "alfa-only-season-02-photo-01",
+              "type": "image",
+              "src": "assets/cases/alfa-only/season-02-photo-01.jpg",
+              "alt": "Yura Borisov holding travel cases",
+              "caption": ""
+            },
+            {
+              "id": "alfa-only-season-02-photo-02",
+              "type": "image",
+              "src": "assets/cases/alfa-only/season-02-photo-02.jpg",
+              "alt": "Yura Borisov inside a travel case",
+              "caption": ""
+            },
+            {
+              "id": "alfa-only-season-02-photo-03",
+              "type": "image",
+              "src": "assets/cases/alfa-only/season-02-photo-03.jpg",
+              "alt": "Yura Borisov with a model car",
+              "caption": ""
+            },
+            {
+              "id": "alfa-only-season-02-photo-04",
+              "type": "image",
+              "src": "assets/cases/alfa-only/season-02-photo-04.jpg",
+              "alt": "Yura Borisov balancing a model car",
               "caption": ""
             }
           ]

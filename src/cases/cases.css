@@ -1,10 +1,10 @@
 .cases-shell {
   position: relative;
-  width: min(100%, 1920px);
+  width: 100%;
   min-height: 100vh;
   margin-inline: auto;
   overflow: clip;
-  border-radius: 26px;
+  border-radius: 0;
   background: #fff;
 }
 
@@ -314,8 +314,10 @@
 .case-detail-role {
   display: grid;
   width: min(100%, 1055px);
-  margin: 132px 0 0 auto;
+  margin: 132px auto 0;
+  justify-items: center;
   gap: 55px;
+  text-align: center;
 }
 
 .case-detail-video {
@@ -370,6 +372,107 @@
 .case-detail-play:hover,
 .case-detail-play:focus-visible {
   scale: 1.06;
+}
+
+.case-detail-story {
+  display: grid;
+  margin-top: 129px;
+  gap: 72px;
+}
+
+.case-detail-story-copy {
+  width: min(100%, 1403px);
+  margin-inline: auto;
+}
+
+.case-detail-story-copy h2 {
+  margin: 0;
+  font-family: "Druk Cyr", "Object Sans", Arial, sans-serif;
+  font-size: clamp(38px, 4.2vw, 80px);
+  font-weight: 500;
+  line-height: 0.92;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+}
+
+.case-detail-story-copy p {
+  width: min(100%, 1055px);
+  margin: 30px 0 0;
+  color: #2f2f2f;
+  font-size: clamp(22px, 2.1vw, 40px);
+  line-height: 1.05;
+  letter-spacing: -0.011em;
+}
+
+.case-detail-story-video {
+  margin: 0 auto;
+}
+
+.case-detail-story-grid {
+  display: grid;
+  width: min(100%, 1403px);
+  margin-inline: auto;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.case-detail-story-grid[data-columns="3"] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.case-detail-story-grid[data-columns="4"] {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.case-detail-story-grid figure,
+.case-detail-story-image {
+  margin: 0;
+}
+
+.case-detail-story-grid figure {
+  display: grid;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.case-detail-story-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.case-detail-story-grid figcaption,
+.case-detail-story-image figcaption {
+  padding-top: 12px;
+  color: #6d6d6d;
+  font-size: 16px;
+}
+
+.case-detail-story-image {
+  width: min(100%, 1403px);
+  margin-inline: auto;
+}
+
+.case-detail-story-image > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+}
+
+.case-detail-story-image.is-award-overlay {
+  position: relative;
+  z-index: 2;
+  width: clamp(190px, 21vw, 380px);
+  margin: -250px 4% 0 auto;
+  filter: drop-shadow(0 24px 30px rgba(0, 0, 0, 0.28));
+  rotate: 7deg;
+}
+
+.case-detail-story-image.is-award-overlay > img {
+  border-radius: 0;
 }
 
 .case-detail-actions {
@@ -534,6 +637,12 @@
   .case-detail-gallery[data-count="3"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .case-detail-role { width: 65%; margin-top: 82px; gap: 32px; }
   .case-detail-video { margin-top: 82px; }
+  .case-detail-story { margin-top: 82px; gap: 50px; }
+  .case-detail-story-video { margin-top: 0; }
+  .case-detail-story-grid { gap: 14px; }
+  .case-detail-story-grid[data-columns="3"],
+  .case-detail-story-grid[data-columns="4"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .case-detail-story-image.is-award-overlay { margin-top: -180px; }
   .case-detail-play { scale: 0.7; }
   .case-detail-play:hover,
   .case-detail-play:focus-visible { scale: 0.75; }
@@ -577,6 +686,15 @@
   .case-detail-gallery-item { border-radius: 9px; }
   .case-detail-role { width: 100%; margin-top: 52px; gap: 24px; }
   .case-detail-video { margin-top: 52px; border-radius: 10px; }
+  .case-detail-story { margin-top: 52px; gap: 32px; }
+  .case-detail-story-copy h2 { font-size: 32px; }
+  .case-detail-story-copy p { margin-top: 18px; font-size: 18px; }
+  .case-detail-story-video { margin-top: 0; }
+  .case-detail-story-grid,
+  .case-detail-story-grid[data-columns="3"],
+  .case-detail-story-grid[data-columns="4"] { grid-template-columns: 1fr; gap: 10px; }
+  .case-detail-story-grid figure { aspect-ratio: 4 / 5; border-radius: 10px; }
+  .case-detail-story-image.is-award-overlay { width: 145px; margin: -105px 6px 0 auto; }
   .case-detail-play { scale: 0.38; }
   .case-detail-play:hover,
   .case-detail-play:focus-visible { scale: 0.42; }

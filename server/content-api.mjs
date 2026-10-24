@@ -286,6 +286,13 @@ export async function createContentApi({
             project.image,
             project.previewVideo?.src,
             project.previewVideo?.poster,
+            project.detailVideo?.src,
+            project.detailVideo?.poster,
+            ...project.previewBlocks.flatMap((blockValue) => {
+              if (blockValue.type === "media") return [blockValue.item.src, blockValue.item.poster].filter(Boolean);
+              if (blockValue.type === "carousel") return blockValue.items.flatMap((item) => [item.src, item.poster].filter(Boolean));
+              return [];
+            }),
             ...project.blocks.flatMap((blockValue) => {
               if (blockValue.type === "media") return [blockValue.item.src, blockValue.item.poster].filter(Boolean);
               if (blockValue.type === "carousel") return blockValue.items.flatMap((item) => [item.src, item.poster].filter(Boolean));
@@ -330,6 +337,13 @@ export async function createContentApi({
             project.image,
             project.previewVideo?.src,
             project.previewVideo?.poster,
+            project.detailVideo?.src,
+            project.detailVideo?.poster,
+            ...project.previewBlocks.flatMap((blockValue) => {
+              if (blockValue.type === "media") return [blockValue.item.src, blockValue.item.poster].filter(Boolean);
+              if (blockValue.type === "carousel") return blockValue.items.flatMap((item) => [item.src, item.poster].filter(Boolean));
+              return [];
+            }),
             ...project.blocks.flatMap((blockValue) => {
               if (blockValue.type === "media") return [blockValue.item.src, blockValue.item.poster].filter(Boolean);
               if (blockValue.type === "carousel") return blockValue.items.flatMap((item) => [item.src, item.poster].filter(Boolean));

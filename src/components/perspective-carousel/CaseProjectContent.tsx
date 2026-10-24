@@ -89,14 +89,15 @@ function CaseMediaGrid({ block }: { block: CaseCarouselBlock }) {
 
 export function CaseProjectContent({ project }: { project: PerspectiveProject }) {
   const legacyBlocks = [project.description, project.role].filter(Boolean);
+  const blocks = project.previewBlocks ?? project.blocks;
 
-  if (!project.blocks?.length) {
+  if (!blocks?.length) {
     return legacyBlocks.map((text, index) => <p key={index}>{text}</p>);
   }
 
   return (
     <div className="pc-case-content">
-      {project.blocks.map((block) => {
+      {blocks.map((block) => {
         if (block.type === "text") {
           return (
             <section className="pc-case-text" key={block.id}>

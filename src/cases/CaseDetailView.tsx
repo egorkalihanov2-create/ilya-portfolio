@@ -1,13 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import type { PerspectiveProject, CaseMedia } from "@/components/perspective-carousel";
+import type { PerspectiveProject, CaseBlock, CaseMedia } from "@/components/perspective-carousel";
 import { VideoPlayer } from "@/components/perspective-carousel";
-
-const citydriveGallery = [
-  { src: "./assets/figma/case-detail/gallery-1.png", alt: "Citydrive campaign visual" },
-  { src: "./assets/figma/case-detail/gallery-2.png", alt: "Citydrive campaign portrait" },
-  { src: "./assets/figma/case-detail/gallery-3.png", alt: "Citydrive campaign portrait" },
-  { src: "./assets/figma/case-detail/gallery-4.png", alt: "Citydrive campaign visual" },
-];
 
 function textContent(project: PerspectiveProject) {
   const textBlocks = project.blocks?.filter((block) => block.type === "text") ?? [];
@@ -17,8 +10,6 @@ function textContent(project: PerspectiveProject) {
 }
 
 function projectMedia(project: PerspectiveProject) {
-  if (project.id === "citydrive") return citydriveGallery;
-
   const images: { src: string; alt: string }[] = [];
   for (const block of project.blocks ?? []) {
     if (block.type === "media" && block.item.type === "image") {
@@ -32,15 +23,13 @@ function projectMedia(project: PerspectiveProject) {
   }
 
   if (!images.length) {
-    images.push(
-      { src: project.image, alt: project.title },
-      { src: project.coverImage, alt: project.title },
-    );
+    images.push({ src: project.coverImage, alt: project.title });
   }
   return images.slice(0, 4);
 }
 
 function detailVideo(project: PerspectiveProject): CaseMedia | undefined {
+  if (Object.hasOwn(project, "detailVideo")) return project.detailVideo ?? undefined;
   if (project.previewVideo) return project.previewVideo;
   for (const block of project.blocks ?? []) {
     if (block.type === "media" && block.item.type === "video") return block.item;
@@ -56,6 +45,92 @@ function CaseTitle({ title }: { title: string }) {
   const separator = title.indexOf(":");
   if (separator < 0) return <>{title}</>;
   return <>{title.slice(0, separator + 1)}<br />{title.slice(separator + 1).trim()}</>;
+}
+
+function storyBlocks(project: PerspectiveProject) {
+  const introTextIds = new Set(
+    (project.blocks ?? [])
+      .filter((block) => block.type === "text")
+      .slice(0, 2)
+      .map((block) => block.id),
+  );
+  return (project.blocks ?? []).filter((block) => !introTextIds.has(block.id));
+}
+
+function isStructuredStory(blocks: CaseBlock[]) {
+  return blocks.some((block) =>
+    (block.type === "text" && Boolean(block.heading?.trim()))
+    || (block.type === "media" && block.layout === "award-overlay"),
+  );
+}
+
+function StoryVideo({ media, fallback, title }: { media: CaseMedia; fallback: string; title: string }) {
+  const [started, setStarted] = useState(false);
+  return (
+    <section className="case-detail-video case-detail-story-video" aria-label={`${title} video`}>
+      {started ? (
+        <VideoPlayer
+          src={media.src}
+          poster={media.poster ?? fallback}
+          autoPlay
+          controls
+          playsInline
+          preload="metadata"
+        />
+      ) : (
+        <>
+          <img className="case-detail-video-poster" src={media.poster ?? fallback} alt="" />
+          <span className="case-detail-video-shade" aria-hidden />
+          <button
+            type="button"
+            className="case-detail-play"
+            onClick={() => setStarted(true)}
+            aria-label={`Play ${title}`}
+          >
+            <img src="./assets/figma/case-detail/play.svg" alt="" />
+          </button>
+        </>
+      )}
+    </section>
+  );
+}
+
+function StoryBlock({ block, project }: { block: CaseBlock; project: PerspectiveProject }) {
+  if (block.type === "text") {
+    return (
+      <section className="case-detail-story-copy">
+        {block.heading ? <h2>{block.heading}</h2> : null}
+        {block.text ? <p>{block.text}</p> : null}
+      </section>
+    );
+  }
+
+  if (block.type === "media") {
+    if (block.item.type === "video") {
+      return <StoryVideo media={block.item} fallback={project.coverImage} title={block.item.caption || project.title} />;
+    }
+    return (
+      <figure className={`case-detail-story-image${block.layout === "award-overlay" ? " is-award-overlay" : ""}`}>
+        <img src={block.item.src} alt={block.item.alt ?? project.title} decoding="async" />
+        {block.item.caption ? <figcaption>{block.item.caption}</figcaption> : null}
+      </figure>
+    );
+  }
+
+  return (
+    <div
+      className="case-detail-story-grid"
+      data-columns={block.columns ?? 2}
+      aria-label={`${project.title} gallery`}
+    >
+      {block.items.map((item) => (
+        <figure key={item.id}>
+          <img src={item.src} alt={item.alt ?? project.title} decoding="async" />
+          {item.caption ? <figcaption>{item.caption}</figcaption> : null}
+        </figure>
+      ))}
+    </div>
+  );
 }
 
 export function CaseDetailView({
@@ -74,6 +149,8 @@ export function CaseDetailView({
   const { description, role } = textContent(project);
   const gallery = useMemo(() => projectMedia(project), [project]);
   const video = detailVideo(project);
+  const narrativeBlocks = useMemo(() => storyBlocks(project), [project]);
+  const structuredStory = useMemo(() => isStructuredStory(narrativeBlocks), [narrativeBlocks]);
   const currentIndex = Math.max(0, projects.findIndex((item) => item.id === project.id));
   const nextProject = projects[(currentIndex + 1) % projects.length];
   const stripProjects = useMemo(() => {
@@ -100,50 +177,58 @@ export function CaseDetailView({
           <p>{description}</p>
         </div>
 
-        <div
-          className={`case-detail-gallery${project.id === "citydrive" ? " is-citydrive" : ""}`}
-          data-count={Math.min(gallery.length, 4)}
-          aria-label={`${project.title} gallery`}
-        >
-          {gallery.map((item, index) => (
-            <figure className="case-detail-gallery-item" key={`${item.src}-${index}`}>
-              <img src={item.src} alt={item.alt} decoding="async" />
-            </figure>
-          ))}
-        </div>
+        {!structuredStory ? (
+          <div
+            className={`case-detail-gallery${project.id === "citydrive" ? " is-citydrive" : ""}`}
+            data-count={Math.min(gallery.length, 4)}
+            aria-label={`${project.title} gallery`}
+          >
+            {gallery.map((item, index) => (
+              <figure className="case-detail-gallery-item" key={`${item.src}-${index}`}>
+                <img src={item.src} alt={item.alt} decoding="async" />
+              </figure>
+            ))}
+          </div>
+        ) : null}
 
         <section className="case-detail-role">
           <h2>My Role</h2>
           <p>{role}</p>
         </section>
 
-        <section className="case-detail-video" aria-label={`${project.title} video`}>
-          {videoStarted && video ? (
-            <VideoPlayer
-              src={video.src}
-              poster={video.poster ?? project.coverImage}
-              autoPlay
-              controls
-              playsInline
-              preload="metadata"
-            />
-          ) : (
-            <>
-              <img className="case-detail-video-poster" src={video?.poster ?? project.coverImage} alt="" />
-              <span className="case-detail-video-shade" aria-hidden />
-              {video ? (
-                <button
-                  type="button"
-                  className="case-detail-play"
-                  onClick={() => setVideoStarted(true)}
-                  aria-label={`Play ${project.title} video`}
-                >
-                  <img src="./assets/figma/case-detail/play.svg" alt="" />
-                </button>
-              ) : null}
-            </>
-          )}
-        </section>
+        {structuredStory ? (
+          <div className="case-detail-story">
+            {narrativeBlocks.map((block) => <StoryBlock key={block.id} block={block} project={project} />)}
+          </div>
+        ) : (
+          <section className="case-detail-video" aria-label={`${project.title} video`}>
+            {videoStarted && video ? (
+              <VideoPlayer
+                src={video.src}
+                poster={video.poster ?? project.coverImage}
+                autoPlay
+                controls
+                playsInline
+                preload="metadata"
+              />
+            ) : (
+              <>
+                <img className="case-detail-video-poster" src={video?.poster ?? project.coverImage} alt="" />
+                <span className="case-detail-video-shade" aria-hidden />
+                {video ? (
+                  <button
+                    type="button"
+                    className="case-detail-play"
+                    onClick={() => setVideoStarted(true)}
+                    aria-label={`Play ${project.title} video`}
+                  >
+                    <img src="./assets/figma/case-detail/play.svg" alt="" />
+                  </button>
+                ) : null}
+              </>
+            )}
+          </section>
+        )}
       </article>
 
       <nav className="case-detail-actions" aria-label="Case navigation">

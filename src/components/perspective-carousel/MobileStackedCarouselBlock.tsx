@@ -94,11 +94,6 @@ export function MobileStackedCarouselBlock({
 
   return (
     <section className="msc-block" id="cases">
-      <header className="msc-block__label" aria-hidden="true">
-        <span>Selected works</span>
-        <span>01 / stacked</span>
-      </header>
-
       <div
         className="msc-stack"
         role="region"
@@ -225,9 +220,6 @@ export function MobileStackedCarouselBlock({
           })}
         </div>
 
-        <p className="msc-stack__hint" aria-hidden="true">
-          swipe left or right
-        </p>
       </div>
     </section>
   );

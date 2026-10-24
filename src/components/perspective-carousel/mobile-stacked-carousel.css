@@ -4,7 +4,7 @@
 }
 
 .msc-block {
-  --msc-background: #f2f1ed;
+  --msc-background: #ffffff;
   --msc-card-background: #252525;
   --msc-card-text: #f0f0f0;
   --msc-text: #242424;
@@ -13,35 +13,21 @@
   position: relative;
   display: grid;
   width: 100%;
-  min-height: 100svh;
-  padding: 92px 12px 42px;
+  min-height: 0;
+  padding: 0;
   place-items: center;
+  border-color: #ffffff;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0) 45%),
-    var(--msc-background);
+  background: var(--msc-background);
   color: var(--msc-text);
   font-family: inherit;
-}
-
-.msc-block__label {
-  position: absolute;
-  inset: 24px 18px auto;
-  z-index: 20;
-  display: flex;
-  justify-content: space-between;
-  gap: 24px;
-  color: color-mix(in srgb, var(--msc-text) 72%, transparent);
-  font-size: 12px;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
 }
 
 .msc-stack {
   position: relative;
   width: 100%;
-  height: 64svh;
-  min-height: 430px;
+  height: min(112vw, 430px);
+  min-height: 390px;
   touch-action: pan-y;
 }
 
@@ -53,7 +39,7 @@
 
 .msc-stack__stage {
   position: absolute;
-  inset: 82px 0 72px;
+  inset: 72px 0 28px;
   display: grid;
   place-items: center;
   perspective: 1200px;
@@ -134,19 +120,6 @@
   color: var(--msc-muted);
   font-size: clamp(10px, 2.8vw, 13px);
   line-height: 1;
-  white-space: nowrap;
-}
-
-.msc-stack__hint {
-  position: absolute;
-  bottom: 18px;
-  left: 50%;
-  margin: 0;
-  color: color-mix(in srgb, var(--msc-text) 54%, transparent);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  translate: -50% 0;
   white-space: nowrap;
 }
 

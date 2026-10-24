@@ -51,6 +51,10 @@ test("local editor loads, uploads and saves a versioned catalog", async (context
   const catalog = await fetch(`${origin}/api/catalog`).then((response) => response.json());
   assert.equal(catalog.version, 1);
   assert.equal(catalog.projects.length, 6);
+  assert.equal(catalog.projects[0].previewBlocks.length, 3);
+  assert.equal(catalog.projects[0].blocks.length, 5);
+  assert.notDeepEqual(catalog.projects[0].previewBlocks, catalog.projects[0].blocks);
+  assert.equal(catalog.projects[0].detailVideo, null);
 
   const png = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Y9Z1xkAAAAASUVORK5CYII=", "base64");
   const uploadResponse = await fetch(`${origin}/api/admin/upload`, {
@@ -82,6 +86,9 @@ test("local editor loads, uploads and saves a versioned catalog", async (context
   assert.match(uploadedVideo.src, /^uploads\/[a-f0-9-]+\.mp4$/);
 
   catalog.projects[0].title = "QA title";
+  const detailDescription = catalog.projects[0].blocks[0].text;
+  catalog.projects[0].previewBlocks[0].text = "Preview-only copy";
+  assert.equal(catalog.projects[0].blocks[0].text, detailDescription);
   catalog.projects[0].previewVideo = {
     id: "qa-preview-video",
     type: "video",
@@ -90,6 +97,15 @@ test("local editor loads, uploads and saves a versioned catalog", async (context
     muted: false,
     controls: true,
   };
+  catalog.projects[0].detailVideo = {
+    id: "qa-detail-video",
+    type: "video",
+    src: uploadedVideo.src,
+    autoplay: false,
+    muted: false,
+    controls: true,
+  };
+  catalog.projects[1].detailVideo = null;
   const gallery = catalog.projects[2].blocks.find((block) => block.type === "carousel");
   assert.ok(gallery);
   gallery.layout = "grid";
@@ -108,6 +124,10 @@ test("local editor loads, uploads and saves a versioned catalog", async (context
   assert.equal(saved.revision, catalog.revision + 1);
   assert.equal(saved.projects[0].title, "QA title");
   assert.equal(saved.projects[0].previewVideo.src, uploadedVideo.src);
+  assert.equal(saved.projects[0].detailVideo.src, uploadedVideo.src);
+  assert.equal(saved.projects[1].detailVideo, null);
+  assert.equal(saved.projects[0].previewBlocks[0].text, "Preview-only copy");
+  assert.equal(saved.projects[0].blocks[0].text, detailDescription);
   assert.equal(saved.projects[2].blocks.find((block) => block.type === "carousel").layout, "grid");
   assert.equal(saved.projects[2].blocks.find((block) => block.type === "carousel").columns, 2);
 
@@ -115,6 +135,10 @@ test("local editor loads, uploads and saves a versioned catalog", async (context
   assert.equal(stored.revision, catalog.revision + 1);
   assert.equal(stored.projects[0].title, "QA title");
   assert.equal(stored.projects[0].previewVideo.src, uploadedVideo.src);
+  assert.equal(stored.projects[0].detailVideo.src, uploadedVideo.src);
+  assert.equal(stored.projects[1].detailVideo, null);
+  assert.equal(stored.projects[0].previewBlocks[0].text, "Preview-only copy");
+  assert.equal(stored.projects[0].blocks[0].text, detailDescription);
   assert.equal(stored.projects[2].blocks.find((block) => block.type === "carousel").layout, "grid");
 
   const publishResponse = await fetch(`${origin}/api/admin/publish`, {

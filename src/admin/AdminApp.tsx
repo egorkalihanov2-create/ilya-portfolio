@@ -11,6 +11,7 @@ import type {
   CaseMedia,
   PerspectiveProject,
 } from "@/components/perspective-carousel";
+import { CaseDetailView } from "@/cases/CaseDetailView";
 
 interface AdminSession {
   authenticated: boolean;
@@ -39,6 +40,8 @@ interface PickerRequest {
   accept: "images" | "videos" | "all";
   onFiles: (files: File[]) => Promise<void>;
 }
+
+type EditorMode = "preview" | "detail";
 
 const acceptedMedia = "image/png,image/jpeg,image/webp,image/gif,video/mp4,video/webm";
 const acceptedImages = "image/png,image/jpeg,image/webp,image/gif";
@@ -152,36 +155,182 @@ function MediaEditor({
   );
 }
 
-function ProjectPreview({ project }: { project: PerspectiveProject }) {
-  const resolved = resolveProjectAssets(project);
+function VideoEditorCard({
+  title,
+  description,
+  video,
+  poster,
+  onReplace,
+  onDelete,
+  openPicker,
+  uploadMany,
+}: {
+  title: string;
+  description: string;
+  video?: CaseMedia;
+  poster: string;
+  onReplace: (item: CaseMedia) => void;
+  onDelete: () => void;
+  openPicker: (request: PickerRequest) => void;
+  uploadMany: (files: File[]) => Promise<CaseMedia[]>;
+}) {
+  return (
+    <section className="admin-card admin-preview-video-card">
+      <div className="admin-preview-video-card__copy">
+        <h2>{title}</h2>
+        <p>{description}</p>
+      </div>
+      {video ? (
+        <video
+          src={resolveCaseAsset(video.src)}
+          poster={resolveCaseAsset(poster)}
+          controls
+          muted
+          preload="metadata"
+        />
+      ) : (
+        <div className="admin-preview-video-card__empty">Видео пока не добавлено</div>
+      )}
+      <div className="admin-inline-actions admin-preview-video-card__actions">
+        <button
+          type="button"
+          onClick={() => openPicker({
+            multiple: false,
+            accept: "videos",
+            onFiles: async (files) => {
+              const [item] = await uploadMany(files.slice(0, 1));
+              if (!item) return;
+              if (item.type !== "video") throw new Error("Выберите видео в формате MP4 или WebM");
+              onReplace({
+                ...item,
+                autoplay: false,
+                muted: false,
+                controls: true,
+              });
+            },
+          })}
+        >
+          {video ? "Заменить видео" : "Добавить видео"}
+        </button>
+        {video ? (
+          <button className="danger" type="button" onClick={onDelete}>
+            Удалить видео
+          </button>
+        ) : null}
+      </div>
+    </section>
+  );
+}
+
+function detailTextBlock(project: PerspectiveProject, kind: "description" | "role") {
+  const textBlocks = project.blocks?.filter((block) => block.type === "text") ?? [];
+  return textBlocks.find((block) => block.id.toLowerCase().includes(kind))
+    ?? textBlocks[kind === "description" ? 0 : 1];
+}
+
+function detailText(project: PerspectiveProject, kind: "description" | "role") {
+  const fallback = kind === "description" ? project.description : project.role;
+  const value = detailTextBlock(project, kind)?.text ?? fallback ?? "";
+  return kind === "role" ? value.replace(/^My role:\s*/i, "") : value;
+}
+
+function setDetailText(project: PerspectiveProject, kind: "description" | "role", value: string) {
+  project.blocks ??= [];
+  const block = detailTextBlock(project, kind);
+  if (block) {
+    const hadRolePrefix = kind === "role" && /^My role:\s*/i.test(block.text);
+    block.text = hadRolePrefix ? `My role: ${value}` : value;
+    return;
+  }
+
+  const nextBlock: CaseBlock = {
+    id: `${project.id}-${kind}`,
+    type: "text",
+    heading: kind === "role" ? "My Role" : "",
+    text: value,
+  };
+  const firstMediaIndex = project.blocks.findIndex((item) => item.type !== "text");
+  const insertAt = firstMediaIndex < 0 ? project.blocks.length : firstMediaIndex;
+  project.blocks.splice(insertAt, 0, nextBlock);
+}
+
+function editableBlocks(project: PerspectiveProject, mode: EditorMode) {
+  if (mode === "preview") {
+    project.previewBlocks ??= structuredClone(project.blocks ?? []);
+    return project.previewBlocks;
+  }
+  project.blocks ??= [];
+  return project.blocks;
+}
+
+function MainProjectPreview({ project }: { project: PerspectiveProject }) {
   const [videoStarted, setVideoStarted] = useState(false);
 
-  useEffect(() => {
-    setVideoStarted(false);
-  }, [resolved.id, resolved.previewVideo?.src]);
+  useEffect(() => setVideoStarted(false), [project.id, project.previewVideo?.src]);
 
   return (
-    <article className="admin-case-preview">
-      <div className="admin-case-preview__media">
-        {videoStarted && resolved.previewVideo ? (
-          <VideoPlayer src={resolved.previewVideo.src} poster={resolved.image} autoPlay controls playsInline preload="metadata" />
+    <article className="admin-main-preview">
+      <div className="admin-main-preview__media">
+        {videoStarted && project.previewVideo ? (
+          <VideoPlayer
+            src={project.previewVideo.src}
+            poster={project.image}
+            autoPlay
+            controls
+            playsInline
+            preload="metadata"
+          />
         ) : (
-          <img src={resolved.image} alt="" />
+          <img src={project.image} alt="" />
         )}
-        {!videoStarted && resolved.previewVideo ? (
-          <button className="admin-case-preview__play" type="button" aria-label="Включить видео" onClick={() => setVideoStarted(true)}>
+        {!videoStarted && project.previewVideo ? (
+          <button
+            className="admin-main-preview__play"
+            type="button"
+            aria-label="Включить видео"
+            onClick={() => setVideoStarted(true)}
+          >
             <span />
           </button>
         ) : null}
       </div>
-      <div className="admin-case-preview__content">
-        <div className="admin-case-preview__heading">
-          <h2>{resolved.title}</h2>
-          <span>{resolved.tag}</span>
+      <div className="admin-main-preview__content">
+        <div className="admin-main-preview__heading">
+          <h2>{project.title}</h2>
+          <span>{project.tag}</span>
         </div>
-        <CaseProjectContent project={resolved} />
+        <CaseProjectContent project={project} />
       </div>
     </article>
+  );
+}
+
+function ProjectPreview({
+  project,
+  projects,
+  onSelect,
+  mode,
+}: {
+  project: PerspectiveProject;
+  projects: PerspectiveProject[];
+  onSelect: (project: PerspectiveProject) => void;
+  mode: EditorMode;
+}) {
+  const resolvedProjects = useMemo(() => projects.map(resolveProjectAssets), [projects]);
+  const resolved = resolvedProjects.find((item) => item.id === project.id)
+    ?? resolveProjectAssets(project);
+
+  if (mode === "preview") return <MainProjectPreview project={resolved} />;
+
+  return (
+    <div className="admin-detail-preview">
+      <CaseDetailView
+        project={resolved}
+        projects={resolvedProjects}
+        onClose={() => undefined}
+        onSelect={onSelect}
+      />
+    </div>
   );
 }
 
@@ -189,6 +338,7 @@ export function AdminApp() {
   const [session, setSession] = useState<AdminSession | null>(null);
   const [draft, setDraft] = useState<CaseCatalog | null>(null);
   const [selectedId, setSelectedId] = useState("");
+  const [editorMode, setEditorMode] = useState<EditorMode>("preview");
   const [dirty, setDirty] = useState(false);
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState("Подключение к редактору…");
@@ -263,6 +413,9 @@ export function AdminApp() {
     () => draft?.projects.find((project) => project.id === selectedId) ?? null,
     [draft, selectedId],
   );
+  const selectedBlocks = selected
+    ? (editorMode === "preview" ? selected.previewBlocks ?? selected.blocks ?? [] : selected.blocks ?? [])
+    : [];
 
   const updateProject = useCallback((mutate: (project: PerspectiveProject) => void) => {
     setDraft((current) => {
@@ -330,15 +483,19 @@ export function AdminApp() {
 
   const replaceBlock = (blockId: string, mutate: (block: CaseBlock) => void) => {
     updateProject((project) => {
-      const block = project.blocks?.find((item) => item.id === blockId);
+      const block = editableBlocks(project, editorMode).find((item) => item.id === blockId);
       if (block) mutate(block);
     });
   };
 
   const addTextBlock = () => {
     updateProject((project) => {
-      project.blocks ??= [];
-      project.blocks.push({ id: crypto.randomUUID(), type: "text", heading: "", text: "" });
+      editableBlocks(project, editorMode).push({
+        id: crypto.randomUUID(),
+        type: "text",
+        heading: "",
+        text: "",
+      });
     });
   };
 
@@ -350,8 +507,7 @@ export function AdminApp() {
         const [item] = await uploadMany(files.slice(0, 1));
         if (!item) return;
         updateProject((project) => {
-          project.blocks ??= [];
-          project.blocks.push({ id: crypto.randomUUID(), type: "media", item });
+          editableBlocks(project, editorMode).push({ id: crypto.randomUUID(), type: "media", item });
         });
       },
     });
@@ -365,8 +521,7 @@ export function AdminApp() {
         const items = await uploadMany(files.slice(0, 20));
         if (!items.length) return;
         updateProject((project) => {
-          project.blocks ??= [];
-          project.blocks.push({
+          editableBlocks(project, editorMode).push({
             id: crypto.randomUUID(),
             type: "carousel",
             layout: "carousel",
@@ -514,98 +669,142 @@ export function AdminApp() {
                 <input value={selected.tag} onChange={(event) => updateProject((project) => { project.tag = event.target.value; })} />
               </label>
 
-              <section className="admin-card admin-cover-card">
-                <div>
-                  <h2>Обложка</h2>
-                  <p>Оригинал используется внутри кейса. Для карточки автоматически создаётся WebP 1280 px.</p>
-                </div>
-                <img src={resolveCaseAsset(selected.coverImage)} alt="" />
+              <div className="admin-editor-mode" role="tablist" aria-label="Редактируемая версия кейса">
                 <button
                   type="button"
-                  onClick={() => openPicker({
-                    multiple: false,
-                    accept: "images",
-                    onFiles: async ([file]) => {
-                      if (!file) return;
-                      setBusy(true);
-                      try {
-                        showStatus(`Загрузка обложки: ${file.name}`);
-                        const original = await uploadFile(file);
-                        const cover = await uploadFile(await makeCover(file));
-                        updateProject((project) => {
-                          project.image = original.src;
-                          project.coverImage = cover.src;
-                        });
-                      } finally {
-                        setBusy(false);
-                      }
-                    },
-                  })}
+                  role="tab"
+                  aria-selected={editorMode === "preview"}
+                  className={editorMode === "preview" ? "is-active" : ""}
+                  onClick={() => setEditorMode("preview")}
                 >
-                  Заменить обложку
+                  <strong>Превью в Main</strong>
+                  <span>Попап после нажатия на карточку</span>
                 </button>
-              </section>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={editorMode === "detail"}
+                  className={editorMode === "detail" ? "is-active" : ""}
+                  onClick={() => setEditorMode("detail")}
+                >
+                  <strong>Основной кейс</strong>
+                  <span>Полная страница внутри Cases</span>
+                </button>
+              </div>
 
-              <section className="admin-card admin-preview-video-card">
-                <div className="admin-preview-video-card__copy">
-                  <h2>Видео-превью</h2>
-                  <p>
-                    Показывается только внутри полного кейса. До нажатия на кнопку воспроизведения
-                    посетитель видит обложку, а видео не загружается.
-                  </p>
-                </div>
-                {selected.previewVideo ? (
-                  <video
-                    src={resolveCaseAsset(selected.previewVideo.src)}
-                    poster={resolveCaseAsset(selected.image)}
-                    controls
-                    muted
-                    preload="metadata"
-                  />
-                ) : (
-                  <div className="admin-preview-video-card__empty">Видео пока не добавлено</div>
-                )}
-                <div className="admin-inline-actions admin-preview-video-card__actions">
-                  <button
-                    type="button"
-                    onClick={() => openPicker({
-                      multiple: false,
-                      accept: "videos",
-                      onFiles: async (files) => {
-                        const [item] = await uploadMany(files.slice(0, 1));
-                        if (!item) return;
-                        if (item.type !== "video") throw new Error("Выберите видео в формате MP4 или WebM");
-                        updateProject((project) => {
-                          project.previewVideo = {
-                            ...item,
-                            autoplay: false,
-                            muted: false,
-                            controls: true,
-                          };
-                        });
-                      },
-                    })}
-                  >
-                    {selected.previewVideo ? "Заменить видео" : "Добавить видео"}
-                  </button>
-                  {selected.previewVideo ? (
+              {editorMode === "detail" ? (
+                <>
+                  <section className="admin-card admin-detail-copy-card">
+                    <div>
+                      <span className="admin-kicker">CASES PAGE</span>
+                      <h2>Тексты основного кейса</h2>
+                      <p>Описание и My Role относятся только к полной странице в Cases.</p>
+                    </div>
+                    <label>
+                      Описание кейса
+                      <textarea
+                        rows={6}
+                        value={detailText(selected, "description")}
+                        onChange={(event) => updateProject((project) => {
+                          setDetailText(project, "description", event.target.value);
+                        })}
+                      />
+                    </label>
+                    <label>
+                      My Role
+                      <textarea
+                        rows={6}
+                        value={detailText(selected, "role")}
+                        onChange={(event) => updateProject((project) => {
+                          setDetailText(project, "role", event.target.value);
+                        })}
+                      />
+                    </label>
+                  </section>
+
+                  <section className="admin-card admin-cover-card">
+                    <div>
+                      <h2>Обложка основного кейса</h2>
+                      <p>Используется в сетке Cases и как первый экран полной страницы.</p>
+                    </div>
+                    <img src={resolveCaseAsset(selected.coverImage)} alt="" />
                     <button
-                      className="danger"
                       type="button"
-                      onClick={() => updateProject((project) => { delete project.previewVideo; })}
+                      onClick={() => openPicker({
+                        multiple: false,
+                        accept: "images",
+                        onFiles: async ([file]) => {
+                          if (!file) return;
+                          setBusy(true);
+                          try {
+                            showStatus(`Загрузка обложки основного кейса: ${file.name}`);
+                            const cover = await uploadFile(await makeCover(file));
+                            updateProject((project) => { project.coverImage = cover.src; });
+                          } finally {
+                            setBusy(false);
+                          }
+                        },
+                      })}
                     >
-                      Удалить видео
+                      Заменить обложку Cases
                     </button>
-                  ) : null}
-                </div>
-              </section>
+                  </section>
+
+                  <VideoEditorCard
+                    title="Видео основного кейса"
+                    description="Показывается только на полной странице внутри Cases."
+                    video={selected.detailVideo ?? undefined}
+                    poster={selected.coverImage}
+                    onReplace={(item) => updateProject((project) => { project.detailVideo = item; })}
+                    onDelete={() => updateProject((project) => { project.detailVideo = null; })}
+                    openPicker={openPicker}
+                    uploadMany={uploadMany}
+                  />
+                </>
+              ) : (
+                <>
+                  <section className="admin-card admin-cover-card">
+                    <div>
+                      <h2>Изображение превью Main</h2>
+                      <p>Показывается в попапе после нажатия на кейс на главной странице.</p>
+                    </div>
+                    <img src={resolveCaseAsset(selected.image)} alt="" />
+                    <button
+                      type="button"
+                      onClick={() => openPicker({
+                        multiple: false,
+                        accept: "images",
+                        onFiles: async ([file]) => {
+                          if (!file) return;
+                          showStatus(`Загрузка изображения превью: ${file.name}`);
+                          const image = await uploadFile(file);
+                          updateProject((project) => { project.image = image.src; });
+                        },
+                      })}
+                    >
+                      Заменить изображение Main
+                    </button>
+                  </section>
+
+                  <VideoEditorCard
+                    title="Видео превью Main"
+                    description="Показывается только в попапе кейса на главной странице."
+                    video={selected.previewVideo}
+                    poster={selected.image}
+                    onReplace={(item) => updateProject((project) => { project.previewVideo = item; })}
+                    onDelete={() => updateProject((project) => { delete project.previewVideo; })}
+                    openPicker={openPicker}
+                    uploadMany={uploadMany}
+                  />
+                </>
+              )}
 
               <div className="admin-section-heading">
                 <div>
-                  <span className="admin-kicker">CONTENT</span>
-                  <h2>Блоки кейса</h2>
+                  <span className="admin-kicker">{editorMode === "preview" ? "MAIN PREVIEW" : "CASES PAGE"}</span>
+                  <h2>{editorMode === "preview" ? "Блоки превью" : "Блоки основного кейса"}</h2>
                 </div>
-                <span>{selected.blocks?.length ?? 0} блоков</span>
+                <span>{selectedBlocks.length} блоков</span>
               </div>
 
               <div className="admin-block-toolbar">
@@ -615,7 +814,7 @@ export function AdminApp() {
               </div>
 
               <div className="admin-block-list">
-                {(selected.blocks ?? []).map((block, index) => (
+                {selectedBlocks.map((block, index) => (
                   <article className="admin-card admin-block" key={block.id}>
                     <header>
                       <strong>{index + 1}. {block.type === "text" ? "Текст" : block.type === "media" ? "Медиа" : "Фотокарусель"}</strong>
@@ -624,22 +823,24 @@ export function AdminApp() {
                           type="button"
                           disabled={index === 0}
                           onClick={() => updateProject((project) => {
-                            const blocks = project.blocks ?? [];
+                            const blocks = editableBlocks(project, editorMode);
                             [blocks[index - 1], blocks[index]] = [blocks[index], blocks[index - 1]];
                           })}
                         >↑</button>
                         <button
                           type="button"
-                          disabled={index === (selected.blocks?.length ?? 0) - 1}
+                          disabled={index === selectedBlocks.length - 1}
                           onClick={() => updateProject((project) => {
-                            const blocks = project.blocks ?? [];
+                            const blocks = editableBlocks(project, editorMode);
                             [blocks[index], blocks[index + 1]] = [blocks[index + 1], blocks[index]];
                           })}
                         >↓</button>
                         <button
                           className="danger"
                           type="button"
-                          onClick={() => updateProject((project) => { project.blocks?.splice(index, 1); })}
+                          onClick={() => updateProject((project) => {
+                            editableBlocks(project, editorMode).splice(index, 1);
+                          })}
                         >Удалить</button>
                       </div>
                     </header>
@@ -790,11 +991,18 @@ export function AdminApp() {
         </section>
         <aside className="admin-preview">
           <div className="admin-preview__label">
-            <span>LIVE PREVIEW</span>
+            <span>{editorMode === "preview" ? "MAIN POPUP PREVIEW" : "CASES PAGE PREVIEW"}</span>
             <strong>{selected?.title}</strong>
           </div>
           <div className="admin-preview__viewport">
-            {selected ? <ProjectPreview project={selected} /> : null}
+            {selected && draft ? (
+              <ProjectPreview
+                project={selected}
+                projects={draft.projects}
+                mode={editorMode}
+                onSelect={(project) => setSelectedId(project.id)}
+              />
+            ) : null}
           </div>
         </aside>
       </main>

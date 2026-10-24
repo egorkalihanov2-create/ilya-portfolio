@@ -31,12 +31,22 @@ function resolveBlock(block: CaseBlock): CaseBlock {
 }
 
 export function resolveProjectAssets(project: PerspectiveProject): PerspectiveProject {
+  const blocks = project.blocks?.map(resolveBlock) ?? [];
+  const previewBlocks = (project.previewBlocks ?? project.blocks)?.map(resolveBlock) ?? [];
   return {
     ...project,
     coverImage: resolveCaseAsset(project.coverImage),
     image: resolveCaseAsset(project.image),
     previewVideo: project.previewVideo ? resolveMedia(project.previewVideo) : undefined,
-    blocks: project.blocks?.map(resolveBlock),
+    detailVideo: project.detailVideo === null
+      ? null
+      : project.detailVideo
+      ? resolveMedia(project.detailVideo)
+      : project.previewVideo
+        ? resolveMedia(project.previewVideo)
+        : undefined,
+    previewBlocks,
+    blocks,
   };
 }
 

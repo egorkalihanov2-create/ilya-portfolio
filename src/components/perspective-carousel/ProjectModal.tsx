@@ -67,7 +67,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             </button>
             <div
               className="pc-modal__media"
-              style={{ backgroundImage: `url("${project.coverImage}")` }}
+              style={{ backgroundImage: `url("${project.image}")` }}
             >
               {videoStarted && project.previewVideo ? (
                 <VideoPlayer

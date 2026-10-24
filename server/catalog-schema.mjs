@@ -69,7 +69,11 @@ function block(value) {
       text: text(value.text ?? "", "текст блока", 30000),
     };
   }
-  if (value.type === "media") return { id, type: "media", item: media(value.item) };
+  if (value.type === "media") {
+    const layout = value.layout ?? "default";
+    if (!["default", "award-overlay"].includes(layout)) fail("Неизвестный вид медиаблока");
+    return { id, type: "media", layout, item: media(value.item) };
+  }
   if (value.type === "carousel") {
     const items = list(value.items, 40, "фото в карусели").map((item) => media(item, true));
     if (!items.length) fail("Фотокарусель не может быть пустой");
@@ -91,6 +95,18 @@ export function validateCatalog(value) {
     if (previewVideo && previewVideo.type !== "video") {
       fail("В видео-превью допустим только видеофайл");
     }
+    const detailVideo = project.detailVideo === undefined
+      ? (previewVideo ? structuredClone(previewVideo) : undefined)
+      : project.detailVideo === null
+        ? null
+        : media(project.detailVideo);
+    if (detailVideo && detailVideo.type !== "video") {
+      fail("В видео основного кейса допустим только видеофайл");
+    }
+    const blocks = list(project.blocks ?? [], 100, "блоки основного кейса").map(block);
+    const previewBlocks = project.previewBlocks == null
+      ? structuredClone(blocks)
+      : list(project.previewBlocks, 100, "блоки превью").map(block);
     return {
       id: text(project.id, "ID кейса", 100, true),
       title: text(project.title, "название кейса", 300, true),
@@ -98,7 +114,9 @@ export function validateCatalog(value) {
       coverImage: mediaPath(project.coverImage, "обложка карточки", true),
       image: mediaPath(project.image, "обложка кейса", true),
       ...(previewVideo ? { previewVideo } : {}),
-      blocks: list(project.blocks ?? [], 100, "блоки кейса").map(block),
+      ...(detailVideo !== undefined ? { detailVideo } : {}),
+      previewBlocks,
+      blocks,
     };
   });
   const ids = projects.map((project) => project.id);
@@ -106,6 +124,9 @@ export function validateCatalog(value) {
     fail("Нельзя удалять кейсы или менять их ID");
   }
   for (const project of projects) {
+    if (new Set(project.previewBlocks.map((item) => item.id)).size !== project.previewBlocks.length) {
+      fail(`В превью ${project.title} повторяются ID блоков`);
+    }
     if (new Set(project.blocks.map((item) => item.id)).size !== project.blocks.length) {
       fail(`В кейсе ${project.title} повторяются ID блоков`);
     }

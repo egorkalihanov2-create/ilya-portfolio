@@ -20,6 +20,7 @@ export interface CaseTextBlock {
 export interface CaseMediaBlock {
   id: string;
   type: "media";
+  layout?: "default" | "award-overlay";
   item: CaseMedia;
 }
 
@@ -40,6 +41,8 @@ export interface PerspectiveProject {
   coverImage: string;
   image: string;
   previewVideo?: CaseMedia;
+  detailVideo?: CaseMedia | null;
+  previewBlocks?: CaseBlock[];
   blocks?: CaseBlock[];
   description?: string;
   role?: string;

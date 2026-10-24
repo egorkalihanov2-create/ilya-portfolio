@@ -1,11 +1,11 @@
 .about-shell {
   --about-section: min(calc(100vw - 84px), 1835px);
   position: relative;
-  width: min(100%, 1920px);
+  width: 100%;
   min-height: 100vh;
   margin-inline: auto;
   overflow: clip;
-  border-radius: 26px;
+  border-radius: 0;
   background: #fff;
 }
 

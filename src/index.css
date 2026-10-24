@@ -37,7 +37,7 @@
 :root {
   font-family: "Object Sans", Arial, sans-serif;
   color: #0d0d0d;
-  background: #eeeeee;
+  background: #ffffff;
   font-synthesis: none;
   text-rendering: geometricPrecision;
   --page-gutter: 42px;
@@ -57,7 +57,7 @@ body {
   margin: 0;
   min-width: 320px;
   overflow-x: hidden;
-  background: #eeeeee;
+  background: #ffffff;
 }
 
 button,
@@ -75,11 +75,11 @@ img {
 
 .site-shell {
   position: relative;
-  width: min(100%, 1920px);
+  width: 100%;
   min-height: 100vh;
   margin-inline: auto;
   overflow: clip;
-  border-radius: 26px;
+  border-radius: 0;
   background: #ffffff;
 }
 
