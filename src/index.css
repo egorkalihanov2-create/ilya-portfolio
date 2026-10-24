@@ -561,6 +561,23 @@ img {
   text-align: center;
 }
 
+.manifesto-label {
+  position: absolute;
+  z-index: 2;
+  top: auto;
+  bottom: calc(100% + clamp(5px, 0.55vw, 11px));
+  left: 0;
+  padding: clamp(6px, 0.7vw, 13px) clamp(10px, 1.2vw, 23px);
+  border-radius: clamp(8px, 1.25vw, 24px);
+  color: #adadad;
+  background: #f8f8f8;
+  font-size: clamp(13px, 2.5vw, 48px);
+  line-height: 1;
+  letter-spacing: -0.011em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
 .manifesto-top,
 .manifesto-bottom {
   position: absolute;
@@ -1189,7 +1206,7 @@ img {
   }
 
   .intro-copy {
-    aspect-ratio: 384 / 80;
+    min-height: calc(15.73px * 4 + 7.9602vw);
     margin-top: max(-36px, -7.5157vw);
     margin-bottom: max(-23px, -4.8017vw);
     padding: 3.9801vw 0;
@@ -1197,12 +1214,14 @@ img {
 
   .intro-copy p {
     width: 100%;
-    font-size: clamp(11px, 2.9851vw, 13px);
-    line-height: 1;
+    padding-inline: 1px;
+    font-size: clamp(15px, 4.0025vw, 17px);
+    line-height: 1.04;
+    text-wrap: balance;
   }
 
   .desktop-break {
-    display: initial;
+    display: none;
   }
 
   .main-flow > .statement-block {
@@ -1499,6 +1518,14 @@ img {
     min-height: 0;
     aspect-ratio: 372 / 92;
     border-radius: 2.2388vw;
+  }
+
+  .manifesto-label {
+    top: auto;
+    bottom: calc(100% + 1.2vw);
+    padding: 1.35vw 2.3vw;
+    border-radius: 1.8vw;
+    font-size: 3.2vw;
   }
 
   .manifesto-top {

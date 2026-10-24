@@ -249,6 +249,7 @@ export default function App() {
           viewport={{ once: true, amount: 0.25, margin: "-43% 0px -43% 0px" }}
           onViewportEnter={startManifestoPulseCycle}
         >
+          <span className="manifesto-label">My motto</span>
           <p className="manifesto-top">
             WORLD-CHANGERS <motion.a
               className={`brand-dot manifesto-action manifesto-action--pulse-one${manifestoPulseReady ? " is-periodic-pulse" : ""}`}

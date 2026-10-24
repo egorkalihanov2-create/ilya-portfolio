@@ -6,16 +6,25 @@ import {
 } from "@/components/perspective-carousel";
 import { CaseDetailView } from "./CaseDetailView";
 
-const preferredTagOrder = [
-  "Special project",
-  "OLV",
-  "Influence",
-  "SMM",
-  "DOOH",
-  "EVP",
-  "Employer Branding",
-  "TV",
-  "OOH",
+const caseFilters: ReadonlyArray<{
+  label: string;
+  projectIds: readonly string[];
+}> = [
+  {
+    label: "My CD Loves",
+    projectIds: ["demix", "alfa-smooth-over", "beeline", "citydrive"],
+  },
+  { label: "Enchantix Era", projectIds: ["winx"] },
+  {
+    label: "My Mom Loves",
+    projectIds: ["alfa-only", "winx", "alfa-smooth-over"],
+  },
+  { label: "Good Old-Fashioned Ads", projectIds: ["alfa-only", "beeline"] },
+  {
+    label: "Famous Faces",
+    projectIds: ["alfa-only", "alfa-smooth-over", "demix"],
+  },
+  { label: "Reality Hacks", projectIds: ["citydrive"] },
 ];
 
 const preferredProjectOrder = [
@@ -26,19 +35,6 @@ const preferredProjectOrder = [
   "alfa-only",
   "citydrive",
 ];
-
-function splitTags(tag: string) {
-  return tag
-    .split("/")
-    .map((value) => value.trim())
-    .filter(Boolean);
-}
-
-function projectHasTag(project: PerspectiveProject, tag: string) {
-  return splitTags(project.tag).some(
-    (projectTag) => projectTag.toLocaleLowerCase() === tag.toLocaleLowerCase(),
-  );
-}
 
 function Header() {
   return (
@@ -79,16 +75,6 @@ export default function CasesPage() {
     return () => window.removeEventListener("popstate", updateFromHistory);
   }, []);
 
-  const tags = useMemo(() => {
-    const catalogTags = projects.flatMap((project) => splitTags(project.tag));
-    const uniqueTags = new Map<string, string>();
-    for (const tag of [...preferredTagOrder, ...catalogTags]) {
-      const key = tag.toLocaleLowerCase();
-      if (!uniqueTags.has(key)) uniqueTags.set(key, tag);
-    }
-    return [...uniqueTags.values()];
-  }, [projects]);
-
   const orderedProjects = useMemo(() => {
     return [...projects].sort((a, b) => {
       const aIndex = preferredProjectOrder.indexOf(a.id);
@@ -99,8 +85,10 @@ export default function CasesPage() {
   }, [projects]);
 
   const visibleProjects = useMemo(() => {
-    return selectedTag
-      ? orderedProjects.filter((project) => projectHasTag(project, selectedTag))
+    if (!selectedTag) return orderedProjects;
+    const filter = caseFilters.find(({ label }) => label === selectedTag);
+    return filter
+      ? orderedProjects.filter((project) => filter.projectIds.includes(project.id))
       : orderedProjects;
   }, [orderedProjects, selectedTag]);
 
@@ -143,19 +131,19 @@ export default function CasesPage() {
         <section className="cases-filter" aria-labelledby="cases-filter-heading">
           <h1 id="cases-filter-heading">Filter by tag:</h1>
           <div className="cases-filter-list" aria-label="Case tags">
-            {tags.map((tag) => {
-              const active = selectedTag === tag;
-              const count = projects.filter((project) => projectHasTag(project, tag)).length;
+            {caseFilters.map(({ label, projectIds }) => {
+              const active = selectedTag === label;
+              const count = projects.filter((project) => projectIds.includes(project.id)).length;
               return (
                 <button
-                  key={tag}
+                  key={label}
                   type="button"
                   className={active ? "is-active" : ""}
                   aria-pressed={active}
-                  aria-label={`${tag}: ${count} ${count === 1 ? "case" : "cases"}`}
-                  onClick={() => setSelectedTag(active ? null : tag)}
+                  aria-label={`${label}: ${count} ${count === 1 ? "case" : "cases"}`}
+                  onClick={() => setSelectedTag(active ? null : label)}
                 >
-                  {tag}
+                  {label}
                 </button>
               );
             })}

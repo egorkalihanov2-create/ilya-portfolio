@@ -1,6 +1,7 @@
 export { PerspectiveCarouselBlock } from "./PerspectiveCarouselBlock";
 export type { PerspectiveCarouselBlockProps } from "./PerspectiveCarouselBlock";
 export { PerspectiveCarouselWithModal } from "./PerspectiveCarouselWithModal";
+export { MobileStackedCarouselBlock } from "./MobileStackedCarouselBlock";
 export { ProjectModal } from "./ProjectModal";
 export { CaseProjectContent } from "./CaseProjectContent";
 export { VideoPlayer } from "./VideoPlayer";
