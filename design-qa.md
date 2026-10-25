@@ -62,3 +62,30 @@ No actionable P0, P1, or P2 mismatches remain for the requested accent treatment
 No P3 follow-up is required for this iteration.
 
 final result: passed
+
+---
+
+# Design QA — mobile Main hero “This is”
+
+- Source visual truth: `C:\Users\77FE78~1\AppData\Local\Temp\codex-clipboard-05034524-1fae-49cd-9e58-632a398f570d.png`
+- Implementation screenshot: `C:\Users\босс77\AppData\Local\Packages\sandbox.{51fb17c0-d913-4bcc-98b9-bb8a70367727}\AC\Temp\codex-qa-mobile-this-is.png`
+- Viewport: 393 × 884 CSS px, mobile breakpoint (`max-width: 480px`)
+- State: Main page, top of page, fixed navigation visible
+- Full-view evidence: source and implementation were reviewed side by side after the CSS change.
+- Focused evidence: the “This is” label, its spacing below the fixed navigation, and the transition into the yellow hero panel.
+
+## Findings
+
+- Layout and spacing: passed. The label is now fully visible above the first image and no longer sits beneath the navigation mask.
+- Typography: passed. The label remains part of the supplied mobile hero artwork, preserving the reference styling exactly.
+- Colors and imagery: passed. The hero artwork is unchanged; only its mobile positioning and container ratio were adjusted.
+- Responsive behavior: passed. The change is scoped to the existing mobile media query, so desktop presentation remains unchanged.
+- Interaction and console: passed. No interaction changes were introduced by this presentational adjustment.
+
+## Comparison history
+
+1. Initial state: the top of the mobile artwork, including “This is”, was hidden behind the fixed navigation and a white masking pseudo-element.
+2. Adjustment: expanded the mobile hero aspect ratio, shifted the picture down, and disabled the obsolete mask.
+3. Verification: captured the 393 × 884 implementation and received explicit visual approval.
+
+final result: passed

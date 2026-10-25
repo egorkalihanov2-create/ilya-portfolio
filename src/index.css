@@ -1171,24 +1171,19 @@ img {
   .hero-block {
     position: relative;
     overflow: hidden;
-    aspect-ratio: 402 / 696;
+    aspect-ratio: 402 / 755;
     border-radius: 0;
   }
 
   .hero-block picture {
     position: absolute;
-    inset: 0;
+    top: 10vw;
+    right: 0;
+    left: 0;
   }
 
   .hero-block::after {
-    position: absolute;
-    z-index: 2;
-    top: 9.2vw;
-    right: 0;
-    left: 0;
-    height: 4.2vw;
-    background: #ffffff;
-    content: "";
+    display: none;
   }
 
   .hero-block img {
