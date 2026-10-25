@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": 5,
+  "revision": 8,
   "projects": [
     {
       "id": "citydrive",
@@ -18,6 +18,7 @@
         "muted": false,
         "controls": true
       },
+      "detailVideo": null,
       "previewBlocks": [
         {
           "id": "citydrive-description",
@@ -30,45 +31,8 @@
           "type": "text",
           "heading": "",
           "text": "My role: developed the creative concept, campaign platform and communication mechanics — from the initial idea to final execution."
-        },
-        {
-          "id": "citydrive-gallery",
-          "type": "carousel",
-          "layout": "grid",
-          "columns": 4,
-          "items": [
-            {
-              "id": "citydrive-gallery-1",
-              "type": "image",
-              "src": "assets/figma/case-detail/gallery-1.png",
-              "alt": "Citydrive campaign visual",
-              "caption": ""
-            },
-            {
-              "id": "citydrive-gallery-2",
-              "type": "image",
-              "src": "assets/figma/case-detail/gallery-2.png",
-              "alt": "Citydrive campaign portrait",
-              "caption": ""
-            },
-            {
-              "id": "citydrive-gallery-3",
-              "type": "image",
-              "src": "assets/figma/case-detail/gallery-3.png",
-              "alt": "Citydrive campaign portrait",
-              "caption": ""
-            },
-            {
-              "id": "citydrive-gallery-4",
-              "type": "image",
-              "src": "assets/figma/case-detail/gallery-4.png",
-              "alt": "Citydrive campaign visual",
-              "caption": ""
-            }
-          ]
         }
       ],
-      "detailVideo": null,
       "blocks": [
         {
           "id": "citydrive-description",
@@ -91,6 +55,7 @@
         {
           "id": "citydrive-film",
           "type": "media",
+          "layout": "default",
           "item": {
             "id": "citydrive-film-media",
             "type": "video",
@@ -133,6 +98,7 @@
         "muted": false,
         "controls": true
       },
+      "detailVideo": null,
       "previewBlocks": [
         {
           "id": "alfa-smooth-description",
@@ -145,37 +111,8 @@
           "type": "text",
           "heading": "",
           "text": "My role: developed the creative concept, campaign idea, video scripts and digital mechanics — from the initial insight to the recruitment landing experience."
-        },
-        {
-          "id": "ea4d645c-d658-4e1e-9e9c-d426ae11f789",
-          "type": "media",
-          "item": {
-            "id": "6e089c14-6c3c-4ce2-ba9f-b9e0b5ebe0e0",
-            "type": "video",
-            "src": "uploads/86f5c80f-1932-48bd-a55b-0e9a624812fa.mp4",
-            "alt": "",
-            "caption": "Некоторое описание",
-            "autoplay": false,
-            "muted": false,
-            "controls": true
-          }
-        },
-        {
-          "id": "08180a4f-a99f-4188-b443-5f5b1c8226f7",
-          "type": "media",
-          "item": {
-            "id": "a6ec72bb-a866-4964-9cb9-77548df72950",
-            "type": "video",
-            "src": "uploads/81296549-2272-4bdf-90e4-06211ea1c80e.mp4",
-            "alt": "",
-            "caption": "Некоторое описание",
-            "autoplay": false,
-            "muted": false,
-            "controls": true
-          }
         }
       ],
-      "detailVideo": null,
       "blocks": [
         {
           "id": "alfa-smooth-description",
@@ -198,6 +135,7 @@
         {
           "id": "alfa-your-film-01",
           "type": "media",
+          "layout": "default",
           "item": {
             "id": "alfa-your-film-01-media",
             "type": "video",
@@ -219,6 +157,7 @@
         {
           "id": "alfa-your-film-02",
           "type": "media",
+          "layout": "default",
           "item": {
             "id": "alfa-your-film-02-media",
             "type": "video",
@@ -240,6 +179,7 @@
         {
           "id": "alfa-your-film-03",
           "type": "media",
+          "layout": "default",
           "item": {
             "id": "alfa-your-film-03-media",
             "type": "video",
@@ -260,6 +200,20 @@
       "tag": "TV/OOH/DOOH",
       "coverImage": "assets/perspective-carousel/covers/demix.webp",
       "image": "assets/perspective-carousel/demix.png",
+      "previewBlocks": [
+        {
+          "id": "demix-description",
+          "type": "text",
+          "heading": "",
+          "text": "A football special project created for the Russian Championship — bringing the classic Soviet yard game “Kvadrat” back to the streets with a limited kit available with every football purchase. The campaign was amplified through bloggers and athletes, who helped turn the game from a nostalgic childhood memory into a social challenge people could actually play again."
+        },
+        {
+          "id": "demix-role",
+          "type": "text",
+          "heading": "",
+          "text": "My role: developed the big idea, creative concept, limited box and unboxing mechanics, plus the creative framework for blogger and athlete integrations."
+        }
+      ],
       "blocks": [
         {
           "id": "demix-description",
@@ -353,6 +307,20 @@
       "tag": "SMM",
       "coverImage": "assets/perspective-carousel/covers/winx.webp",
       "image": "assets/perspective-carousel/winx.png",
+      "previewBlocks": [
+        {
+          "id": "winx-description",
+          "type": "text",
+          "heading": "",
+          "text": "Not the most complicated case (the hardest part was getting them officially verified, by the way), but definitely one of my favorites — because how often do you come to work and create memes for fairies?"
+        },
+        {
+          "id": "winx-role",
+          "type": "text",
+          "heading": "",
+          "text": "My role: SMM strategy, content supervision, collaboration ideas, organic promotion and paid media mechanics."
+        }
+      ],
       "blocks": [
         {
           "id": "winx-description",
@@ -374,6 +342,20 @@
       "tag": "EVP/Employer Branding",
       "coverImage": "assets/perspective-carousel/covers/beeline.webp",
       "image": "assets/perspective-carousel/beeline.png",
+      "previewBlocks": [
+        {
+          "id": "beeline-description",
+          "type": "text",
+          "heading": "",
+          "text": "Beeline was trying to break out of heavy corporate bureaucracy, but many long-time employees no longer believed that real change was possible. We created an EVP platform that brought back a startup-like mindset: your ideas matter, your voice can move things forward, and the company is ready to help make them happen."
+        },
+        {
+          "id": "beeline-role",
+          "type": "text",
+          "heading": "",
+          "text": "My role: market and competitor analysis, EVP platform development, master slogan, direction-specific messaging and key visual ideas."
+        }
+      ],
       "blocks": [
         {
           "id": "beeline-description",
@@ -405,6 +387,7 @@
         "muted": false,
         "controls": true
       },
+      "detailVideo": null,
       "previewBlocks": [
         {
           "id": "alfa-only-description",
@@ -417,47 +400,8 @@
           "type": "text",
           "heading": "",
           "text": "My role: campaign positioning, video scripts, photo shoot concept and key visual direction for TV, OOH and airport DOOH."
-        },
-        {
-          "id": "461714a8-ada9-4418-800a-0463bc9e9a84",
-          "type": "media",
-          "item": {
-            "id": "08106eae-1aa1-40e9-8c4c-fdf359e92cb0",
-            "type": "video",
-            "src": "uploads/c1defb47-1f7b-4010-8799-379347587d9b.mp4",
-            "alt": "videoplayback (4).mp4",
-            "caption": "",
-            "autoplay": false,
-            "muted": true,
-            "controls": true
-          }
-        },
-        {
-          "id": "a5af24e6-6ab1-4032-9429-1f68d8402f1c",
-          "type": "carousel",
-          "layout": "carousel",
-          "columns": 2,
-          "items": [
-            { "id": "a37c1df6-8f8a-4d4a-9a44-f33672f92c83", "type": "image", "src": "uploads/bfd6faa9-78db-4e78-85fd-374fb978d2ca.png", "alt": "Фото 1 (1) 1.png", "caption": "" },
-            { "id": "180f7b02-6824-4394-af0a-766acbd63a22", "type": "image", "src": "uploads/32da6057-03bd-48c2-8e0c-ecc4a245b171.png", "alt": "5 1.png", "caption": "" },
-            { "id": "7ade5de8-2c50-4fcc-877a-056f58f40cc6", "type": "image", "src": "uploads/990463cb-e60e-43c7-8938-7d57a11dbb9a.png", "alt": "6 (1) 1.png", "caption": "" },
-            { "id": "f698929e-0ceb-49e4-8ed2-f1db6b12469b", "type": "image", "src": "uploads/91fd3a25-27a4-404e-9a73-ef390fec2a78.png", "alt": "Фото 2 1.png", "caption": "" }
-          ]
-        },
-        {
-          "id": "bd0294bb-4c76-44db-8c62-9c68a7801a21",
-          "type": "carousel",
-          "layout": "grid",
-          "columns": 2,
-          "items": [
-            { "id": "25c56001-92f9-44a3-b67c-ece74d68da38", "type": "image", "src": "uploads/b8ec89fd-7eb9-4266-bbb9-0c164745fd6b.png", "alt": "Alfa_Only_Ura_Borisov_april_20260630 1.png", "caption": "" },
-            { "id": "a334b258-f7a4-4877-aaae-2c9f0c445e65", "type": "image", "src": "uploads/4391cc43-2f12-465d-92fe-a009b09033a8.png", "alt": "Alfa_Only_Ura_Borisov_april_20260626 1.png", "caption": "" },
-            { "id": "e4aa303a-3353-41c1-ba54-79bc88694540", "type": "image", "src": "uploads/c2039a17-fe5b-4565-93b1-187d68bc4e59.png", "alt": "Alfa_Only_Ura_Borisov_april_20260734 1.png", "caption": "" },
-            { "id": "73708e6f-0a4d-4503-b063-efde6a7e6219", "type": "image", "src": "uploads/c6c639c8-49ee-4556-a3c1-b380f0fff086.png", "alt": "Alfa_Only_Ura_Borisov_april_20260738 1.png", "caption": "" }
-          ]
         }
       ],
-      "detailVideo": null,
       "blocks": [
         {
           "id": "alfa-only-description",
@@ -480,6 +424,7 @@
         {
           "id": "alfa-only-season-01-film",
           "type": "media",
+          "layout": "default",
           "item": {
             "id": "alfa-only-season-01-film-media",
             "type": "video",
@@ -537,6 +482,7 @@
         {
           "id": "alfa-only-season-02-film",
           "type": "media",
+          "layout": "default",
           "item": {
             "id": "alfa-only-season-02-film-media",
             "type": "video",
