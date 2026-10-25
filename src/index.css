@@ -708,8 +708,9 @@ img {
 .cta-intro h2 {
   width: 95%;
   margin: 0.8% 0 0;
+  font-family: "Object Sans", Arial, sans-serif;
   font-size: clamp(12px, 2.5vw, 48px);
-  font-weight: 400;
+  font-weight: 800;
   line-height: 1.04;
   text-align: center;
   letter-spacing: -0.011em;

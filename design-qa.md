@@ -142,3 +142,56 @@ final result: passed
 3. Verification: captured the 393 × 884 implementation and received explicit visual approval.
 
 final result: passed
+
+---
+
+# Design QA — Contacts links, CV download, and Main CTA weight
+
+- Source visual truth path: `conversation://browser-comment/1`
+- Implementation screenshots: `output/playwright/main-cta-heavy-494x884.png`, `output/playwright/contacts-links-494x884.png`
+- Source and implementation viewport: 494 × 884 CSS px
+- Implementation pixels: 494 × 884 pixels, device scale factor 1
+- State: Main page at the CTA section; Contacts page at the hero/contact controls
+
+## Full-view comparison evidence
+
+The annotated Main capture and the post-change Main capture were compared at the same 494 × 884 viewport. The final sentence now carries the requested heavier hierarchy without changing its placement, copy, CTA controls, or surrounding imagery. The Contacts capture confirms that the existing composition remains unchanged after converting the four relevant pills into functional links.
+
+## Focused region comparison evidence
+
+- `.cta-intro h2` computes to `font-family: "Object Sans", Arial, sans-serif` and `font-weight: 800`.
+- `View CV` resolves to `./assets/documents/Ilya_Novik_CV_EN.pdf`, includes `download="Ilya_Novik_CV_EN.pdf"`, and produced a browser download at `C:\Users\босс77\Downloads\Ilya_Novik_CV_EN.pdf`.
+- `Send me an email` resolves to `mailto:novik.brand@gmail.com`.
+- `PlayStation account` resolves to `https://psnprofiles.com/McLover`.
+- `Chess.com account` resolves to `https://www.chess.com/member/McLover_from_Minsk`.
+
+## Required fidelity surfaces
+
+- Fonts and typography: passed. The annotated sentence uses the loaded Object Sans Heavy face through weight 800; all other text styling is preserved.
+- Spacing and layout rhythm: passed. The Main CTA and Contacts pill positions, sizes, rotations, and responsive flow are unchanged.
+- Colors and visual tokens: passed. Existing CTA and Contacts colors remain untouched.
+- Image quality and asset fidelity: passed. Existing imagery is unchanged; the supplied one-page A4 CV renders legibly with no clipping or overlap.
+- Copy and content: passed. Visible button labels are unchanged and their targets match the supplied CV, email, and account names.
+
+## Comparison history
+
+1. Source state: the Main CTA sentence used Object Sans Regular, while the Contacts CV, PlayStation, and Chess pills were non-interactive.
+2. Fix: applied Object Sans Heavy, added the supplied PDF as a downloadable asset, and connected all requested account links.
+3. Post-fix evidence: visual captures preserve the layouts, computed typography matches the request, the PDF downloads successfully, and both browser consoles report zero errors or warnings.
+
+## Primary interactions and runtime checks
+
+- Downloaded the CV through `View CV` and verified the saved filename.
+- Verified the email, PlayStation, and Chess profile destinations from the live DOM.
+- Confirmed the production build contains the exact PDF bytes by SHA-256 comparison.
+- Production build and ESLint completed successfully.
+
+## Findings
+
+No actionable P0, P1, or P2 mismatches remain.
+
+## Follow-up polish
+
+No P3 follow-up is required for this iteration.
+
+final result: passed

@@ -16,15 +16,23 @@ function Header() {
 function ContactPill({
   className,
   href,
+  download,
   children,
 }: {
   className: string;
   href?: string;
+  download?: string;
   children: string;
 }) {
   if (!href) return <span className={`contacts-pill ${className}`}>{children}</span>;
   return (
-    <a className={`contacts-pill ${className}`} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noreferrer" : undefined}>
+    <a
+      className={`contacts-pill ${className}`}
+      href={href}
+      download={download}
+      target={href.startsWith("http") ? "_blank" : undefined}
+      rel={href.startsWith("http") ? "noreferrer" : undefined}
+    >
       {children}
     </a>
   );
@@ -47,11 +55,17 @@ export default function ContactsPage() {
         <section className="contacts-hero" aria-labelledby="contacts-title">
           <h1 id="contacts-title">Contacts</h1>
 
-          <ContactPill className="contacts-pill--cv">View CV</ContactPill>
+          <ContactPill
+            className="contacts-pill--cv"
+            href="./assets/documents/Ilya_Novik_CV_EN.pdf"
+            download="Ilya_Novik_CV_EN.pdf"
+          >
+            View CV
+          </ContactPill>
           <ContactPill className="contacts-pill--telegram" href="https://t.me/wilyam_the_originator">Write in Telegram</ContactPill>
           <ContactPill className="contacts-pill--email" href="mailto:novik.brand@gmail.com">Send me an email</ContactPill>
-          <ContactPill className="contacts-pill--playstation">PlayStation account</ContactPill>
-          <ContactPill className="contacts-pill--chess">Chess.com account</ContactPill>
+          <ContactPill className="contacts-pill--playstation" href="https://psnprofiles.com/McLover">PlayStation account</ContactPill>
+          <ContactPill className="contacts-pill--chess" href="https://www.chess.com/member/McLover_from_Minsk">Chess.com account</ContactPill>
 
           <div className="contacts-portrait">
             <img src="./assets/figma/contacts/portrait.png" alt="Ilya sitting on a chair and speaking on a vintage telephone" />
