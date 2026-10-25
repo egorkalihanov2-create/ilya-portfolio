@@ -1209,6 +1209,7 @@ img {
 
   .intro-copy p {
     width: 100%;
+    margin: -1px 0 21px;
     padding-inline: 1px;
     font-size: clamp(15px, 4.0025vw, 17px);
     line-height: 1.04;

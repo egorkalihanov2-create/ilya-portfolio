@@ -101,6 +101,12 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 <span className="pc-modal__tag">{project.tag}</span>
               </div>
               <CaseProjectContent project={project} />
+              <a
+                className="pc-modal__full-case"
+                href={`./cases.html?case=${encodeURIComponent(project.id)}`}
+              >
+                View full case
+              </a>
             </div>
           </motion.article>
         </motion.div>

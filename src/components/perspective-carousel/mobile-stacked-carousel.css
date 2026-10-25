@@ -28,6 +28,7 @@
   width: 100%;
   height: min(112vw, 430px);
   min-height: 390px;
+  margin: 36px 0;
   touch-action: pan-y;
 }
 

@@ -65,6 +65,59 @@ final result: passed
 
 ---
 
+# Design QA — mobile spacing and preview CTA
+
+- Source visual truth paths: `conversation://browser-comment/1`, `conversation://browser-comment/2`, `conversation://browser-comment/3`
+- Implementation screenshots: `output/playwright/main-spacing-388x884.png`, `output/playwright/preview-full-case-388x884.png`
+- Source viewports: 388 × 884 CSS px for spacing annotations; 535 × 884 CSS px for the preview annotation
+- Implementation viewport and pixels: 388 × 884 CSS px and 388 × 884 pixels, device scale factor 1
+- State: Main page at the About/stacked-carousel region; Citydrive preview scrolled to its bottom; full-case navigation target loaded
+
+## Full-view comparison evidence
+
+The three annotated browser captures were compared with the post-change mobile Main and preview captures in the same task context. The implementation preserves the existing responsive composition and adds only the requested spacing and CTA.
+
+## Focused region comparison evidence
+
+- Computed style for `#about > p`: `margin-top: -1px`, `margin-bottom: 21px`.
+- Computed style for `.msc-stack`: `margin-top: 36px`, `margin-bottom: 36px`.
+- The preview CTA renders at 190 × 52 px on the 388 px viewport, is horizontally centered, uses the brand yellow `#ffb900`, and remains the final element in the scrollable preview.
+- The Citydrive CTA resolved to `./cases.html?case=citydrive`; clicking it loaded the matching full-case heading.
+
+## Required fidelity surfaces
+
+- Fonts and typography: passed. The CTA uses the existing Object Sans heavy weight and preserves all preview typography.
+- Spacing and layout rhythm: passed. The exact annotated margins are applied only to the responsive Main elements that own them.
+- Colors and visual tokens: passed. The CTA reuses the established yellow/orange pill treatment (`#ffb900` with `#eb7500` shadow).
+- Image quality and asset fidelity: passed. No imagery, crop, compression, or media behavior changed.
+- Copy and content: passed. The CTA copy is exactly `View full case` and every project link is generated from its catalog ID.
+
+## Comparison history
+
+1. Source state: About copy and the mobile stack had zero element margins; preview content ended without a route to the full case.
+2. Fix: added the annotated mobile margins and one shared, centered CTA in `ProjectModal`.
+3. Post-fix evidence: computed styles match the annotations, the CTA appears at the bottom, navigation reaches the correct Cases detail, and the browser console reports zero errors or warnings.
+
+## Findings
+
+No actionable P0, P1, or P2 mismatches remain. The wider source viewport for the preview is an annotation-context difference, not a component mismatch; the CTA was verified within the same mobile breakpoint at 388 px.
+
+## Primary interactions and runtime checks
+
+- Opened the active Citydrive preview from the mobile stacked carousel.
+- Scrolled the modal to the bottom and verified the centered CTA.
+- Activated `View full case` and verified the Citydrive detail page.
+- Browser console checked: 0 errors and 0 warnings.
+- Production build and ESLint completed successfully.
+
+## Follow-up polish
+
+No P3 follow-up is required for this iteration.
+
+final result: passed
+
+---
+
 # Design QA — mobile Main hero “This is”
 
 - Source visual truth: `C:\Users\77FE78~1\AppData\Local\Temp\codex-clipboard-05034524-1fae-49cd-9e58-632a398f570d.png`
