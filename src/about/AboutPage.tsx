@@ -90,7 +90,7 @@ const toolLines = [
 
 function Header() {
   return (
-    <header className="about-header">
+    <header className="site-header">
       <nav aria-label="Main navigation">
         <a href="/">Main</a>
         <a href="/about" aria-current="page">About me</a>
