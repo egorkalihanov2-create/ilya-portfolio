@@ -4,10 +4,10 @@ function Header() {
   return (
     <header className="site-header">
       <nav aria-label="Main navigation">
-        <a href="./index.html">Main</a>
-        <a href="./about.html">About me</a>
-        <a href="./cases.html">Cases</a>
-        <a href="./contacts.html" aria-current="page">Contacts</a>
+        <a href="/main">Main</a>
+        <a href="/about">About me</a>
+        <a href="/cases">Cases</a>
+        <a href="/contacts" aria-current="page">Contacts</a>
       </nav>
     </header>
   );
@@ -68,7 +68,7 @@ export default function ContactsPage() {
           <ContactPill className="contacts-pill--chess" href="https://www.chess.com/member/McLover_from_Minsk">Chess.com account</ContactPill>
 
           <div className="contacts-portrait">
-            <img src="./assets/figma/contacts/portrait.png" alt="Ilya sitting on a chair and speaking on a vintage telephone" />
+            <img src="./assets/figma/contacts/portrait-dog.jpeg" alt="Ilya taking a selfie with his dog" />
           </div>
 
           <form id="contact-form" className="contacts-form" onSubmit={submitMessage}>
@@ -99,7 +99,7 @@ export default function ContactsPage() {
           </form>
         </section>
 
-        <a className="page-pill page-pill--dark contacts-main-link" href="./index.html">
+        <a className="page-pill page-pill--dark contacts-main-link" href="/main">
           Go to<br />Main Page
         </a>
 

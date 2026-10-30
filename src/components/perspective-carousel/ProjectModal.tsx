@@ -103,7 +103,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               <CaseProjectContent project={project} />
               <a
                 className="pc-modal__full-case"
-                href={`./cases.html?case=${encodeURIComponent(project.id)}`}
+                href={`/cases/${encodeURIComponent(project.id)}`}
               >
                 View full case
               </a>

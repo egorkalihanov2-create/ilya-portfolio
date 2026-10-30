@@ -36,14 +36,28 @@ const preferredProjectOrder = [
   "citydrive",
 ];
 
+function getCaseIdFromLocation() {
+  const pathMatch = window.location.pathname.match(/^\/cases\/([^/]+)\/?$/);
+
+  if (pathMatch) {
+    try {
+      return decodeURIComponent(pathMatch[1]);
+    } catch {
+      return pathMatch[1];
+    }
+  }
+
+  return new URLSearchParams(window.location.search).get("case");
+}
+
 function Header() {
   return (
     <header className="site-header">
       <nav aria-label="Main navigation">
-        <a href="./index.html">Main</a>
-        <a href="./about.html">About me</a>
-        <a href="./cases.html" aria-current="page">Cases</a>
-        <a href="./contacts.html">Contacts</a>
+        <a href="/main">Main</a>
+        <a href="/about">About me</a>
+        <a href="/cases" aria-current="page">Cases</a>
+        <a href="/contacts">Contacts</a>
       </nav>
     </header>
   );
@@ -54,7 +68,7 @@ export default function CasesPage() {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(() => {
     if (typeof window === "undefined") return null;
-    return new URLSearchParams(window.location.search).get("case");
+    return getCaseIdFromLocation();
   });
 
   useEffect(() => {
@@ -68,9 +82,7 @@ export default function CasesPage() {
   }, []);
 
   useEffect(() => {
-    const updateFromHistory = () => {
-      setSelectedProjectId(new URLSearchParams(window.location.search).get("case"));
-    };
+    const updateFromHistory = () => setSelectedProjectId(getCaseIdFromLocation());
     window.addEventListener("popstate", updateFromHistory);
     return () => window.removeEventListener("popstate", updateFromHistory);
   }, []);
@@ -95,17 +107,13 @@ export default function CasesPage() {
   const selectedProject = orderedProjects.find((project) => project.id === selectedProjectId) ?? null;
 
   const navigateToProject = (project: PerspectiveProject) => {
-    const url = new URL(window.location.href);
-    url.searchParams.set("case", project.id);
-    window.history.pushState({}, "", url);
+    window.history.pushState({}, "", `/cases/${encodeURIComponent(project.id)}`);
     setSelectedProjectId(project.id);
     window.scrollTo({ top: 0, behavior: "instant" });
   };
 
   const closeProject = () => {
-    const url = new URL(window.location.href);
-    url.searchParams.delete("case");
-    window.history.pushState({}, "", url);
+    window.history.pushState({}, "", "/cases");
     setSelectedProjectId(null);
     window.scrollTo({ top: 0, behavior: "instant" });
   };
@@ -171,10 +179,10 @@ export default function CasesPage() {
         </section>
 
         <section className="cases-actions" aria-label="Next steps">
-          <a className="page-pill page-pill--yellow" href="./contacts.html">
+          <a className="page-pill page-pill--yellow" href="/contacts">
             Let’s create<br />something
           </a>
-          <a className="page-pill page-pill--dark" href="./index.html">
+          <a className="page-pill page-pill--dark" href="/main">
             Go to<br />Main Page
           </a>
         </section>

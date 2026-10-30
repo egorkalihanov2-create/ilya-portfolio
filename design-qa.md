@@ -65,6 +65,114 @@ final result: passed
 
 ---
 
+# Design QA — copywriter positioning, mobile word spacing, and Contacts portrait
+
+- Source visual truth paths:
+  - `C:\Users\77FE78~1\AppData\Local\Temp\codex-clipboard-8b816743-febb-42d1-b3a8-e9919b667f76.png`
+  - `C:\Users\77FE78~1\AppData\Local\Temp\codex-clipboard-430a5ea5-1cc0-4f16-b148-25a8afc041c1.png`
+  - `C:\Users\77FE78~1\AppData\Local\Temp\codex-clipboard-b85087c4-9273-4cf3-9f92-1f89964f4291.png`
+  - `C:\Users\77FE78~1\AppData\Local\Temp\codex-clipboard-aefa9afa-248e-4bab-a528-4472abcdd7a5.png`
+  - `C:\Users\босс77\Downloads\Telegram Desktop\CA4E7C16-80D4-4F8A-A39E-DADF2C8C57B2_1_105_c.jpeg`
+- Implementation screenshots:
+  - `C:\Users\босс77\Pictures\Портфолио Илья\tmp\design-qa\main-mobile.png`
+  - `C:\Users\босс77\Pictures\Портфолио Илья\tmp\design-qa\contacts-1260x840.png`
+- Combined comparison evidence:
+  - `C:\Users\босс77\Pictures\Портфолио Илья\tmp\design-qa\comparison-main-spacing.jpg`
+  - `C:\Users\босс77\Pictures\Портфолио Илья\tmp\design-qa\comparison-contacts.jpg`
+- Viewports: 390 × 844 CSS px for mobile Main; 1260 × 840 CSS px for desktop Contacts.
+- Pixel dimensions and density: mobile source 590 × 1280 px; mobile implementation 390 × 844 px at device scale factor 1 and normalized to 590 px width in the comparison; Contacts source and implementation 1260 × 840 px at device scale factor 1.
+- State: Main at the top of the page with the intro paragraph visible; Contacts at the hero/contact-control section.
+
+## Full-view comparison evidence
+
+The mobile comparison preserves the supplied responsive composition while changing the positioning copy to `Creative Copywriter`. The previously joined words now render as `spent the` and `need to`. The Contacts comparison preserves the existing pill, title, form, and portrait-card layout while replacing only the portrait source and crop.
+
+## Focused region comparison evidence
+
+- The rendered accessibility text is `Hey, I’m Ilya — a Creative Copywriter from Minsk who’s spent the last 7 years ... turning what companies need to say ...`; both requested spaces are present.
+- The document title is `Ilya — Creative Copywriter`, and the description is `Portfolio of Ilya — creative copywriter and originator.`
+- `/main` renders the Main page directly; `/` and `/index.html` both resolve to `/main` in the production server.
+- The Contacts image uses the supplied dog selfie, keeps the existing rotated card, and retains both Ilya’s face and the dog as visible focal subjects at mobile and desktop widths.
+
+## Required fidelity surfaces
+
+- Fonts and typography: passed. Existing font families, weights, sizes, line heights, and hierarchy are preserved; only the requested copy and missing spaces changed.
+- Spacing and layout rhythm: passed. The explicit JSX spaces repair mobile word joining without altering the desktop line breaks. Contacts positions, rotations, radii, and section rhythm remain unchanged.
+- Colors and visual tokens: passed. No palette, shadow, or semantic token changed.
+- Image quality and asset fidelity: passed. The supplied JPEG is used directly, rendered sharply with `object-fit: cover`, and cropped to keep the requested subjects visible.
+- Copy and content: passed. Site metadata, visible Main copy, CV positioning, and experience level use the requested Creative Copywriter / Middle wording.
+
+## Comparison history
+
+1. Initial state: the mobile-hidden line breaks caused `spentthe` and `needto`; SEO copy and the CV used Conceptual Creative / Senior Creator wording; Contacts showed the telephone portrait.
+2. Fixes: added explicit spaces around responsive breaks, updated titles/descriptions and visible copy, regenerated the CV, added `/main`, and replaced the Contacts portrait with the supplied selfie.
+3. Post-fix evidence: the browser-rendered text exposes both spaces, the clean route resolves, both responsive Contacts captures show the new photo, and the browser console reports zero errors or warnings.
+
+## Primary interactions and runtime checks
+
+- Opened `/main` directly and verified its title, navigation, and rendered Main content.
+- Opened Contacts at mobile and desktop widths and verified the new portrait and existing contact controls.
+- Browser console checked: 0 errors and 0 warnings.
+- Production build completed successfully.
+
+## Findings
+
+No actionable P0, P1, or P2 mismatches remain.
+
+## Follow-up polish
+
+No P3 follow-up is required for this iteration.
+
+final result: passed
+
+---
+
+# Design QA — About ending Heavy text and Cases CTA
+
+- Source visual truth: current-task browser annotations for the About ending (`conversation://browser-comment/1`)
+- Implementation screenshot: `output/playwright/about-ending-heavy-cases-494x884.png`
+- Source and implementation viewport: 494 × 884 CSS px
+- Implementation pixels: 494 × 884 pixels, device scale factor 1
+- State: About page, ending section with both CTA buttons visible
+
+## Full-view comparison evidence
+
+The annotated About capture and the post-change implementation were reviewed at the same mobile viewport. The ending copy keeps its original centered position and spacing while using the requested Heavy weight. The right CTA preserves the existing dark pill treatment and now reads “View Cases”.
+
+## Focused region comparison evidence
+
+- `.about-ending > p` uses `font-family: "Object Sans", Arial, sans-serif` with `font-weight: 800`.
+- The dark CTA text is `View Cases`.
+- The CTA resolves to `./cases.html` and browser activation opens the Cases page.
+
+## Required fidelity surfaces
+
+- Fonts and typography: passed. The ending sentence uses the loaded Object Sans Heavy face without changing its size, line height, alignment, or letter spacing.
+- Spacing and layout rhythm: passed. The copy and both CTA pills retain their original mobile positions and spacing.
+- Colors and visual tokens: passed. Existing yellow and dark CTA treatments are unchanged.
+- Image quality and asset fidelity: passed. The surrounding AI tools artwork and page imagery are unchanged.
+- Copy and content: passed. Only the requested CTA label and destination changed.
+
+## Comparison history
+
+1. Initial state: the ending sentence used the default weight and the dark CTA read “Go to Main Page” with a Main-page target.
+2. Fix: applied Object Sans Heavy and changed the CTA to “View Cases” linking to `cases.html`.
+3. Verification: captured the 494 × 884 implementation, activated the CTA, confirmed the Cases page loaded, and found zero browser console errors or warnings.
+
+## Primary interactions and runtime checks
+
+- Activated `View Cases` in the mobile preview and confirmed navigation to `/cases.html`.
+- Returned to About and confirmed the updated CTA remained present.
+- Browser console check returned no errors or warnings.
+
+## Findings
+
+No actionable P0, P1, or P2 mismatches remain.
+
+final result: passed
+
+---
+
 # Design QA — mobile spacing and preview CTA
 
 - Source visual truth paths: `conversation://browser-comment/1`, `conversation://browser-comment/2`, `conversation://browser-comment/3`

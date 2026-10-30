@@ -1,4 +1,4 @@
-# Ilya — Conceptual Creative
+# Ilya — Creative Copywriter
 
 Адаптивное портфолио по макету Figma. Проект собран на React, TypeScript, Vite, Tailwind CSS и Motion. Шрифты и все изображения хранятся локально в репозитории.
 

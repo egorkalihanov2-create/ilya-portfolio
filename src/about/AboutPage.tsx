@@ -92,10 +92,10 @@ function Header() {
   return (
     <header className="about-header">
       <nav aria-label="Main navigation">
-        <a href="./index.html">Main</a>
-        <a href="./about.html" aria-current="page">About me</a>
-        <a href="./cases.html">Cases</a>
-        <a href="./contacts.html">Contacts</a>
+        <a href="/main">Main</a>
+        <a href="/about" aria-current="page">About me</a>
+        <a href="/cases">Cases</a>
+        <a href="/contacts">Contacts</a>
       </nav>
     </header>
   );
@@ -296,11 +296,11 @@ export default function AboutPage() {
             </motion.a>
             <motion.a
               className="about-pill about-main-link"
-              href="./index.html"
+              href="/cases"
               whileHover={reduceMotion ? undefined : { y: -4, scale: 1.025 }}
               whileTap={reduceMotion ? undefined : { scale: 0.98 }}
             >
-              Go to<br />Main Page
+              View Cases
             </motion.a>
           </div>
         </section>

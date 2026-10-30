@@ -53,13 +53,46 @@ async function serve(req, res) {
       res.writeHead(405);
       return res.end();
     }
-    let pathname = decodeURIComponent(new URL(req.url, "http://localhost").pathname);
+    const requestUrl = new URL(req.url, "http://localhost");
+    let pathname = decodeURIComponent(requestUrl.pathname);
+    const legacyCaseId = pathname === "/cases.html" ? requestUrl.searchParams.get("case") : null;
+    if (legacyCaseId) {
+      res.writeHead(308, { Location: `/cases/${encodeURIComponent(legacyCaseId)}` });
+      return res.end();
+    }
     if (pathname === "/admin/") {
       res.writeHead(308, { Location: "/admin" });
       return res.end();
     }
     if (pathname === "/admin") pathname = "/admin.html";
-    if (pathname === "/") pathname = "/index.html";
+    if (pathname === "/" || pathname === "/index.html") {
+      res.writeHead(308, { Location: "/main" });
+      return res.end();
+    }
+    const redirects = new Map([
+      ["/main/", "/main"],
+      ["/about.html", "/about"],
+      ["/about/", "/about"],
+      ["/cases.html", "/cases"],
+      ["/cases/", "/cases"],
+      ["/contacts.html", "/contacts"],
+      ["/contacts/", "/contacts"],
+    ]);
+    const redirectTarget = redirects.get(pathname);
+    if (redirectTarget) {
+      res.writeHead(308, { Location: `${redirectTarget}${requestUrl.search}` });
+      return res.end();
+    }
+    const trailingCasePath = pathname.match(/^\/cases\/([^/]+)\/$/);
+    if (trailingCasePath) {
+      res.writeHead(308, { Location: `/cases/${encodeURIComponent(trailingCasePath[1])}${requestUrl.search}` });
+      return res.end();
+    }
+    if (pathname === "/main") pathname = "/index.html";
+    if (pathname === "/about") pathname = "/about.html";
+    if (pathname === "/cases") pathname = "/cases.html";
+    if (pathname === "/contacts") pathname = "/contacts.html";
+    if (/^\/cases\/[^/]+$/.test(pathname)) pathname = "/cases.html";
     if (pathname.includes("\\") || pathname.includes("\0") || pathname.split("/").some((part) => part.startsWith("."))) {
       throw new Error("invalid path");
     }
@@ -74,7 +107,7 @@ async function serve(req, res) {
     res.setHeader("X-Content-Type-Options", "nosniff");
     res.setHeader("Referrer-Policy", "same-origin");
     res.setHeader("X-Frame-Options", "DENY");
-    res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'");
+    res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'");
     if (req.method === "HEAD") res.end();
     else createReadStream(file).on("error", () => res.destroy()).pipe(res);
   } catch {

@@ -130,10 +130,10 @@ export default function App() {
     <div className="site-shell">
       <header className="site-header">
         <nav aria-label="Main navigation">
-          <a href="./index.html">Main</a>
-          <a href="./about.html">About me</a>
-          <a href="./cases.html">Cases</a>
-          <a href="./contacts.html">Contacts</a>
+          <a href="/main">Main</a>
+          <a href="/about">About me</a>
+          <a href="/cases">Cases</a>
+          <a href="/contacts">Contacts</a>
         </nav>
       </header>
 
@@ -157,9 +157,9 @@ export default function App() {
           }}
         >
           <p>
-            Hey, I’m Ilya — a Conceptual Creative from Minsk who’s spent<br className="desktop-break" />
+            Hey, I’m Ilya — a Creative Copywriter from Minsk who’s spent{" "}<br className="desktop-break" />
             the last 7 years between global ad agencies, tech teams and brands,
-            turning what companies need<br className="desktop-break" />
+            turning what companies need{" "}<br className="desktop-break" />
             to say into ideas people might actually care about
           </p>
         </motion.section>
@@ -346,7 +346,7 @@ export default function App() {
             </motion.a>
             <motion.a
               className="cta-choice cta-choice-more"
-              href="./about.html"
+              href="/about"
               variants={{
                 hidden: { opacity: 0, y: 120, scale: 0.72 },
                 visible: {

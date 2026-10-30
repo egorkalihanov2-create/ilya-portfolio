@@ -27,7 +27,50 @@ export default defineConfig({
       async configureServer(server) {
         const api = await createContentApi({ root: server.config.root, development: true });
         server.middlewares.use((req, res, next) => {
-          if (req.url === "/admin" || req.url === "/admin/") req.url = "/admin.html";
+          const requestUrl = new URL(req.url ?? "/", "http://localhost");
+          const { pathname } = requestUrl;
+          const legacyCaseId = pathname === "/cases.html"
+            ? requestUrl.searchParams.get("case")
+            : null;
+
+          if (legacyCaseId) {
+            res.writeHead(308, { Location: `/cases/${encodeURIComponent(legacyCaseId)}` });
+            res.end();
+            return;
+          }
+
+          const redirects = new Map([
+            ["/", "/main"],
+            ["/index.html", "/main"],
+            ["/main/", "/main"],
+            ["/about.html", "/about"],
+            ["/about/", "/about"],
+            ["/cases.html", "/cases"],
+            ["/cases/", "/cases"],
+            ["/contacts.html", "/contacts"],
+            ["/contacts/", "/contacts"],
+          ]);
+          const redirectTarget = redirects.get(pathname);
+
+          if (redirectTarget) {
+            res.writeHead(308, { Location: `${redirectTarget}${requestUrl.search}` });
+            res.end();
+            return;
+          }
+
+          const trailingCasePath = pathname.match(/^\/cases\/([^/]+)\/$/);
+          if (trailingCasePath) {
+            res.writeHead(308, { Location: `/cases/${trailingCasePath[1]}${requestUrl.search}` });
+            res.end();
+            return;
+          }
+
+          if (pathname === "/admin" || pathname === "/admin/") req.url = "/admin.html";
+          if (pathname === "/main") req.url = `/index.html${requestUrl.search}`;
+          if (pathname === "/about") req.url = `/about.html${requestUrl.search}`;
+          if (pathname === "/cases") req.url = `/cases.html${requestUrl.search}`;
+          if (pathname === "/contacts") req.url = `/contacts.html${requestUrl.search}`;
+          if (/^\/cases\/[^/]+$/.test(pathname)) req.url = `/cases.html${requestUrl.search}`;
           api.handler(req, res, next);
         });
       },
