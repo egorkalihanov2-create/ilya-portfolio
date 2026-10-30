@@ -65,12 +65,11 @@ async function serve(req, res) {
       return res.end();
     }
     if (pathname === "/admin") pathname = "/admin.html";
-    if (pathname === "/" || pathname === "/index.html") {
-      res.writeHead(308, { Location: "/main" });
+    if (pathname === "/index.html" || pathname === "/main" || pathname === "/main/") {
+      res.writeHead(308, { Location: `/${requestUrl.search}` });
       return res.end();
     }
     const redirects = new Map([
-      ["/main/", "/main"],
       ["/about.html", "/about"],
       ["/about/", "/about"],
       ["/cases.html", "/cases"],
@@ -88,7 +87,7 @@ async function serve(req, res) {
       res.writeHead(308, { Location: `/cases/${encodeURIComponent(trailingCasePath[1])}${requestUrl.search}` });
       return res.end();
     }
-    if (pathname === "/main") pathname = "/index.html";
+    if (pathname === "/") pathname = "/index.html";
     if (pathname === "/about") pathname = "/about.html";
     if (pathname === "/cases") pathname = "/cases.html";
     if (pathname === "/contacts") pathname = "/contacts.html";

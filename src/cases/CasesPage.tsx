@@ -54,7 +54,7 @@ function Header() {
   return (
     <header className="site-header">
       <nav aria-label="Main navigation">
-        <a href="/main">Main</a>
+        <a href="/">Main</a>
         <a href="/about">About me</a>
         <a href="/cases" aria-current="page">Cases</a>
         <a href="/contacts">Contacts</a>
@@ -182,7 +182,7 @@ export default function CasesPage() {
           <a className="page-pill page-pill--yellow" href="/contacts">
             Let’s create<br />something
           </a>
-          <a className="page-pill page-pill--dark" href="/main">
+          <a className="page-pill page-pill--dark" href="/">
             Go to<br />Main Page
           </a>
         </section>

@@ -4,7 +4,7 @@ function Header() {
   return (
     <header className="site-header">
       <nav aria-label="Main navigation">
-        <a href="/main">Main</a>
+        <a href="/">Main</a>
         <a href="/about">About me</a>
         <a href="/cases">Cases</a>
         <a href="/contacts" aria-current="page">Contacts</a>
@@ -99,7 +99,7 @@ export default function ContactsPage() {
           </form>
         </section>
 
-        <a className="page-pill page-pill--dark contacts-main-link" href="/main">
+        <a className="page-pill page-pill--dark contacts-main-link" href="/">
           Go to<br />Main Page
         </a>
 

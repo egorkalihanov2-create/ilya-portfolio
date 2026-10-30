@@ -92,7 +92,7 @@ function Header() {
   return (
     <header className="about-header">
       <nav aria-label="Main navigation">
-        <a href="/main">Main</a>
+        <a href="/">Main</a>
         <a href="/about" aria-current="page">About me</a>
         <a href="/cases">Cases</a>
         <a href="/contacts">Contacts</a>

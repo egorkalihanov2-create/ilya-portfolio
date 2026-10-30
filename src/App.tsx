@@ -130,7 +130,7 @@ export default function App() {
     <div className="site-shell">
       <header className="site-header">
         <nav aria-label="Main navigation">
-          <a href="/main">Main</a>
+          <a href="/">Main</a>
           <a href="/about">About me</a>
           <a href="/cases">Cases</a>
           <a href="/contacts">Contacts</a>

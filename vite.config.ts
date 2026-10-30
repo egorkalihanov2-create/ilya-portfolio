@@ -40,9 +40,9 @@ export default defineConfig({
           }
 
           const redirects = new Map([
-            ["/", "/main"],
-            ["/index.html", "/main"],
-            ["/main/", "/main"],
+            ["/index.html", "/"],
+            ["/main", "/"],
+            ["/main/", "/"],
             ["/about.html", "/about"],
             ["/about/", "/about"],
             ["/cases.html", "/cases"],
@@ -66,7 +66,7 @@ export default defineConfig({
           }
 
           if (pathname === "/admin" || pathname === "/admin/") req.url = "/admin.html";
-          if (pathname === "/main") req.url = `/index.html${requestUrl.search}`;
+          if (pathname === "/") req.url = `/index.html${requestUrl.search}`;
           if (pathname === "/about") req.url = `/about.html${requestUrl.search}`;
           if (pathname === "/cases") req.url = `/cases.html${requestUrl.search}`;
           if (pathname === "/contacts") req.url = `/contacts.html${requestUrl.search}`;
